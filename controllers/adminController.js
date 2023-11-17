@@ -1,10 +1,22 @@
+const { StatusCodes } = require("http-status-codes");
+
 const Admin = require("../models/admin");
 
-exports.adminLogin = (req, res, next) => {
-  res.send("Admin logged in");
-  //   res.render("admin/edit-product", {
-  //     pageTitle: "Add Product",
-  //     path: "/admin/add-product",
-  //     editing: false,
-  //   });
+exports.adminLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const admin = await Admin.create({
+      email,
+      password,
+    });
+
+    res
+      .status(StatusCodes.CREATED)
+      .json({ message: "Admin successfully logged in" });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: "Failed to login admin" });
+  }
 };

@@ -19,8 +19,9 @@ const User = sequelize.define("user", {
   },
   point: {
     type: Sequelize.DOUBLE,
+    defaultValue: 0.0,
   },
-  nakeName: {
+  nickName: {
     type: Sequelize.STRING,
   },
   gender: {

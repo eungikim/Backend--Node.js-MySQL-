@@ -8,7 +8,15 @@ const User = sequelize.define("user", {
     primaryKey: true,
     autoIncrement: true,
   },
+  accountId: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
   email: {
+    type: Sequelize.STRING,
+  },
+  accountName: {
     type: Sequelize.STRING,
   },
   loginType: {

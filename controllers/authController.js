@@ -2,24 +2,15 @@ const { StatusCodes } = require("http-status-codes");
 
 const User = require("../models/user");
 
-exports.userLogin = async (req, res, next) => {
+exports.loginWithGoogle = async (req, res, next) => {
   try {
-    const { email, loginType, imageURL, nickName, gender, height, weight } =
-      req.body;
+    const thisUser = await User.findOne({ where: { accountId: req.user.id } });
 
-    const user = await User.create({
-      email,
-      loginType,
-      imageURL,
-      nickName,
-      gender,
-      height,
-      weight,
-    });
+    req.thisUser = thisUser;
 
     res
       .status(StatusCodes.CREATED)
-      .json({ message: "User created successfully", user });
+      .json({ message: "User created successfully", user: thisUser });
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)

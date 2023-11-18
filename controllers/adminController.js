@@ -1,6 +1,9 @@
 const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcryptjs");
+
 const Admin = require("../models/admin");
+const Exercise = require("../models/exercise");
+const User = require("../models/user");
 
 exports.adminLogin = async (req, res, next) => {
   try {
@@ -31,4 +34,9 @@ exports.adminLogin = async (req, res, next) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: "Failed to login admin" });
   }
+};
+
+exports.getAllExercises = async (req, res) => {
+  const exercise = await Exercise.findAll();
+  res.status(StatusCodes.OK).json({ exercise: exercise });
 };

@@ -1,18 +1,27 @@
 require("express-async-errors");
 const { StatusCodes } = require("http-status-codes");
 const express = require("express");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const app = express();
+
+const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 const session = require("express-session");
 const passport = require("./config/passport");
 
 const sequelize = require("./utils/database");
-const User = require("./models/user");
-const { isLoggedIn } = require("./middleware/isLoggedIn");
+const Admin = require("./models/admin");
 
-const app = express();
+const { authenticateUser } = require("./middleware/currentUser");
+
+dotenv.config();
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(
   session({
@@ -25,38 +34,28 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-dotenv.config();
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(cookieParser());
-
 // Routes
 const adminRoutes = require("./routes/adminRoute");
 const authRoutes = require("./routes/authRoute");
 
-app.use("/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/admin", adminRoutes);
+// app.use("/api/v1/user", authenticateUser, "Later Route");
 
 app.get("/", (req, res, next) => {
   res.json({ message: "Hi, welcome" });
 });
 
 app.get("/test", (req, res) => {
-  res.send('<h1>Home Page</h1><a href="/auth/google">Login with Google</a>');
+  res.send(
+    '<h1>Home Page</h1><a href="/api/v1/auth/google">Login with Google</a>'
+  );
 });
 
 app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
-
-app.get("/profile", isLoggedIn, (req, res) => {
-  res.send(
-    `<h1>Hello, ${req.user.displayName}!</h1><img src="${req.user.imageUrl}" alt="Profile Image"><br><a href="/logout">Logout</a>`
-  );
-});
-
-app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/user/", authRoutes);
 
 //404 middleware
 app.use("*", (req, res, next) => {
@@ -73,6 +72,15 @@ app.use((error, req, res, next) => {
 
 sequelize
   .sync()
+  .then((result) => {
+    return Admin.findByPk(1);
+  })
+  .then((admin) => {
+    if (!admin) {
+      return Admin.create({ email: "fayselcode@gmail.com", password: "admin" });
+    }
+    return admin;
+  })
   .then((result) => {
     app.listen(8080, () => {
       console.log("Server running...");

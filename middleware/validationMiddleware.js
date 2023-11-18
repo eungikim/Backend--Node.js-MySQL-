@@ -22,11 +22,7 @@ const withValidatorErrors = (validateValues) => {
   ];
 };
 
-exports.validateUserLogin = withValidatorErrors([
-  body("email").notEmpty().isEmail().withMessage("A valid email is required"),
-
-  body("loginType").notEmpty().withMessage("Login Type is required"),
-
+exports.validateCompleteLogin = withValidatorErrors([
   body("nickName").notEmpty().withMessage("Nick Name is required"),
 
   body("gender").notEmpty().withMessage("Gender is required"),

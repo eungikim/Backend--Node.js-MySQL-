@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
@@ -71,13 +72,18 @@ app.use((error, req, res, next) => {
 });
 
 sequelize
+  // .sync({ force: true })
   .sync()
   .then((result) => {
     return Admin.findByPk(1);
   })
-  .then((admin) => {
+  .then(async (admin) => {
     if (!admin) {
-      return Admin.create({ email: "fayselcode@gmail.com", password: "admin" });
+      const hashedPassword = await bcrypt.hash("admin", 10);
+      return Admin.create({
+        email: "fayselcode@gmail.com",
+        password: hashedPassword,
+      });
     }
     return admin;
   })

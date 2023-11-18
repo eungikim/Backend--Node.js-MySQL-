@@ -40,3 +40,9 @@ exports.getAllExercises = async (req, res) => {
   const exercise = await Exercise.findAll();
   res.status(StatusCodes.OK).json({ exercise: exercise });
 };
+
+exports.getOneExercise = async (req, res) => {
+  const id = await req.params.exercise_id;
+  const exercise = await Exercise.findOne({ where: { id: id } });
+  res.status(StatusCodes.OK).json({ exercise: exercise });
+};

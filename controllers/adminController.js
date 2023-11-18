@@ -58,10 +58,10 @@ exports.addExercise = async (req, res) => {
   const {
     Name,
     imageURL,
-    Achievement_point,
-    Duration,
-    Method_of_performing,
-    Pose_and_description,
+    achievement_point,
+    duration,
+    method_of_performing,
+    pose_and_description,
     videoUrl,
     Precaution,
   } = req.body;
@@ -69,10 +69,10 @@ exports.addExercise = async (req, res) => {
     const newExercise = await Exercise.create({
       Name,
       imageURL,
-      Achievement_point,
-      Duration,
-      Method_of_performing,
-      Pose_and_description,
+      achievement_point,
+      duration,
+      method_of_performing,
+      pose_and_description,
       videoUrl,
       Precaution,
     });

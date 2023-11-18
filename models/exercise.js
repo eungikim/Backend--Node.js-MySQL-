@@ -11,7 +11,7 @@ const Exercise = sequelize.define(
       autoIncrement: true,
     },
 
-    Name: {
+    name: {
       type: Sequelize.STRING,
     },
 
@@ -23,24 +23,24 @@ const Exercise = sequelize.define(
       type: Sequelize.STRING,
     },
 
-    Achievement_point: {
+    achievement_point: {
       type: Sequelize.DOUBLE,
       defaultValue: 0.0,
     },
 
-    Duration: {
+    duration: {
       type: Sequelize.INTEGER,
     },
 
-    Method_of_performing: {
+    method_of_performing: {
       type: Sequelize.STRING,
     },
 
-    Pose_and_description: {
+    pose_and_description: {
       type: Sequelize.STRING,
     },
 
-    Precaution: {
+    precaution: {
       type: Sequelize.STRING,
     },
   },

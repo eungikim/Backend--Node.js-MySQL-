@@ -19,9 +19,11 @@ const router = express.Router();
 router.post("/login", adminLogin);
 
 router.get("/exercises", getAllExercises);
+
 router.get("/exercise/:id", getOneExercise);
 
 router.post("/exercise", validateExerciseAdding, addExercise);
+
 router.delete("/exercise/:id", deleteExercise);
 
 module.exports = router;

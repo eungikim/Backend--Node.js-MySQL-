@@ -31,3 +31,18 @@ exports.validateCompleteLogin = withValidatorErrors([
 
   body("weight").notEmpty().withMessage("Weight is required"),
 ]);
+
+exports.validateExerciseAdding = withValidatorErrors([
+  body("name").notEmpty().withMessage("name is required"),
+
+  body("duration").notEmpty().withMessage("duration is required"),
+
+  body("pose_description")
+    .notEmpty()
+    .withMessage("pose_description is required"),
+
+  body("precaution").notEmpty().withMessage("precaution is required"),
+  body("method_of_performing")
+    .notEmpty()
+    .withMessage("method_of_Performing is required"),
+]);

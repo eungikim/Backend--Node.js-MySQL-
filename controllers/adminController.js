@@ -82,3 +82,16 @@ exports.addExercise = async (req, res) => {
     res.status(401).json({ message: "Error when adding exercise" });
   }
 };
+
+exports.deleteExercise = async (id) => {
+  const exercise = await Exercise.findByPk(id);
+  if (!exercise) {
+    const error = new Error(
+      "Exercise not found for the given id when deleting"
+    );
+    error.StatusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+  exercise.destroy();
+  res.status(StatusCodes.OK).json({ deletedExercise: exercise });
+};

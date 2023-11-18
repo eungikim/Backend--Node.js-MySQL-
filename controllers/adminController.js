@@ -44,5 +44,41 @@ exports.getAllExercises = async (req, res) => {
 exports.getOneExercise = async (req, res) => {
   const id = await req.params.exercise_id;
   const exercise = await Exercise.findOne({ where: { id: id } });
+
+  if (!exercise) {
+    const error = new Error("Exercise not found for the given id");
+    error.StatusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
   res.status(StatusCodes.OK).json({ exercise: exercise });
+};
+
+exports.addExercise = async (req, res) => {
+  const {
+    Name,
+    imageURL,
+    Achievement_point,
+    Duration,
+    Method_of_performing,
+    Pose_and_description,
+    videoUrl,
+    Precaution,
+  } = req.body;
+  try {
+    const newExercise = await Exercise.create({
+      Name,
+      imageURL,
+      Achievement_point,
+      Duration,
+      Method_of_performing,
+      Pose_and_description,
+      videoUrl,
+      Precaution,
+    });
+
+    res.status(StatusCodes.CREATED).json({ newExercise: newExercise });
+  } catch (err) {
+    res.status(401).json({ message: "Error when adding exercise" });
+  }
 };

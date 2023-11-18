@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const Admin = require("../models/admin");
 const Exercise = require("../models/exercise");
 const User = require("../models/user");
+const UserExercise = require("../models/userExercise");
 
 exports.adminLogin = async (req, res, next) => {
   try {
@@ -83,7 +84,8 @@ exports.addExercise = async (req, res) => {
   }
 };
 
-exports.deleteExercise = async (id) => {
+exports.deleteExercise = async (req, res) => {
+  const id = req.params.exercise_id;
   const exercise = await Exercise.findByPk(id);
   if (!exercise) {
     const error = new Error(
@@ -95,3 +97,40 @@ exports.deleteExercise = async (id) => {
   exercise.destroy();
   res.status(StatusCodes.OK).json({ deletedExercise: exercise });
 };
+
+exports.getAllUsers = async (req, res) => {
+  const users = await User.findAll();
+
+  if (!users) {
+    const error = new Error("There is not any user");
+    error.StatusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
+  res.status(StatusCodes.OK).json({ users: users });
+};
+
+exports.getOneUser = async (req, res) => {
+  const id = req.params.user_id;
+  const user = await User.findOne({ where: { id: id } });
+  if (!user) {
+    const error = new Error("No user is found by this id");
+    error.StatusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
+  res.status(StatusCodes.OK).json({ user: user });
+};
+
+exports.getUserExercises = async (req, res) => {
+  const id = req.params.user_id;
+  const userExercises = await UserExercise.findAll({ where: { User_ID: id } });
+  res.status(StatusCodes.OK).json({ userExercises: userExercises });
+};
+
+// exports.addUserExercise = async (req, res) => {
+//   uid = req.params.id;
+//   eid = req.params.eid;
+//   enrolled = await UserRepo.enrollExercise(uid, eid);
+//   return res.json(enrolled);
+// };

@@ -38,10 +38,11 @@ app.use(passport.session());
 // Routes
 const adminRoutes = require("./routes/adminRoute");
 const authRoutes = require("./routes/authRoute");
+const userRoutes = require("./routes/userRoute");
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", adminRoutes);
-// app.use("/api/v1/user", authenticateUser, "Later Route");
+app.use("/api/v1/user", authenticateUser, userRoutes);
 
 app.get("/", (req, res, next) => {
   res.json({ message: "Hi, welcome" });

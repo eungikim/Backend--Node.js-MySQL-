@@ -20,10 +20,10 @@ router.post("/login", adminLogin);
 
 router.get("/exercises", getAllExercises);
 
-router.get("/exercise/:id", getOneExercise);
+router.get("/exercise/:exercise_id", getOneExercise);
 
 router.post("/exercise", validateExerciseAdding, addExercise);
 
-router.delete("/exercise/:id", deleteExercise);
+router.delete("/exercise/:exercise_id", deleteExercise);
 
 module.exports = router;

@@ -7,9 +7,9 @@ exports.authenticateUser = async (req, res, next) => {
   const token = req.cookies.motyToken;
 
   if (!token) {
-    const error = new Error("Authentication invalid, no token");
-    error.statusCode = StatusCodes.UNAUTHORIZED;
-    throw error;
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ message: "Authentication invalid, no token" });
   }
 
   try {

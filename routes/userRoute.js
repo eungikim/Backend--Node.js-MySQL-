@@ -10,7 +10,7 @@ const {
 
 router.get("/exercises", getAllExercises);
 
-router.get("/exercise/:id", getOneExercise);
+router.get("/exercise/:exercise_id", getOneExercise);
 
 router.post("/exercise", addUserExercise);
 

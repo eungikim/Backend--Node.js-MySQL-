@@ -6,42 +6,13 @@ const Exercise = require("../models/exercise");
 const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
 
-exports.adminLogin = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-
-    const admin = await Admin.findOne({
-      where: { email: email },
-    });
-
-    if (!admin) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Non-authorized admin" });
-    }
-
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
-      const error = new Error("Password not match");
-      error.statusCode = StatusCodes.UNAUTHORIZED;
-      throw error;
-    }
-
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "Admin successfully logged in" });
-  } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Failed to login admin" });
-  }
-};
-
+// Retrieve all exercises
 exports.getAllExercises = async (req, res) => {
-  const exercise = await Exercise.findAll();
-  res.status(StatusCodes.OK).json({ exercise: exercise });
+  const exercises = await Exercise.findAll();
+  res.status(StatusCodes.OK).json({ exercises: exercises });
 };
 
+// Retrieve one single exercise
 exports.getOneExercise = async (req, res) => {
   const id = await req.params.exercise_id;
   const exercise = await Exercise.findOne({ where: { id: id } });
@@ -55,6 +26,7 @@ exports.getOneExercise = async (req, res) => {
   res.status(StatusCodes.OK).json({ exercise: exercise });
 };
 
+// Add exercise to the exercises list
 exports.addExercise = async (req, res) => {
   const {
     Name,
@@ -84,6 +56,7 @@ exports.addExercise = async (req, res) => {
   }
 };
 
+// Delete one exercise
 exports.deleteExercise = async (req, res) => {
   const id = req.params.exercise_id;
   const exercise = await Exercise.findByPk(id);
@@ -98,6 +71,7 @@ exports.deleteExercise = async (req, res) => {
   res.status(StatusCodes.OK).json({ deletedExercise: exercise });
 };
 
+// Retrieve all users
 exports.getAllUsers = async (req, res) => {
   const users = await User.findAll();
 
@@ -110,6 +84,7 @@ exports.getAllUsers = async (req, res) => {
   res.status(StatusCodes.OK).json({ users: users });
 };
 
+// Retrieve one single user
 exports.getOneUser = async (req, res) => {
   const id = req.params.user_id;
   const user = await User.findOne({ where: { id: id } });
@@ -122,15 +97,10 @@ exports.getOneUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: user });
 };
 
-exports.getUserExercises = async (req, res) => {
-  const id = req.params.user_id;
-  const userExercises = await UserExercise.findAll({ where: { User_ID: id } });
-  res.status(StatusCodes.OK).json({ userExercises: userExercises });
-};
+// Retrieve one user exercises (find all exercises enrolled by user)
 
-// exports.addUserExercise = async (req, res) => {
-//   uid = req.params.id;
-//   eid = req.params.eid;
-//   enrolled = await UserRepo.enrollExercise(uid, eid);
-//   return res.json(enrolled);
+// exports.getUserExercises = async (req, res) => {
+//   const id = req.params.user_id;
+//   const userExercises = await UserExercise.findAll({ where: { User_ID: id } });
+//   res.status(StatusCodes.OK).json({ userExercises: userExercises });
 // };

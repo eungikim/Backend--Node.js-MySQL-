@@ -23,6 +23,10 @@ const Exercise = sequelize.define(
       type: Sequelize.STRING,
     },
 
+    detailed_information: {
+      type: Sequelize.STRING,
+    },
+
     achievement_point: {
       type: Sequelize.DOUBLE,
       defaultValue: 0.0,

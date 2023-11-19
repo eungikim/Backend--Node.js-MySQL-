@@ -17,7 +17,7 @@ const passport = require("./config/passport");
 const sequelize = require("./utils/database");
 const Admin = require("./models/admin");
 
-const { authenticateUser } = require("./middleware/currentUser");
+const { authenticateUser } = require("./middleware/authenticateUser");
 
 dotenv.config();
 app.use(cookieParser());

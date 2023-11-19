@@ -2,7 +2,10 @@ const { StatusCodes } = require("http-status-codes");
 
 const User = require("../models/user");
 
-const cookieParser = require("cookie-parser");
+const bcrypt = require("bcryptjs");
+
+const Admin = require("../models/admin");
+const { createJWT } = require("../utils/tokenUtils");
 
 exports.loginWithGoogle = async (req, res, next) => {
   try {
@@ -10,11 +13,14 @@ exports.loginWithGoogle = async (req, res, next) => {
 
     req.thisUser = thisUser;
 
-    res.cookie("userId", thisUser.id, { httpOnly: true });
+    const token = createJWT({ userId: thisUser.id, role: "user" });
+
+    res.cookie("motyToken", token, { httpOnly: true });
 
     res
       .status(StatusCodes.CREATED)
-      .json({ message: "User created successfully", user: thisUser });
+      // .json({ message: "User logged in successfully", user: thisUser })
+      .redirect("http://localhost:5173/login-second");
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -44,5 +50,36 @@ exports.completeLogin = async (req, res, next) => {
     req
       .status(StatusCodes.BAD_REQUEST)
       .json({ message: "Failed to add user data" });
+  }
+};
+
+exports.adminLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const admin = await Admin.findOne({
+      where: { email: email },
+    });
+
+    if (!admin) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Non-authorized admin" });
+    }
+
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      const error = new Error("Password not match");
+      error.statusCode = StatusCodes.UNAUTHORIZED;
+      throw error;
+    }
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "Admin successfully logged in" });
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: "Failed to login admin" });
   }
 };

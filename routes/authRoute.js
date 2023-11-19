@@ -3,14 +3,16 @@ const express = require("express");
 const passport = require("../config/passport");
 
 const { loginWithGoogle } = require("../controllers/authController");
-const { completeLogin } = require("../controllers/authController");
+const { completeLogin, adminLogin } = require("../controllers/authController");
 
 const { validateCompleteLogin } = require("../middleware/validationMiddleware");
-const { authenticateUser } = require("../middleware/currentUser");
+const { authenticateUser } = require("../middleware/authenticateUser");
 
 const router = express.Router();
 
 // router.post("/login", validateUserLogin, userLogin);
+
+router.post("/login", adminLogin);
 
 router.get(
   "/google",

@@ -22,6 +22,12 @@ const withValidatorErrors = (validateValues) => {
   ];
 };
 
+exports.validateAdminLogin = withValidatorErrors([
+  body("email").notEmpty().isEmail().withMessage("a valid email is required"),
+
+  body("password").notEmpty().withMessage("password is required"),
+]);
+
 exports.validateCompleteLogin = withValidatorErrors([
   body("nickName").notEmpty().withMessage("Nick Name is required"),
 
@@ -37,12 +43,12 @@ exports.validateExerciseAdding = withValidatorErrors([
 
   body("duration").notEmpty().withMessage("duration is required"),
 
-  body("pose_description")
+  body("pose_and_description")
     .notEmpty()
-    .withMessage("pose_description is required"),
+    .withMessage("pose_and_description is required"),
 
   body("precaution").notEmpty().withMessage("precaution is required"),
   body("method_of_performing")
     .notEmpty()
-    .withMessage("method_of_Performing is required"),
+    .withMessage("method_of_performing is required"),
 ]);

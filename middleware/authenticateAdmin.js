@@ -16,10 +16,12 @@ exports.authenticateAdmin = async (req, res, next) => {
     const adminId = admin.adminId;
     const role = admin.role;
 
+    console.log("Admin auth middleware", role, adminId);
+
     if (role !== "admin") {
-      const error = new Error("Not allowed to access");
-      error.statusCode = StatusCodes.UNAUTHORIZED;
-      throw error;
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Non-authorized admin, invalid role" });
     }
 
     req.adminId = adminId;

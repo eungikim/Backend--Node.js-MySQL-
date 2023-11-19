@@ -33,7 +33,7 @@ const Exercise = sequelize.define(
     },
 
     duration: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
     },
 
     method_of_performing: {

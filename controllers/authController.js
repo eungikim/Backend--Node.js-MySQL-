@@ -69,9 +69,9 @@ exports.adminLogin = async (req, res, next) => {
 
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      const error = new Error("Password not match");
-      error.statusCode = StatusCodes.UNAUTHORIZED;
-      throw error;
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Password not much" });
     }
 
     const token = createJWT({ adminId: admin.id, role: "admin" });

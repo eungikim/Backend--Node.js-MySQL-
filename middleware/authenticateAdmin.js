@@ -16,8 +16,6 @@ exports.authenticateAdmin = async (req, res, next) => {
     const adminId = admin.adminId;
     const role = admin.role;
 
-    console.log("Admin auth middleware", role, adminId);
-
     if (role !== "admin") {
       return res
         .status(StatusCodes.BAD_REQUEST)

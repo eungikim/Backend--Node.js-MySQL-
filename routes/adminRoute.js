@@ -34,6 +34,6 @@ router.patch("/exercise/:exercise_id", updateExercise);
 
 router.get("/users", getAllUsers);
 
-router.get("/user/:id", getOneUser);
+router.get("/user/:user_id", getOneUser);
 
 module.exports = router;

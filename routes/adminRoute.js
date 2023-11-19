@@ -15,6 +15,7 @@ const {
   getAllUsers,
   getOneUser,
   getUserExercises,
+  getOneUserExercise,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -38,5 +39,7 @@ router.get("/users", getAllUsers);
 router.get("/user/:user_id", getOneUser);
 
 router.get("/user/exercises/:user_id", getUserExercises);
+
+router.get("/user/:user_id/exercise/:exercise_id/", getOneUserExercise);
 
 module.exports = router;

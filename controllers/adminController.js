@@ -70,7 +70,27 @@ exports.deleteExercise = async (req, res) => {
     throw error;
   }
   exercise.destroy();
-  res.status(StatusCodes.OK).json({ deletedExercise: exercise });
+  res.status(StatusCodes.OK).json({ message: "Exercise deleted successfully" });
+};
+
+// Update one exercise
+
+exports.updateExercise = async (req, res) => {
+  const exercise_id = req.params.exercise_id;
+
+  const exercise = await Exercise.findByPk(exercise_id);
+
+  if (!exercise) {
+    const error = new Error(
+      "Exercise not found for the given id when updating"
+    );
+    error.StatusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
+  exercise.update(req.body);
+
+  res.status(StatusCodes.OK).json({ message: "Exercise updated successfully" });
 };
 
 // Retrieve all users

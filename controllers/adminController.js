@@ -119,10 +119,24 @@ exports.getOneUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: user });
 };
 
-// Retrieve one user exercises (find all exercises enrolled by user)
+// Retrieve user's exercises (find all exercises enrolled by user)
 
-// exports.getUserExercises = async (req, res) => {
-//   const id = req.params.user_id;
-//   const userExercises = await UserExercise.findAll({ where: { User_ID: id } });
-//   res.status(StatusCodes.OK).json({ userExercises: userExercises });
-// };
+exports.getUserExercises = async (req, res) => {
+  const user_id = req.params.user_id;
+
+  const user_exercise = await User.findOne({
+    where: { id: user_id },
+    include: {
+      model: Exercise,
+      through: UserExercise,
+    },
+  });
+
+  if (!user_exercise) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "Not exercise is for this user" });
+  }
+
+  res.status(StatusCodes.OK).json({ user_exercise: user_exercise });
+};

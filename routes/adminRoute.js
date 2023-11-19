@@ -11,9 +11,10 @@ const {
   getOneExercise,
   addExercise,
   deleteExercise,
+  updateExercise,
   getAllUsers,
   getOneUser,
-  updateExercise,
+  getUserExercises,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -35,5 +36,7 @@ router.patch("/exercise/:exercise_id", updateExercise);
 router.get("/users", getAllUsers);
 
 router.get("/user/:user_id", getOneUser);
+
+router.get("/user/exercises/:user_id", getUserExercises);
 
 module.exports = router;

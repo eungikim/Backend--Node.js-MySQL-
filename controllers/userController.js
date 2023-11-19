@@ -123,3 +123,71 @@ exports.getOneUserExercise = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ user_exercise: user_exercise });
 };
+
+// #########################################################    //
+
+// -> Send a report
+exports.sendReport = async (req, res) => {
+  try {
+    const {
+      point_Achieved,
+      performance,
+      duration,
+      weight_lifted,
+      calorie_conversion_result,
+      completion_status,
+    } = req.body;
+
+    const user_id = req.userId;
+    const exercise_id = req.params.exercise_id;
+
+    console.log("This is exercise id", user_id);
+
+    if (!exercise_id) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "exercise id is required when adding a report" });
+    }
+
+    const exercise = await UserExercise.findOne({
+      where: { User_ID: user_id, Exercise_ID: exercise_id },
+    });
+
+    if (!exercise) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        message: "No exercise is found for this user_id and exercise_id",
+      });
+    }
+
+    await UserExercise.update(
+      {
+        point_Achieved,
+        performance,
+        duration,
+        weight_lifted,
+        calorie_conversion_result,
+        completion_status,
+      },
+      {
+        where: {
+          User_ID: user_id,
+          Exercise_ID: exercise_id,
+        },
+      }
+    );
+
+    const updatedExercise = await UserExercise.findOne({
+      where: { User_ID: user_id, Exercise_ID: exercise_id },
+    });
+
+    res.status(StatusCodes.CREATED).json({
+      message: "Reported successfully added",
+      exercise_report: updatedExercise,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "Error when adding a report" });
+  }
+};

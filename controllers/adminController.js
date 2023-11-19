@@ -54,7 +54,9 @@ exports.addExercise = async (req, res) => {
 
     res.status(StatusCodes.CREATED).json({ newExercise: newExercise });
   } catch (err) {
-    res.status(401).json({ message: "Error when adding exercise" });
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "Error when adding exercise" });
   }
 };
 
@@ -156,11 +158,9 @@ exports.getOneUserExercise = async (req, res) => {
   });
 
   if (!user_exercise) {
-    return res
-      .status(StatusCodes.NOT_FOUND)
-      .json({
-        message: "No exercise is found for such user_id and exercise_id",
-      });
+    return res.status(StatusCodes.NOT_FOUND).json({
+      message: "No exercise is found for such user_id and exercise_id",
+    });
   }
 
   res.status(StatusCodes.OK).json({ user_exercise: user_exercise });

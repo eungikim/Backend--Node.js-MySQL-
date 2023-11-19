@@ -74,6 +74,10 @@ exports.adminLogin = async (req, res, next) => {
       throw error;
     }
 
+    const token = createJWT({ adminId: admin.id, role: "admin" });
+
+    res.cookie("motyToken", token, { httpOnly: true });
+
     return res
       .status(StatusCodes.OK)
       .json({ message: "Admin successfully logged in" });

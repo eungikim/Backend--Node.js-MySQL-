@@ -12,7 +12,7 @@ const router = express.Router();
 
 // router.post("/login", validateUserLogin, userLogin);
 
-router.post("/login", adminLogin);
+router.post("/admin-login", adminLogin);
 
 router.get(
   "/google",

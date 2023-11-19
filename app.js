@@ -17,8 +17,6 @@ const passport = require("./config/passport");
 const sequelize = require("./utils/database");
 const Admin = require("./models/admin");
 
-const { authenticateUser } = require("./middleware/authenticateUser");
-
 dotenv.config();
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -35,13 +33,17 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Authenticator middlewares
+const { authenticateAdmin } = require("./middleware/authenticateAdmin");
+const { authenticateUser } = require("./middleware/authenticateUser");
+
 // Routes
 const adminRoutes = require("./routes/adminRoute");
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/admin", authenticateAdmin, adminRoutes);
 app.use("/api/v1/user", authenticateUser, userRoutes);
 
 app.get("/", (req, res, next) => {

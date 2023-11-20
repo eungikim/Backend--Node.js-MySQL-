@@ -47,7 +47,7 @@ const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/admin", authenticateAdmin, adminRoutes);
+app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/user", authenticateUser, userRoutes);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
 

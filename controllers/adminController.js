@@ -9,6 +9,13 @@ const UserExercise = require("../models/userExercise");
 // Retrieve all exercises
 exports.getAllExercises = async (req, res) => {
   const exercises = await Exercise.findAll();
+
+  if (!exercises) {
+    const error = new Error("No exercise is found");
+    error.statusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
   res.status(StatusCodes.OK).json({ exercises: exercises });
 };
 
@@ -19,7 +26,7 @@ exports.getOneExercise = async (req, res) => {
 
   if (!exercise) {
     const error = new Error("Exercise not found for the given id");
-    error.StatusCode = StatusCodes.NOT_FOUND;
+    error.statusCode = StatusCodes.NOT_FOUND;
     throw error;
   }
 
@@ -52,7 +59,12 @@ exports.addExercise = async (req, res) => {
       precaution,
     });
 
-    res.status(StatusCodes.CREATED).json({ newExercise: newExercise });
+    res
+      .status(StatusCodes.CREATED)
+      .json({
+        message: "Exercise created successfully",
+        newExercise: newExercise,
+      });
   } catch (err) {
     res
       .status(StatusCodes.BAD_REQUEST)
@@ -68,7 +80,7 @@ exports.deleteExercise = async (req, res) => {
     const error = new Error(
       "Exercise not found for the given id when deleting"
     );
-    error.StatusCode = StatusCodes.NOT_FOUND;
+    error.statusCode = StatusCodes.NOT_FOUND;
     throw error;
   }
   exercise.destroy();
@@ -86,7 +98,7 @@ exports.updateExercise = async (req, res) => {
     const error = new Error(
       "Exercise not found for the given id when updating"
     );
-    error.StatusCode = StatusCodes.NOT_FOUND;
+    error.statusCode = StatusCodes.NOT_FOUND;
     throw error;
   }
 
@@ -101,7 +113,7 @@ exports.getAllUsers = async (req, res) => {
 
   if (!users) {
     const error = new Error("There is not any user");
-    error.StatusCode = StatusCodes.NOT_FOUND;
+    error.statusCode = StatusCodes.NOT_FOUND;
     throw error;
   }
 
@@ -114,11 +126,11 @@ exports.getOneUser = async (req, res) => {
   const user = await User.findOne({ where: { id: id } });
   if (!user) {
     const error = new Error("No user is found by this id");
-    error.StatusCode = StatusCodes.NOT_FOUND;
+    error.statusCode = StatusCodes.NOT_FOUND;
     throw error;
   }
 
-  res.status(StatusCodes.OK).json({ user: user });
+  res.status(StatusCodes.OK).json({ message: "User is obtained", user: user });
 };
 
 // Retrieve user's exercises (find all exercises enrolled by the user)

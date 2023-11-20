@@ -11,6 +11,13 @@ const UserExercise = require("../models/userExercise");
 
 exports.getAllExercises = async (req, res) => {
   const exercises = await Exercise.findAll();
+
+  if (!exercises) {
+    const error = new Error("No exercise is found");
+    error.statusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
   res.status(StatusCodes.OK).json({ exercises: exercises });
 };
 
@@ -28,7 +35,7 @@ exports.getOneExercise = async (req, res) => {
 
   if (!exercise) {
     const error = new Error("Exercise not found for the given id");
-    error.StatusCode = StatusCodes.NOT_FOUND;
+    error.statusCode = StatusCodes.NOT_FOUND;
     throw error;
   }
 

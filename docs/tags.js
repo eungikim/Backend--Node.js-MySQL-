@@ -1,8 +1,8 @@
 module.exports = {
-  tags: [
-    {
-      name: "Exercise CRUD operations",
-    },
+  // tags: [
+  //   {
+  //     name: "Exercise CRUD operations",
+  //   },
     // {
     //   name: "Todo CRUD operations", // name of a tag
     // },

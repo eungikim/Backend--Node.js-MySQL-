@@ -33,7 +33,7 @@ module.exports = {
           id: {
             type: "integer",
             description: "User identification number",
-            example: "1", // example of an id
+            example: 1, // example of an id
           },
           accountId: {
             type: "string",
@@ -57,9 +57,10 @@ module.exports = {
               "https://lh3.googleusercontent.com/a/ACg8ocLUTXXr5TLqzC7MhpXGxaKmHOEa4zYx8jmdHEBk4zAZ=s96-c",
           },
           totalPoint: {
-            type: "Double",
+            type: "number",
+            format: "double",
             description: "User's total point",
-            example: "300",
+            example: 300,
           },
           nickName: {
             type: "string",
@@ -72,14 +73,16 @@ module.exports = {
             example: "Male",
           },
           height: {
-            type: "double",
+            type: "number",
+            format: "double",
             description: "User's height",
-            example: "1.3",
+            example: 1.3,
           },
           weight: {
-            type: "double",
+            type: "number",
+            format: "double",
             description: "User's weight",
-            example: "52",
+            example: 52,
           },
         },
       },
@@ -91,7 +94,7 @@ module.exports = {
           id: {
             type: "integer",
             description: "Exercise identification number",
-            example: "1", // example of an id
+            example: 1, // example of an id
           },
           name: {
             type: "string",
@@ -116,9 +119,10 @@ module.exports = {
             example: "This exercise is for young people..",
           },
           achievement_point: {
-            type: "Double",
+            type: "number",
+            format: "double",
             description: "Exercise achievement point",
-            example: "100",
+            example: 100,
           },
           duration: {
             type: "string",
@@ -143,6 +147,61 @@ module.exports = {
         },
       },
 
+      // Exercise input model
+      ExerciseInput: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            description: "Exercise's name",
+            example: "Push-up",
+          },
+          imageURL: {
+            type: "string", // data type
+            description: "The image URL of the exercise", // desc
+            example:
+              "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          },
+          videoURL: {
+            type: "string", // data type
+            description: "The video URL of the exercise", // desc
+            example:
+              "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          },
+          detailed_information: {
+            type: "string",
+            description: "The detail information of the exercise",
+            example: "This exercise is for .....",
+          },
+          achievement_point: {
+            type: "number",
+            format: "double",
+            description: "The achievement point of the exercise",
+            example: 160,
+          },
+          duration: {
+            type: "string",
+            description: "The duration of the exercise",
+            example: "20Min",
+          },
+          method_of_performing: {
+            type: "string",
+            description: "The method of performing of the exercise",
+            example: "First make......",
+          },
+          pose_and_description: {
+            type: "string",
+            description: "The pose_and_description of the exercise",
+            example: "Make sure to make your hand......",
+          },
+          precaution: {
+            type: "string",
+            description: "The precaution of the exercise",
+            example: "Make sure to wear......",
+          },
+        },
+      },
+
       // userExercise model(table)
       UserExercise: {
         // type: "object",
@@ -163,7 +222,8 @@ module.exports = {
             example: "2",
           },
           point_Achieved: {
-            type: "double",
+            type: "number",
+            format: "double",
             description: "Point achieved by this user for this exercise",
             example: "30",
           },
@@ -178,12 +238,14 @@ module.exports = {
             example: "20Min",
           },
           weight_lifted: {
-            type: "double",
+            type: "number",
+            format: "double",
             description: "Weight lifted by this user for this exercise",
             example: "4",
           },
           calorie_conversion_result: {
-            type: "double",
+            type: "number",
+            format: "double",
             description:
               "Calorie conversion result of this user for this exercise",
             example: "70",

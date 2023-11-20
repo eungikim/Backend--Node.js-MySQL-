@@ -1,13 +1,13 @@
 const basicInfo = require("./basicInfo");
 const servers = require("./servers");
 const components = require("./components");
-const tags = require("./tags");
-// const todos = require("./");
+// const tags = require("./tags");
+const routes = require("./routes/index");
 
 module.exports = {
   ...basicInfo,
   ...servers,
   ...components,
-  ...tags,
-  //   ...todos,
+  // ...tags,
+  ...routes,
 };

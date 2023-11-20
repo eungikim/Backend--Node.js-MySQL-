@@ -11,7 +11,9 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/api/v1/auth/google/callback",
+      // callbackURL: "http://localhost:8080/api/v1/auth/google/callback",
+      callbackURL:
+        "https://bag6xc5pd2.us-east-1.awsapprunner.com/api/v1/auth/google/callback",
 
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },

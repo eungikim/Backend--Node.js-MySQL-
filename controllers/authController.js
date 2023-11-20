@@ -20,7 +20,7 @@ exports.loginWithGoogle = async (req, res, next) => {
     res
       .status(StatusCodes.CREATED)
       // .json({ message: "User logged in successfully", user: thisUser })
-      .redirect("http://localhost:5173/login-second");
+      .redirect("https://api-tester-wxhg.vercel.app/login-second");
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)

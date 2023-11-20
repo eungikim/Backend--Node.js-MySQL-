@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
+const swaggerUI = require("swagger-ui-express");
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
@@ -33,6 +34,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Docs
+const docs = require("./docs");
+
 // Authenticator middlewares
 const { authenticateAdmin } = require("./middleware/authenticateAdmin");
 const { authenticateUser } = require("./middleware/authenticateUser");
@@ -45,6 +49,7 @@ const userRoutes = require("./routes/userRoute");
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", authenticateAdmin, adminRoutes);
 app.use("/api/v1/user", authenticateUser, userRoutes);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
 
 app.get("/", (req, res, next) => {
   res.json({ message: "Hi, welcome" });

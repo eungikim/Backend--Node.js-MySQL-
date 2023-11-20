@@ -26,7 +26,7 @@ const User = sequelize.define("user", {
   imageURL: {
     type: Sequelize.STRING,
   },
-  point: {
+  totalPoint: {
     type: Sequelize.DOUBLE,
     defaultValue: 0.0,
   },

@@ -1,8 +1,8 @@
 module.exports = {
   post: {
-    tags: ["Admin-to-exercise operations"],
-    description: "Create exercise",
-    operationId: "addExercise",
+    tags: ["User operations"],
+    description: "Complete registration (add additional info)",
+    operationId: "",
     parameters: [],
     requestBody: {
       // expected request body
@@ -10,7 +10,7 @@ module.exports = {
         // content-type
         "application/json": {
           schema: {
-            $ref: "#/components/schemas/ExerciseInput",
+            $ref: "#/components/schemas/UserCompleteLoginInput",
           },
         },
       },
@@ -19,11 +19,11 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "Exercise created successfully",
+        description: "User's data added successfully",
       },
       // response code
-      500: {
-        description: "Error when adding exercise",
+      400: {
+        description: "Authentication failed, user not found",
       },
     },
   },

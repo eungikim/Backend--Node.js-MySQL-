@@ -37,6 +37,12 @@ exports.completeLogin = async (req, res, next) => {
     const userId = req.userId;
     const user = await User.findOne({ where: { id: userId } });
 
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "User not found" });
+    }
+
     user.nickName = nickName;
     user.gender = gender;
     user.height = height;

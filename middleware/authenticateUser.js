@@ -17,6 +17,8 @@ exports.authenticateUser = async (req, res, next) => {
     const userId = user.userId;
     const role = user.role;
 
+    console.log("this is the user id", userId);
+
     req.userId = userId;
     next();
   } catch (err) {

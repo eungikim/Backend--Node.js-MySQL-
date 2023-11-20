@@ -32,7 +32,7 @@ router.get(
 );
 
 router.post(
-  "/complete-login",
+  "/complete-register",
   validateCompleteLogin,
   authenticateUser,
   completeLogin

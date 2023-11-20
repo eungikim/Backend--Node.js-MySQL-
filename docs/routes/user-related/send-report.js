@@ -1,11 +1,9 @@
 module.exports = {
-  // operation's method
-  patch: {
-    tags: ["Admin-to-exercise operations"],
-    description: "Update exercise",
-    operationId: "updateTodo",
+  post: {
+    tags: ["User operations"],
+    description: "Send a report ",
+    operationId: "sendReport",
     parameters: [
-      // expected params
       {
         name: "exercise_id",
         in: "path",
@@ -13,17 +11,16 @@ module.exports = {
           $ref: "#/components/schemas/Exercise/properties/id",
         },
         required: true,
-        description: "Id of exercise to be updated",
+        description: "A single exercise id",
       },
     ],
-    // expected request
     requestBody: {
       // expected request body
       content: {
         // content-type
         "application/json": {
           schema: {
-            $ref: "#/components/schemas/ExerciseInput",
+            $ref: "#/components/schemas/ReportInput",
           },
         },
       },
@@ -31,16 +28,15 @@ module.exports = {
     // expected responses
     responses: {
       // response code
-      200: {
-        description: "Exercise updated successfully",
+      201: {
+        description: "Report added successfully",
       },
-      // response code
-      404: {
-        description: "Exercise not found",
+      400: {
+        description: "No exercise is found for this user_id and exercise_id",
       },
       // response code
       500: {
-        description: "Server error",
+        description: "Error when adding exercise",
       },
     },
   },

@@ -1,9 +1,9 @@
 module.exports = {
   // operation's method
   get: {
-    tags: ["Admin-to-exercise operations"],
-    description: "Get a specific exercise",
-    operationId: "getOneExercise", // unique operation id
+    tags: ["User operations"],
+    description: "Get a specific exercise form User_exercise",
+    operationId: "getOneUserExerciseMy", // unique operation id
     parameters: [
       // expected params.
       {
@@ -23,7 +23,7 @@ module.exports = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/Exercise",
+              $ref: "#/components/schemas/UserExercise",
             },
           },
         },

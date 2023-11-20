@@ -55,7 +55,9 @@ exports.addUserExercise = async (req, res) => {
       .json({ message: "Invalid exercise id when enrolling exercise" });
   }
 
-  const exercise = Exercise.findOne({ where: { id: exercise_id } });
+  const exercise = await Exercise.findOne({ where: { id: exercise_id } });
+
+  console.log("This is exercise", exercise);
 
   if (!exercise) {
     return res
@@ -79,7 +81,7 @@ exports.addUserExercise = async (req, res) => {
   });
 
   res.status(StatusCodes.CREATED).json({
-    message: "User successfully enrolled this exercise",
+    message: "Exercise successfully enrolled",
   });
 };
 
@@ -103,7 +105,10 @@ exports.getUserExercises = async (req, res) => {
       .json({ message: "You don't have any exercise yet" });
   }
 
-  res.status(StatusCodes.OK).json({ user_exercise: user_exercise });
+  res.status(StatusCodes.OK).json({
+    message: "User-exercise obtained successfully",
+    user_exercise: user_exercise,
+  });
 };
 
 // #########################################################    //
@@ -148,8 +153,6 @@ exports.sendReport = async (req, res) => {
     const user_id = req.userId;
     const exercise_id = req.params.exercise_id;
 
-    console.log("This is exercise id", user_id);
-
     if (!exercise_id) {
       return res
         .status(StatusCodes.NOT_FOUND)
@@ -168,11 +171,12 @@ exports.sendReport = async (req, res) => {
 
     await UserExercise.update(
       {
-        point_Achieved,
+        point_Achieved: exercise.point_Achieved + point_Achieved,
         performance,
         duration,
-        weight_lifted,
-        calorie_conversion_result,
+        weight_lifted: exercise.weight_lifted + weight_lifted,
+        calorie_conversion_result:
+          exercise.calorie_conversion_result + calorie_conversion_result,
         completion_status,
       },
       {

@@ -1,20 +1,20 @@
 module.exports = {
   // method of operation
   get: {
-    tags: ["Admin-to-exercise operations"],
-    description: "Get all exercises",
-    operationId: "getAllExercises", // unique operation id.
+    tags: ["User operations"],
+    description: "Get all my exercises",
+    operationId: "getAllMyExercises", // unique operation id.
     parameters: [], // expected params.
     // expected responses
     responses: {
       // response code
       200: {
-        description: "All exercises are obtained", // response desc.
+        description: "All user_exercises are obtained", // response desc.
         content: {
           // content-type
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/Exercise",
+              $ref: "#/components/schemas/UserExercise",
             },
           },
         },

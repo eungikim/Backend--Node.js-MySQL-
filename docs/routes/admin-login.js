@@ -1,8 +1,8 @@
 module.exports = {
   post: {
-    tags: ["Admin-to-exercise operations"],
-    description: "Create exercise",
-    operationId: "addExercise",
+    tags: ["Admin operations"],
+    description: "Admin login",
+    operationId: "adminLogin",
     parameters: [],
     requestBody: {
       // expected request body
@@ -10,7 +10,7 @@ module.exports = {
         // content-type
         "application/json": {
           schema: {
-            $ref: "#/components/schemas/ExerciseInput",
+            $ref: "#/components/schemas/AdminLoginInput",
           },
         },
       },
@@ -18,12 +18,12 @@ module.exports = {
     // expected responses
     responses: {
       // response code
-      201: {
-        description: "Exercise created successfully",
+      200: {
+        description: "Admin successfully logged in",
       },
       // response code
-      500: {
-        description: "Error when adding exercise",
+      400: {
+        description: "Non-authorized admin",
       },
     },
   },

@@ -20,7 +20,7 @@ router.post("/exercise/:exercise_id", addUserExercise);
 
 router.get("/my-exercises", getUserExercises);
 
-router.get("/my-exercises/:exercise_id", getOneUserExercise);
+router.get("/my-exercise/:exercise_id", getOneUserExercise);
 
 router.post("/report/:exercise_id", validateSendingReport, sendReport);
 

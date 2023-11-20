@@ -1,38 +1,38 @@
 module.exports = {
   // operation's method
   get: {
-    tags: ["Admin-to-user operations"],
-    description: "Get a user by ID",
-    operationId: "getOneUser", // unique operation id
+    tags: ["User operations"],
+    description: "Get a specific exercise",
+    operationId: "getOneExercise", // unique operation id
     parameters: [
       // expected params.
       {
-        name: "user_id",
+        name: "exercise_id",
         in: "path",
         schema: {
-          $ref: "#/components/schemas/User/properties/id",
+          $ref: "#/components/schemas/Exercise/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single user id",
+        description: "A single exercise id",
       },
     ],
     // expected responses
     responses: {
       200: {
-        description: "User is obtained",
+        description: "Exercise is obtained",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/User",
+              $ref: "#/components/schemas/Exercise",
             },
           },
         },
       },
       404: {
-        description: "No user is found by this id",
+        description: "No exercise is found by this id",
         content: {
           "application/json": {
-            message: "No user is found by this id",
+            message: "No exercise is found by this id",
           },
         },
       },

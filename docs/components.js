@@ -20,8 +20,13 @@ module.exports = {
           password: {
             type: "string",
             description: "Admin password",
-            example:
-              "$2a$10$YwE3o.D1Lc4Z/CPnpzm87.g7Kvl40z2K11wTdM8mbfofarEgRnAcO",
+            example: "admin_password",
+          },
+
+          role: {
+            type: "string",
+            description: "Admin default role",
+            example: "admin",
           },
         },
       },
@@ -147,6 +152,103 @@ module.exports = {
         },
       },
 
+      // userExercise model(table)
+      UserExercise: {
+        // type: "object",
+        properties: {
+          User_ID: {
+            type: "integer",
+            description: "User id",
+            example: "1",
+          },
+          Exercise_ID: {
+            type: "integer",
+            description: "Exercise id",
+            example: "2",
+          },
+          point_Achieved: {
+            type: "number",
+            format: "double",
+            description: "Point achieved by this user for this exercise",
+            example: "30",
+          },
+          performance: {
+            type: "integer",
+            description: "Performance of this user for this exercise",
+            example: "10",
+          },
+          duration: {
+            type: "string",
+            description: "Duration of this user on this exercise",
+            example: "20Min",
+          },
+          weight_lifted: {
+            type: "number",
+            format: "double",
+            description: "Weight lifted by this user for this exercise",
+            example: "4",
+          },
+          calorie_conversion_result: {
+            type: "number",
+            format: "double",
+            description:
+              "Calorie conversion result of this user for this exercise",
+            example: "70",
+          },
+          completion_status: {
+            type: "string",
+            description: "Completion status of this user for this exercise",
+            example: "Completed",
+          },
+        },
+      },
+
+      AdminLoginInput: {
+        // type: "object",
+        properties: {
+          email: {
+            type: "string",
+            description: "Admin's email",
+            example: "admin@admin.com",
+          },
+
+          password: {
+            type: "string",
+            description: "Admin password",
+            example: "admin_password",
+          },
+        },
+      },
+
+      // Additional information input
+      UserCompleteLoginInput: {
+        // type: "object",
+        properties: {
+          nickName: {
+            type: "string",
+            description: "User's nick name",
+            example: "faye",
+          },
+          gender: {
+            type: "string",
+            description: "User's gender",
+            example: "Male",
+          },
+          height: {
+            type: "number",
+            format: "double",
+            description: "User's height",
+            example: 1.3,
+          },
+          weight: {
+            type: "number",
+            format: "double",
+            description: "User's weight",
+            example: 52,
+          },
+        },
+      },
+
       // Exercise input model
       ExerciseInput: {
         type: "object",
@@ -202,57 +304,41 @@ module.exports = {
         },
       },
 
-      // userExercise model(table)
-      UserExercise: {
-        // type: "object",
+      // Report  input model
+      ReportInput: {
+        type: "object",
         properties: {
-          id: {
-            type: "integer",
-            description: "user_Exercise identification number",
-            example: "1", // example of an id
-          },
-          User_ID: {
-            type: "integer",
-            description: "User id",
-            example: "1",
-          },
-          Exercise_ID: {
-            type: "integer",
-            description: "Exercise id",
-            example: "2",
-          },
           point_Achieved: {
             type: "number",
             format: "double",
-            description: "Point achieved by this user for this exercise",
-            example: "30",
+            description: "Point achieved in report ",
+            example: 30,
           },
           performance: {
-            type: "integer",
-            description: "Performance of this user for this exercise",
+            type: "string", // data type
+            description: "Performance in report", // desc
             example: "10",
           },
           duration: {
-            type: "string",
-            description: "Duration of this user on this exercise",
+            type: "string", // data type
+            description: "duration in report", // desc
             example: "20Min",
           },
           weight_lifted: {
             type: "number",
             format: "double",
-            description: "Weight lifted by this user for this exercise",
-            example: "4",
+            description: "Weight lifted in report", // desc
+            example: 30,
           },
           calorie_conversion_result: {
             type: "number",
             format: "double",
-            description:
-              "Calorie conversion result of this user for this exercise",
-            example: "70",
+            description: "calorie_conversion_result in report", // desc
+            example: 50,
           },
           completion_status: {
             type: "string",
-            description: "Completion status of this user for this exercise",
+            description: "Completion status of the exercise",
             example: "Completed",
           },
         },

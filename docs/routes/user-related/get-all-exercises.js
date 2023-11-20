@@ -1,7 +1,7 @@
 module.exports = {
   // method of operation
   get: {
-    tags: ["Admin-to-exercise operations"],
+    tags: ["User operations"],
     description: "Get all exercises",
     operationId: "getAllExercises", // unique operation id.
     parameters: [], // expected params.

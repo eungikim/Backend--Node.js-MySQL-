@@ -23,8 +23,8 @@ exports.loginWithGoogle = async (req, res, next) => {
 
     res
       .status(StatusCodes.CREATED)
-      // .json({ message: "User logged in successfully", user: thisUser })
-      .redirect("https://api-tester-wxhg.vercel.app/login-second");
+      .json({ message: "User logged in successfully", user: thisUser });
+    // .redirect("https://api-tester-wxhg.vercel.app/login-second");
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -86,7 +86,7 @@ exports.adminLogin = async (req, res, next) => {
 
     const token = createJWT({ adminId: admin.id, role: "admin" });
 
-    res.cookie("motyToken", token, { httpOnly: true });
+    res.cookie("motyToken", token, { httpOnly: false });
 
     return res
       .status(StatusCodes.OK)

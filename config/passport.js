@@ -27,7 +27,7 @@ passport.use(
             accountName: profile.displayName,
             imageURL: profile.photos[0].value,
             email: profile.emails[0].value,
-            loginType: profile.provider,
+            signType: profile.provider,
           });
         }
 

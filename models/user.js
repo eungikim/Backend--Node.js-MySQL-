@@ -20,8 +20,8 @@ const User = sequelize.define("user", {
   accountName: {
     type: Sequelize.STRING,
   },
-  loginType: {
-    type: Sequelize.STRING,
+  signType: {
+    type: Sequelize.ENUM(["google", "apple", "kakao"]),
   },
   imageURL: {
     type: Sequelize.STRING,

@@ -15,7 +15,7 @@ exports.loginWithGoogle = async (req, res, next) => {
 
     const token = createJWT({ userId: thisUser.id, role: "user" });
 
-    res.cookie("motyToken", token, { httpOnly: true });
+    res.cookie("motyToken", token, { httpOnly: false });
 
     res
       .status(StatusCodes.CREATED)

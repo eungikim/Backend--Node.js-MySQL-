@@ -10,7 +10,15 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const swaggerUI = require("swagger-ui-express");
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://bag6xc5pd2.us-east-1.awsapprunner.com",
+    ],
+    credentials: true,
+  })
+);
 
 const session = require("express-session");
 const passport = require("./config/passport");

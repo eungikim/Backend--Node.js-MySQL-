@@ -19,6 +19,8 @@ exports.loginWithGoogle = async (req, res, next) => {
 
     res.cookie("motyToken", token, { httpOnly: false, domain: "/" });
 
+    console.log("Pass in this road");
+
     res
       .status(StatusCodes.CREATED)
       // .json({ message: "User logged in successfully", user: thisUser })

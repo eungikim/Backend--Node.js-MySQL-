@@ -19,8 +19,8 @@ app.use(
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", [
-    "http://localhost:5173",
-    // "https://api-tester-wxhg.vercel.app",
+    // "http://localhost:5173",
+    "https://api-tester-wxhg.vercel.app",
   ]);
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");

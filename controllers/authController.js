@@ -17,7 +17,11 @@ exports.loginWithGoogle = async (req, res, next) => {
 
     res.setHeader("Access-Control-Expose-Headers", "Set-Cookie");
 
-    res.cookie("motyToken", token, { httpOnly: false, domain: "/" });
+    res.cookie("motyToken", token, {
+      httpOnly: false,
+      sameSite: "None",
+      secure: true,
+    });
 
     console.log("Pass in this road");
 
@@ -86,7 +90,11 @@ exports.adminLogin = async (req, res, next) => {
 
     const token = createJWT({ adminId: admin.id, role: "admin" });
 
-    res.cookie("motyToken", token, { httpOnly: false });
+    res.cookie("motyToken", token, {
+      httpOnly: false,
+      sameSite: "None",
+      secure: true,
+    });
 
     return res
       .status(StatusCodes.OK)

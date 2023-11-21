@@ -12,13 +12,20 @@ const swaggerUI = require("swagger-ui-express");
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://bag6xc5pd2.us-east-1.awsapprunner.com",
-    ],
+    origin: ["http://localhost:5173", "https://api-tester-wxhg.vercel.app"],
     credentials: true,
   })
 );
+
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://api-tester-wxhg.vercel.app"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  next();
+});
 
 const session = require("express-session");
 const passport = require("./config/passport");

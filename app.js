@@ -12,7 +12,10 @@ const swaggerUI = require("swagger-ui-express");
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://api-tester-wxhg.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://bag6xc5pd2.us-east-1.awsapprunner.com/",
+    ],
     credentials: true,
   })
 );
@@ -20,7 +23,7 @@ app.use(
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", [
     // "http://localhost:5173",
-    "https://api-tester-wxhg.vercel.app",
+    "https://bag6xc5pd2.us-east-1.awsapprunner.com/",
   ]);
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
@@ -70,17 +73,6 @@ app.get("/", (req, res, next) => {
   res.json({ message: "Hi, welcome" });
 });
 
-app.get("/test", (req, res) => {
-  res.send(
-    '<h1>Home Page</h1><a href="/api/v1/auth/google">Login with Google</a>'
-  );
-});
-
-app.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
-});
-
 //404 middleware
 app.use("*", (req, res, next) => {
   //'*' stands for all routes that do not match the all the above routes
@@ -91,6 +83,7 @@ app.use("*", (req, res, next) => {
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   const message = error.message || "Something went error(error msg not passed)";
+  console.log(error);
   res.status(statusCode).json({ message: message });
 });
 
@@ -102,9 +95,9 @@ sequelize
   })
   .then(async (admin) => {
     if (!admin) {
-      const hashedPassword = await bcrypt.hash("admin", 10);
+      const hashedPassword = await bcrypt.hash("admin_password", 10);
       return Admin.create({
-        email: "fayselcode@gmail.com",
+        email: "admin@admin.com",
         password: hashedPassword,
       });
     }

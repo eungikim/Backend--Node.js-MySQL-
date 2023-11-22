@@ -41,7 +41,7 @@ exports.validateCompleteLogin = withValidatorErrors([
 exports.validateExerciseAdding = withValidatorErrors([
   body("name").notEmpty().withMessage("name is required"),
 
-  body("duration").notEmpty().withMessage("duration is required"),
+  // body("duration").notEmpty().withMessage("duration is required"),
 
   body("pose_and_description")
     .notEmpty()

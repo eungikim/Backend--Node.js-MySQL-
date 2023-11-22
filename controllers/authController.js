@@ -7,30 +7,72 @@ const bcrypt = require("bcryptjs");
 const Admin = require("../models/admin");
 const { createJWT } = require("../utils/tokenUtils");
 
-exports.loginWithGoogle = async (req, res, next) => {
-  try {
-    const thisUser = await User.findOne({ where: { accountId: req.user.id } });
+exports.sign = async (req, res, next) => {
+  const email = req.body.email;
+  const loginType = req.body.loginType;
+  const socialToken = req.body.socialToken;
 
-    req.thisUser = thisUser;
+  if (!email) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "email is required" });
+  }
+  if (!loginType) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "loginType is required" });
+  }
+  if (!socialToken) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "socialToken is required" });
+  }
 
+  const thisUser = await User.findOne({ where: { email: email } });
+
+  if (thisUser && thisUser.gender) {
+    console.log("This is user", thisUser);
+    // If the user's gender is not NULL this means that this user is already a member
     const token = createJWT({ userId: thisUser.id, role: "user" });
-
+    await thisUser.update({ isMember: true });
     res.cookie("motyToken", token, {
       httpOnly: false,
       sameSite: "None",
       secure: true,
     });
 
-    console.log("Pass in this road");
+    return res.json({ message: "User successfully logged in", user: thisUser });
+  } else if (thisUser) {
+    const token = createJWT({ userId: thisUser.id, role: "user" });
+    await thisUser.update({ isMember: true });
+    res.cookie("motyToken", token, {
+      httpOnly: false,
+      sameSite: "None",
+      secure: true,
+    });
 
-    res
-      .status(StatusCodes.CREATED)
-      // .json({ message: "User logged in successfully", user: thisUser });
-      .redirect("https://api-tester-wxhg.vercel.app/login-second");
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Failed to create user" });
+    return res.json({
+      message: "User successfully registered",
+      user: thisUser,
+    });
+  } else {
+    const user = await User.create({
+      email: email,
+      loginType: loginType,
+      socialToken: socialToken,
+    });
+
+    const token = createJWT({ userId: user.id, role: "user" });
+    res.cookie("motyToken", token, {
+      httpOnly: false,
+      sameSite: "None",
+      secure: true,
+    });
+    await user.update({ isMember: false });
+    return res.json({
+      message: "User successfully registered",
+      user: user,
+    });
   }
 };
 
@@ -57,7 +99,7 @@ exports.completeLogin = async (req, res, next) => {
 
     res
       .status(StatusCodes.CREATED)
-      .json({ message: "User data successfully added" });
+      .json({ message: "User data successfully added", user: user });
   } catch (err) {
     req
       .status(StatusCodes.BAD_REQUEST)

@@ -38,33 +38,33 @@ exports.addExercise = async (req, res) => {
   const {
     name,
     imageURL,
-    videoURL,
+    internal_videoURL,
+    external_videoURL,
     detailed_information,
-    achievement_point,
-    duration,
+    // duration,
     method_of_performing,
     pose_and_description,
     precaution,
+    tags,
   } = req.body;
   try {
     const newExercise = await Exercise.create({
       name,
       imageURL,
-      videoURL,
+      internal_videoURL,
+      external_videoURL,
       detailed_information,
-      achievement_point,
-      duration,
+      // duration,
       method_of_performing,
       pose_and_description,
       precaution,
+      tags,
     });
 
-    res
-      .status(StatusCodes.CREATED)
-      .json({
-        message: "Exercise created successfully",
-        newExercise: newExercise,
-      });
+    res.status(StatusCodes.CREATED).json({
+      message: "Exercise created successfully",
+      newExercise: newExercise,
+    });
   } catch (err) {
     res
       .status(StatusCodes.BAD_REQUEST)

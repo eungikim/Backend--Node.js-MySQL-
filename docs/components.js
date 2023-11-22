@@ -40,20 +40,22 @@ module.exports = {
             description: "User identification number",
             example: 1, // example of an id
           },
-          accountId: {
-            type: "string",
-            description: "User's log in provider (google, apple) account id",
-            example: "106587056104379307591",
-          },
-          accountName: {
-            type: "string",
-            description: "User's google or apple account name",
-            example: "Faysel",
-          },
           loginType: {
             type: "string",
             description: "User's login type",
             example: "google",
+          },
+
+          socialToken: {
+            type: "string",
+            description: "User's social token",
+            example: "ACg8ocLUTXXr5TLqzC7MhpXGxaKmHOEa4zYx8jmdHEBk4zAZ=s96-c",
+          },
+          isMember: {
+            type: "boolean",
+            description:
+              "Is this user is a member (He fill all his additional information)",
+            example: "true / false",
           },
           imageURL: {
             type: "string",
@@ -112,9 +114,15 @@ module.exports = {
             example:
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
-          videoURL: {
+          internal_videoURL: {
             type: "string",
-            description: "Exercise video url",
+            description: "internal video url",
+            example:
+              "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          },
+          external_videoURL: {
+            type: "string",
+            description: "external video url",
             example:
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
@@ -123,22 +131,17 @@ module.exports = {
             description: "Exercise detailed information",
             example: "This exercise is for young people..",
           },
-          achievement_point: {
+          method_of_performing: {
             type: "number",
             format: "double",
             description: "Exercise achievement point",
             example: 100,
           },
-          duration: {
-            type: "string",
-            description: "Exercise duration",
-            example: "10Min",
-          },
-          method_of_performing: {
-            type: "string",
-            description: "Exercise method of performing",
-            example: "First make your hand...",
-          },
+          // duration: {
+          //   type: "string",
+          //   description: "Exercise duration",
+          //   example: "10Min",
+          // },
           pose_and_description: {
             type: "string",
             description: "Exercise pose and description",
@@ -146,6 +149,11 @@ module.exports = {
           },
           precaution: {
             type: "string",
+            description: "Exercise precaution",
+            example: "Make sure to avoid...",
+          },
+          tags: {
+            type: "array",
             description: "Exercise precaution",
             example: "Make sure to avoid...",
           },
@@ -216,6 +224,28 @@ module.exports = {
             type: "string",
             description: "Admin password",
             example: "admin_password",
+          },
+        },
+      },
+
+      userSignInput: {
+        // type: "object",
+        properties: {
+          email: {
+            type: "string",
+            description: "User's email",
+            example: "user@test.com",
+          },
+
+          loginType: {
+            type: "string",
+            description: "User's login type",
+            example: "google",
+          },
+          socialToken: {
+            type: "string",
+            description: "User's social token",
+            example: "dnoehgd8djkjmnbvfoE",
           },
         },
       },

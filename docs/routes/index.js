@@ -9,7 +9,9 @@ const deleteExercise = require("./delete-exercise");
 const getUserExercises = require("./get-userExercises");
 const getOneUserExercise = require("./get-userExercise");
 
+const sign = require("./user-related/register");
 const userCompleteLogin = require("./user-related/complete-register");
+
 const getAllExercisesU = require("./user-related/get-all-exercises");
 const getOneExerciseU = require("./user-related/get-one-exercise");
 const enrollExerciseU = require("./user-related/enroll-exercise");
@@ -52,6 +54,10 @@ module.exports = {
     },
     "/api/v1/admin/user/{user_id}/exercise/{exercise_id}/": {
       ...getOneUserExercise,
+    },
+
+    "/api/v1/auth/sign": {
+      ...sign,
     },
 
     "/api/v1/auth/complete-register": {

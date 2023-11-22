@@ -19,21 +19,9 @@ const Exercise = sequelize.define(
       type: Sequelize.STRING,
     },
 
-    videoURL: {
-      type: Sequelize.STRING,
-    },
-
     detailed_information: {
       type: Sequelize.STRING,
-    },
-
-    achievement_point: {
-      type: Sequelize.DOUBLE,
       defaultValue: 0.0,
-    },
-
-    duration: {
-      type: Sequelize.STRING,
     },
 
     method_of_performing: {
@@ -44,12 +32,32 @@ const Exercise = sequelize.define(
       type: Sequelize.STRING,
     },
 
+    internal_videoURL: {
+      type: Sequelize.STRING,
+    },
+    external_videoURL: {
+      type: Sequelize.STRING,
+    },
     precaution: {
       type: Sequelize.STRING,
     },
+    tags: {
+      type: Sequelize.TEXT,
+      get() {
+        const rawValue = this.getDataValue("tags");
+        try {
+          return JSON.parse(rawValue);
+        } catch (error) {
+          return rawValue;
+        }
+      },
+      set(value) {
+        this.setDataValue("tags", JSON.stringify(value));
+      },
+    },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 

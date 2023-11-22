@@ -44,7 +44,7 @@ exports.sign = async (req, res, next) => {
     return res.json({ message: "User successfully logged in", user: thisUser });
   } else if (thisUser) {
     const token = createJWT({ userId: thisUser.id, role: "user" });
-    await thisUser.update({ isMember: true });
+    await thisUser.update({ isMember: false });
     res.cookie("motyToken", token, {
       httpOnly: false,
       sameSite: "None",
@@ -95,13 +95,14 @@ exports.completeLogin = async (req, res, next) => {
     user.gender = gender;
     user.height = height;
     user.weight = weight;
+    user.isMember = true;
     user.save();
 
     res
       .status(StatusCodes.CREATED)
       .json({ message: "User data successfully added", user: user });
   } catch (err) {
-    req
+    res
       .status(StatusCodes.BAD_REQUEST)
       .json({ message: "Failed to add user data" });
   }
@@ -118,7 +119,7 @@ exports.adminLogin = async (req, res, next) => {
     if (!admin) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Non-authorized admin" });
+        .json({ message: "Incorrect email" });
     }
 
     const isMatch = await bcrypt.compare(password, admin.password);

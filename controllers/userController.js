@@ -4,6 +4,8 @@ const Exercise = require("../models/exercise");
 const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
 
+const UserMission = require("../models/userMission");
+
 // #####################################################  //
 
 // -> Retrieve a list of exercises the user can choose from
@@ -201,4 +203,47 @@ exports.sendReport = async (req, res) => {
       .status(StatusCodes.BAD_REQUEST)
       .json({ message: "Error when adding a report" });
   }
+};
+
+// Mission relating controllers
+exports.addUserMission = async (req, res) => {
+  const userId = req.userId;
+  const mission_id = req.params.mission_id;
+
+  const userExists = User.findOne({
+    where: { id: userId },
+  });
+
+  const missionExists = Mission.findOne({
+    where: { id: mission_id },
+  });
+
+  if (!userExists || !missionExists) {
+    return res.status(404).json({ error: "User or Mission not found" });
+  }
+
+  const enrollment = await UserMission.create({
+    UserID: userId,
+    Mission_ID: mission_id,
+  });
+
+  return res.status(StatusCodes.CREATED).json({
+    message: "User mission enrolled successfully",
+    enrollment: enrollment,
+  });
+};
+
+exports.getUserMissions = async (req, res) => {
+  const userId = req.userId;
+  const userMission = await User.findOne({
+    where: { userId },
+    include: {
+      model: Mission,
+      through: UserMission,
+    },
+  });
+  return res.status(StatusCodes.OK).json({
+    message: "User mission obtained successfully",
+    userMission: userMission,
+  });
 };

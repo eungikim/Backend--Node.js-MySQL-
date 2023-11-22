@@ -1,19 +1,19 @@
 module.exports = {
   // operation's method
   patch: {
-    tags: ["Admin-to-exercise operations"],
-    description: "Update exercise",
-    operationId: "updateExercise",
+    tags: ["Admin-to-mission operations"],
+    description: "Update mission",
+    operationId: "updateMission1",
     parameters: [
       // expected params
       {
-        name: "exercise_id",
+        name: "mission_id",
         in: "path",
         schema: {
-          $ref: "#/components/schemas/Exercise/properties/id",
+          $ref: "#/components/schemas/Mission/properties/id",
         },
         required: true,
-        description: "Id of exercise to be updated",
+        description: "Id of mission to be updated",
       },
     ],
     // expected request
@@ -23,7 +23,7 @@ module.exports = {
         // content-type
         "application/json": {
           schema: {
-            $ref: "#/components/schemas/ExerciseInput",
+            $ref: "#/components/schemas/MissionInput",
           },
         },
       },
@@ -32,11 +32,11 @@ module.exports = {
     responses: {
       // response code
       200: {
-        description: "Exercise updated successfully",
+        description: "Mission updated successfully",
       },
       // response code
       404: {
-        description: "Exercise not found",
+        description: "Mission not found",
       },
       // response code
       500: {

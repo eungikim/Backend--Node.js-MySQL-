@@ -24,10 +24,6 @@ const User = sequelize.define(
       type: Sequelize.BOOLEAN,
     },
 
-    accountName: {
-      type: Sequelize.STRING,
-    },
-
     imageURL: {
       type: Sequelize.STRING,
     },

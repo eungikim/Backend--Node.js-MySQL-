@@ -1,27 +1,27 @@
 module.exports = {
   // method of operation
   get: {
-    tags: ["User operations"],
-    description: "Get all exercises",
-    operationId: "getAllExercisesU", // unique operation id.
+    tags: ["Admin-to-mission operations"],
+    description: "Get all missions",
+    operationId: "getAllMissions", // unique operation id.
     parameters: [], // expected params.
     // expected responses
     responses: {
       // response code
       200: {
-        description: "All exercises are obtained", // response desc.
+        description: "All missions are obtained", // response desc.
         content: {
           // content-type
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/Exercise",
+              $ref: "#/components/schemas/Mission",
             },
           },
         },
       },
 
       400: {
-        description: "No exercise is found",
+        description: "No mission is found",
       },
     },
   },

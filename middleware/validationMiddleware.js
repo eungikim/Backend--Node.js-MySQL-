@@ -70,3 +70,13 @@ exports.validateSendingReport = withValidatorErrors([
     .notEmpty()
     .withMessage("completion_status is required"),
 ]);
+
+exports.validateMissionAdding = withValidatorErrors([
+  body("name").notEmpty().withMessage("name is Required"),
+  body("duration").notEmpty().withMessage("duration is required"),
+  body("detailed_information")
+    .notEmpty()
+    .withMessage("detailed_information is required"),
+  body("point").notEmpty().withMessage("point is required"),
+  body("detailed_guide").notEmpty().withMessage("detailed_guide is required"),
+]);

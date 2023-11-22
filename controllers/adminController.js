@@ -6,6 +6,8 @@ const Exercise = require("../models/exercise");
 const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
 
+const Mission = require("../models/mission");
+
 // Retrieve all exercises
 exports.getAllExercises = async (req, res) => {
   const exercises = await Exercise.findAll();
@@ -176,4 +178,79 @@ exports.getOneUserExercise = async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({ user_exercise: user_exercise });
+};
+
+// Mission relating controllers
+
+exports.getAllMission = async (req, res) => {
+  const missions = await Mission.findAll();
+  return res.status(StatusCodes.OK).json({
+    message: "All missions obtained successfully",
+    missions: missions,
+  });
+};
+
+exports.getOneMission = async (req, res) => {
+  const mission_id = req.params.mission_id;
+  const mission = await Mission.findOne({ where: { id: mission_id } });
+
+  if (!mission) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "No mission is found in such id" });
+  }
+
+  return res
+    .status(StatusCodes.OK)
+    .json({ message: "Mission obtained successfully", mission: mission });
+};
+
+exports.addMission = async (req, res) => {
+  const mission = await Mission.create(req.body);
+  return res
+    .status(StatusCodes.CREATED)
+    .json({ message: "Mission created successfully", mission: mission });
+};
+
+exports.updateMission = async (req, res) => {
+  const mission_id = req.params.mission_id;
+
+  const isExist = await Mission.findOne({ where: { id: mission_id } });
+
+  if (!isExist) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "No mission is found in such id" });
+  }
+
+  const mission = await Mission.update(req.body, {
+    where: { id: mission_id },
+  });
+
+  const newMission = await Mission.findAll();
+
+  return res
+    .status(StatusCodes.OK)
+    .json({ message: "Mission update successfully", newMission: newMission });
+};
+
+exports.deleteMission = async (req, res) => {
+  const mission_id = req.params.mission_id;
+  const isExist = await Mission.findOne({ where: { id: mission_id } });
+
+  if (!isExist) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "No mission is found in such id" });
+  }
+
+  try {
+    const deleted = await Mission.destroy({ where: { id: mission_id } });
+    const missions = await Mission.findAll();
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "Mission deleted successfully", missions: missions });
+  } catch (error) {
+    res.json("already Deleted");
+  }
 };

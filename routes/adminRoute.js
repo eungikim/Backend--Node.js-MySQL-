@@ -4,6 +4,7 @@ const express = require("express");
 
 const {
   validateExerciseAdding,
+  validateMissionAdding,
 } = require("../middleware/validationMiddleware");
 
 const {
@@ -16,6 +17,11 @@ const {
   getOneUser,
   getUserExercises,
   getOneUserExercise,
+  addMission,
+  getAllMission,
+  getOneMission,
+  updateMission,
+  deleteMission,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -41,5 +47,19 @@ router.get("/user/:user_id", getOneUser);
 router.get("/user/exercises/:user_id", getUserExercises);
 
 router.get("/user/:user_id/exercise/:exercise_id/", getOneUserExercise);
+
+// Routes relating to missions
+
+router.get("/missions", getAllMission);
+
+router.get("/mission/:mission_id", getOneMission);
+
+router.post("/mission", validateMissionAdding, addMission);
+
+router.patch("/mission/:mission_id", updateMission);
+
+router.delete("/mission/:mission_id", deleteMission);
+
+module.exports = router;
 
 module.exports = router;

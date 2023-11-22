@@ -9,6 +9,12 @@ const deleteExercise = require("./delete-exercise");
 const getUserExercises = require("./get-userExercises");
 const getOneUserExercise = require("./get-userExercise");
 
+const getAllMissions = require("./missions-admin/getAllMissions");
+const getOneMission = require("./missions-admin/getOneMission");
+const addMission = require("./missions-admin/addMission");
+const updateMission = require("./missions-admin/updateMission");
+const deleteMission = require("./missions-admin/deleteMission");
+
 const sign = require("./user-related/register");
 const userCompleteLogin = require("./user-related/complete-register");
 
@@ -43,6 +49,27 @@ module.exports = {
         ...deleteExercise.delete,
       },
     },
+
+    "/api/v1/admin/missions": {
+      ...getAllMissions,
+    },
+
+    "/api/v1/admin/mission": {
+      ...addMission,
+    },
+
+    "/api/v1/admin/mission/{mission_id}": {
+      get: {
+        ...getOneMission.get,
+      },
+      patch: {
+        ...updateMission.patch,
+      },
+      delete: {
+        ...deleteMission.delete,
+      },
+    },
+
     "/api/v1/admin/users": {
       ...getAllUser,
     },

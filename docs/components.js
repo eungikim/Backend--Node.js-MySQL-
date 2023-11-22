@@ -132,10 +132,9 @@ module.exports = {
             example: "This exercise is for young people..",
           },
           method_of_performing: {
-            type: "number",
-            format: "double",
-            description: "Exercise achievement point",
-            example: 100,
+            type: "string",
+            description: "Exercise method_of_performing",
+            example: "First make your hand.......",
           },
           // duration: {
           //   type: "string",
@@ -154,9 +153,58 @@ module.exports = {
           },
           tags: {
             type: "array",
-            description: "Exercise precaution",
-            example: "Make sure to avoid...",
+            description: "Exercise tags",
+            example: ["Leg", "Arm", "Hand"],
           },
+        },
+      },
+
+      // Mission model(table)
+      Mission: {
+        // type: "object",
+        properties: {
+          id: {
+            type: "integer",
+            description: "Mission identification number",
+            example: 1, // example of an id
+          },
+          name: {
+            type: "string",
+            description: "Mission name",
+            example: "Complete 40 push-up",
+          },
+          imageURL: {
+            type: "string",
+            description: "Mission's image url",
+            example:
+              "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          },
+          duration: {
+            type: "string",
+            description: "mission's duration",
+            example: "30Min",
+          },
+          detailed_information: {
+            type: "string",
+            description: "mission's detailed_information",
+            example: "This mission is...",
+          },
+          detailed_guide: {
+            type: "string",
+            description: "Mission's detailed_guide",
+            example: "Before starting this mission...",
+          },
+          point: {
+            type: "number",
+            format: "double",
+            description: "Point assigned to this mission",
+            example: 80,
+          },
+          // duration: {
+          //   type: "string",
+          //   description: "Mission duration",
+          //   example: "10Min",
+          // },
         },
       },
 
@@ -294,7 +342,13 @@ module.exports = {
             example:
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
-          videoURL: {
+          internal_videoURL: {
+            type: "string", // data type
+            description: "The video URL of the exercise", // desc
+            example:
+              "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          },
+          external_videoURL: {
             type: "string", // data type
             description: "The video URL of the exercise", // desc
             example:
@@ -305,31 +359,30 @@ module.exports = {
             description: "The detail information of the exercise",
             example: "This exercise is for .....",
           },
-          achievement_point: {
-            type: "number",
-            format: "double",
-            description: "The achievement point of the exercise",
-            example: 160,
-          },
-          duration: {
-            type: "string",
-            description: "The duration of the exercise",
-            example: "20Min",
-          },
           method_of_performing: {
             type: "string",
-            description: "The method of performing of the exercise",
-            example: "First make......",
+            description: "Exercise method_of_performing",
+            example: "First make your hand.......",
           },
+          // duration: {
+          //   type: "string",
+          //   description: "Exercise duration",
+          //   example: "10Min",
+          // },
           pose_and_description: {
             type: "string",
-            description: "The pose_and_description of the exercise",
-            example: "Make sure to make your hand......",
+            description: "Exercise pose and description",
+            example: "Make sure to wear...",
           },
           precaution: {
             type: "string",
-            description: "The precaution of the exercise",
-            example: "Make sure to wear......",
+            description: "Exercise precaution",
+            example: "Make sure to avoid...",
+          },
+          tags: {
+            type: "array",
+            description: "Exercise tags",
+            example: ["Leg", "Arm", "Hand"],
           },
         },
       },
@@ -371,6 +424,49 @@ module.exports = {
             description: "Completion status of the exercise",
             example: "Completed",
           },
+        },
+      },
+      // Mission  input model
+      MissionInput: {
+        // type: "object",
+        properties: {
+          name: {
+            type: "string",
+            description: "Mission name",
+            example: "Complete 40 push-up",
+          },
+          imageURL: {
+            type: "string",
+            description: "Mission's image url",
+            example:
+              "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          },
+          duration: {
+            type: "string",
+            description: "mission's duration",
+            example: "30Min",
+          },
+          detailed_information: {
+            type: "string",
+            description: "mission's detailed_information",
+            example: "This mission is...",
+          },
+          detailed_guide: {
+            type: "string",
+            description: "Mission's detailed_guide",
+            example: "Before starting this mission...",
+          },
+          point: {
+            type: "number",
+            format: "double",
+            description: "Point assigned to this mission",
+            example: 80,
+          },
+          // duration: {
+          //   type: "string",
+          //   description: "Mission duration",
+          //   example: "10Min",
+          // },
         },
       },
     },

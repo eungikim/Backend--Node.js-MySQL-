@@ -15,6 +15,13 @@ exports.authenticateUser = async (req, res, next) => {
   try {
     const user = verifyJWT(token);
     const userId = user.userId;
+
+    if (!userId) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Please sign up first to add more information" });
+    }
+
     const role = user.role;
 
     console.log("this is the user id", userId);

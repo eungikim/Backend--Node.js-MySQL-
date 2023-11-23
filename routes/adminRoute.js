@@ -32,7 +32,7 @@ router.get("/exercises", getAllExercises);
 
 router.get("/exercise/:exercise_id", getOneExercise);
 
-router.post("/exercise", addExercise);
+router.post("/exercise", validateExerciseAdding, addExercise);
 
 router.delete("/exercise/:exercise_id", deleteExercise);
 

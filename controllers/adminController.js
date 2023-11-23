@@ -37,31 +37,8 @@ exports.getOneExercise = async (req, res) => {
 
 // Add exercise to the exercises list
 exports.addExercise = async (req, res) => {
-  const {
-    name,
-    imageURL,
-    internal_videoURL,
-    external_videoURL,
-    detailed_information,
-    // duration,
-    method_of_performing,
-    pose_and_description,
-    precaution,
-    tags,
-  } = req.body;
   try {
-    const newExercise = await Exercise.create({
-      name,
-      imageURL,
-      internal_videoURL,
-      external_videoURL,
-      detailed_information,
-      // duration,
-      method_of_performing,
-      pose_and_description,
-      precaution,
-      tags,
-    });
+    const newExercise = await Exercise.create(req.body);
 
     res.status(StatusCodes.CREATED).json({
       message: "Exercise created successfully",

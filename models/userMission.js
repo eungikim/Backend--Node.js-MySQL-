@@ -13,17 +13,13 @@ const UserMission = sequelize.define("UserMission", {
     type: Sequelize.STRING,
   },
 
-  thumbnail: {
-    type: Sequelize.STRING,
-  },
-
-  achieved_point: {
+  achievedPoint: {
     type: Sequelize.DOUBLE,
     defaultValue: 0.0,
   },
 
-  completion_status: {
-    type: Sequelize.STRING,
+  completionStatus: {
+    type: Sequelize.ENUM("inProgress", "completed"),
   },
 
   startDate: {
@@ -32,11 +28,6 @@ const UserMission = sequelize.define("UserMission", {
 
   endDate: {
     type: Sequelize.DATE,
-  },
-
-  consecutiveDaysAttended: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0,
   },
 });
 

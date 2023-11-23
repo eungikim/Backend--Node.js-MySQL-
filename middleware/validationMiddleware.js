@@ -54,21 +54,17 @@ exports.validateExerciseAdding = withValidatorErrors([
 ]);
 
 exports.validateSendingReport = withValidatorErrors([
-  body("point_Achieved").notEmpty().withMessage("point_Achieved Is required"),
+  // body("point_Achieved").notEmpty().withMessage("point_Achieved Is required"),
 
   body("performance").notEmpty().withMessage("performance is required"),
 
-  body("duration").notEmpty().withMessage("duration  is required"),
+  // body("duration").notEmpty().withMessage("duration  is required"),
 
-  body("weight_lifted").notEmpty().withMessage("weight_lifted is required"),
+  body("totalWeight").notEmpty().withMessage("totalWeight is required"),
 
-  body("calorie_conversion_result")
-    .notEmpty()
-    .withMessage("calorie_conversion_result  is required"),
+  body("totalCalories").notEmpty().withMessage("totalCalories  is required"),
 
-  body("completion_status")
-    .notEmpty()
-    .withMessage("completion_status is required"),
+  body("exerciseTime").notEmpty().withMessage("exerciseTime is required"),
 ]);
 
 exports.validateMissionAdding = withValidatorErrors([

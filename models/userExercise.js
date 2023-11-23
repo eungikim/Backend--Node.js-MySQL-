@@ -4,32 +4,45 @@ const sequelize = require("../utils/database");
 const User = require("../models/user");
 const Exercise = require("../models/exercise");
 
-const UserExercise = sequelize.define("userExercise", {
-  point_Achieved: {
-    type: Sequelize.DOUBLE,
-    defaultValue: 0.0,
-  },
+const UserExercise = sequelize.define(
+  "userExercise",
+  {
+    performance: {
+      type: Sequelize.ENUM("STANDARD", "ECCENTRIC", "CONCENTRIC"),
+    },
 
-  performance: {
-    type: Sequelize.STRING,
-  },
+    totalWeight: {
+      type: Sequelize.DOUBLE,
+      default: 0.0,
+    },
 
-  duration: {
-    type: Sequelize.STRING,
-  },
+    totalCalories: {
+      type: Sequelize.DOUBLE,
+      default: 0.0,
+    },
 
-  weight_lifted: {
-    type: Sequelize.DOUBLE,
-  },
+    exerciseTime: {
+      type: Sequelize.DOUBLE,
+      default: 0.0,
+    },
 
-  calorie_conversion_result: {
-    type: Sequelize.DOUBLE,
-  },
+    isSupported: {
+      type: Sequelize.DOUBLE,
+      default: false,
+    },
 
-  completion_status: {
-    type: Sequelize.STRING,
+    startDate: {
+      type: Sequelize.DATE,
+    },
+
+    dueDate: {
+      type: Sequelize.DATE,
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 User.belongsToMany(Exercise, {
   through: UserExercise,

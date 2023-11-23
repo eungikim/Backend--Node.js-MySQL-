@@ -11,15 +11,11 @@ const Mission = sequelize.define(
       autoIncrement: true,
     },
 
-    name: {
+    title: {
       type: Sequelize.STRING,
     },
 
-    imageURL: {
-      type: Sequelize.STRING,
-    },
-
-    duration: {
+    subTitle: {
       type: Sequelize.STRING,
     },
 
@@ -27,13 +23,49 @@ const Mission = sequelize.define(
       type: Sequelize.STRING,
     },
 
-    detailed_guide: {
+    imageURL: {
       type: Sequelize.STRING,
     },
 
     point: {
+      //The reward point if this mission completed
       type: Sequelize.DOUBLE,
     },
+
+    missionTheme: {
+      type: Sequelize.ENUM(
+        "Attendance",
+        "TotalExercise",
+        "TotalWeight",
+        "TotalCalories"
+      ),
+    },
+
+    missionValue: {
+      // The targeted mission value
+      type: Sequelize.INTEGER,
+    },
+
+    startDate: {
+      type: Sequelize.DATE,
+    },
+
+    dueDate: {
+      type: Sequelize.DATE,
+    },
+
+    // attendanceCheck: {
+    //   type: Sequelize.INTEGER,
+    // },
+    // exerciseTime: {
+    //   type: Sequelize.INTEGER,
+    // },
+    // totalWeight: {
+    //   type: Sequelize.DOUBLE,
+    // },
+    // totalCalories: {
+    //   type: Sequelize.DOUBLE,
+    // },
   },
   {
     timestamps: false,

@@ -19,9 +19,15 @@ const Exercise = sequelize.define(
       type: Sequelize.STRING,
     },
 
-    detailed_information: {
-      type: Sequelize.STRING,
-      defaultValue: 0.0,
+    exercise_part: {
+      type: Sequelize.ENUM(
+        "shoulders",
+        "arms",
+        "stomach",
+        "back",
+        "legs",
+        "chest"
+      ),
     },
 
     method_of_performing: {
@@ -54,6 +60,11 @@ const Exercise = sequelize.define(
       set(value) {
         this.setDataValue("tags", JSON.stringify(value));
       },
+    },
+
+    usersCount: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
     },
   },
   {

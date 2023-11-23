@@ -126,10 +126,11 @@ module.exports = {
             example:
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
-          detailed_information: {
+          exercise_part: {
             type: "string",
-            description: "Exercise detailed information",
-            example: "This exercise is for young people..",
+            enum: ["shoulders", "arms", "stomach", "back", "legs", "chest"],
+            description: "exercise part of this exercise",
+            example: "shoulders",
           },
           method_of_performing: {
             type: "string",
@@ -151,6 +152,11 @@ module.exports = {
             description: "Exercise precaution",
             example: "Make sure to avoid...",
           },
+          usersCount: {
+            type: "integer",
+            description: "number of users who performed the exercise",
+            example: 10,
+          },
           tags: {
             type: "array",
             description: "Exercise tags",
@@ -168,10 +174,20 @@ module.exports = {
             description: "Mission identification number",
             example: 1, // example of an id
           },
-          name: {
+          title: {
             type: "string",
-            description: "Mission name",
-            example: "Complete 40 push-up",
+            description: "Mission title",
+            example: "Achieve 50 total calories",
+          },
+          subTitle: {
+            type: "string",
+            description: "Mission sub title",
+            example: "This mission is....",
+          },
+          detailed_information: {
+            type: "string",
+            description: "mission's detailed_information",
+            example: "This mission is...",
           },
           imageURL: {
             type: "string",
@@ -179,27 +195,70 @@ module.exports = {
             example:
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
-          duration: {
-            type: "string",
-            description: "mission's duration",
-            example: "30Min",
-          },
-          detailed_information: {
-            type: "string",
-            description: "mission's detailed_information",
-            example: "This mission is...",
-          },
-          detailed_guide: {
-            type: "string",
-            description: "Mission's detailed_guide",
-            example: "Before starting this mission...",
-          },
+
           point: {
             type: "number",
             format: "double",
-            description: "Point assigned to this mission",
+            description: "The reward point when this mission completed",
             example: 80,
           },
+
+          missionTheme: {
+            type: "string",
+            enum: [
+              "Attendance",
+              "TotalExercise",
+              "TotalWeight",
+              "TotalCalories",
+            ],
+            description: "Theme (type) of this mission",
+            example: "TotalCalories",
+          },
+
+          missionValue: {
+            type: "integer",
+            description: "The targeted mission value",
+            example: 34,
+          },
+
+          startDate: {
+            type: "string",
+            format: "date",
+            description: "The starting date of the mission",
+            example: "03-10-2023",
+          },
+
+          dueDate: {
+            type: "string",
+            format: "date",
+            description: "The end date of the mission ",
+            example: "13-10-2023",
+          },
+
+          // attendanceCheck: {
+          //   type: "integer",
+          //   description: "Attendance check is a mission to check attendance",
+          //   example: 5,
+          // },
+          // exerciseTime: {
+          //   type: "integer",
+          //   description: "exercise time is a mission to meet the exercise time",
+          //   example: 5,
+          // },
+          // totalWeight: {
+          //   type: "number",
+          //   format: "double",
+          //   description: "a mission to achieve the target amount of weight",
+          //   example: 58,
+          // },
+          // totalCalories: {
+          //   type: "number",
+          //   format: "double",
+          //   description:
+          //     "a mission to achieve the target amount of calorie consumption.",
+          //   example: 56,
+          // },
+
           // duration: {
           //   type: "string",
           //   description: "Mission duration",
@@ -222,40 +281,111 @@ module.exports = {
             description: "Exercise id",
             example: "2",
           },
-          point_Achieved: {
-            type: "number",
-            format: "double",
-            description: "Point achieved by this user for this exercise",
-            example: "30",
-          },
+          // point_Achieved: {
+          //   type: "number",
+          //   format: "double",
+          //   description: "Point achieved by this user for this exercise",
+          //   example: "30",
+          // },
           performance: {
-            type: "integer",
+            type: "sting",
+            enum: ["STANDARD", "ECCENTRIC", "CONCENTRIC"],
             description: "Performance of this user for this exercise",
             example: "10",
           },
-          duration: {
-            type: "string",
-            description: "Duration of this user on this exercise",
-            example: "20Min",
-          },
-          weight_lifted: {
-            type: "number",
-            format: "double",
-            description: "Weight lifted by this user for this exercise",
-            example: "4",
-          },
-          calorie_conversion_result: {
+
+          totalWeight: {
             type: "number",
             format: "double",
             description:
-              "Calorie conversion result of this user for this exercise",
-            example: "70",
+              "Total weight achieved by this user through this exercise",
+            example: 58,
           },
-          completion_status: {
+
+          totalCalories: {
+            type: "number",
+            format: "double",
+            description: "Total calories of this user for this exercise",
+            example: 70,
+          },
+
+          exerciseTime: {
+            type: "number",
+            format: "double",
+            description: "Total time spent in this exercise ",
+            example: 20,
+          },
+
+          isSupported: {
+            type: "boolean",
+            description: "is supported",
+            example: false,
+          },
+
+          startDate: {
             type: "string",
-            description: "Completion status of this user for this exercise",
-            example: "Completed",
+            format: "date",
+            description: "The starting date of the mission",
+            example: "03-10-2023",
           },
+
+          dueDate: {
+            type: "string",
+            format: "date",
+            description: "The end date of the mission ",
+            example: "13-10-2023",
+          },
+
+          // completion_status: {
+          //   type: "string",
+          //   description: "Completion status of this user for this exercise",
+          //   example: "Completed",
+          // },
+        },
+      },
+
+      UserMission: {
+        User_ID: {
+          type: "integer",
+          description: "User id",
+          example: "1",
+        },
+        Mission_ID: {
+          type: "integer",
+          description: "Mission id",
+          example: "2",
+        },
+
+        title: {
+          type: "string",
+          description: "Mission title",
+          example: "Achieve 50 calories",
+        },
+
+        subTitle: {
+          type: "string",
+          description: "Mission sub title",
+          example: "This mission help.....",
+        },
+
+        completionStatus: {
+          type: "string",
+          enum: ["inProgress", "completed"],
+          example: "completed",
+        },
+
+        startDate: {
+          type: "string",
+          format: "date",
+          description: "The starting date of the mission",
+          example: "03-10-2023",
+        },
+
+        dueDate: {
+          type: "string",
+          format: "date",
+          description: "The end date of the mission ",
+          example: "13-10-2023",
         },
       },
 
@@ -342,6 +472,26 @@ module.exports = {
             example:
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
+
+          exercise_part: {
+            type: "string",
+            enum: ["shoulders", "arms", "stomach", "back", "legs", "chest"],
+            description: "exercise part of this exercise",
+            example: "shoulders",
+          },
+
+          method_of_performing: {
+            type: "string",
+            description: "Exercise method_of_performing",
+            example: "First make your hand.......",
+          },
+
+          pose_and_description: {
+            type: "string",
+            description: "Exercise pose and description",
+            example: "Make sure to wear...",
+          },
+
           internal_videoURL: {
             type: "string", // data type
             description: "The video URL of the exercise", // desc
@@ -354,26 +504,13 @@ module.exports = {
             example:
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
-          detailed_information: {
-            type: "string",
-            description: "The detail information of the exercise",
-            example: "This exercise is for .....",
-          },
-          method_of_performing: {
-            type: "string",
-            description: "Exercise method_of_performing",
-            example: "First make your hand.......",
-          },
+
           // duration: {
           //   type: "string",
           //   description: "Exercise duration",
           //   example: "10Min",
           // },
-          pose_and_description: {
-            type: "string",
-            description: "Exercise pose and description",
-            example: "Make sure to wear...",
-          },
+
           precaution: {
             type: "string",
             description: "Exercise precaution",
@@ -391,38 +528,46 @@ module.exports = {
       ReportInput: {
         type: "object",
         properties: {
-          point_Achieved: {
-            type: "number",
-            format: "double",
-            description: "Point achieved in report ",
-            example: 30,
-          },
+          // point_Achieved: {
+          //   type: "number",
+          //   format: "double",
+          //   description: "Point achieved in report ",
+          //   example: 30,
+          // },
+
           performance: {
-            type: "string", // data type
-            description: "Performance in report", // desc
+            type: "sting",
+            enum: ["STANDARD", "ECCENTRIC", "CONCENTRIC"],
+            description: "Performance of this user for this exercise",
             example: "10",
           },
-          duration: {
-            type: "string", // data type
-            description: "duration in report", // desc
-            example: "20Min",
-          },
-          weight_lifted: {
+
+          totalWeight: {
             type: "number",
             format: "double",
-            description: "Weight lifted in report", // desc
-            example: 30,
+            description:
+              "Total weight achieved by this user through this exercise",
+            example: 58,
           },
-          calorie_conversion_result: {
+
+          totalCalories: {
             type: "number",
             format: "double",
-            description: "calorie_conversion_result in report", // desc
-            example: 50,
+            description: "Total calories of this user for this exercise",
+            example: 70,
           },
-          completion_status: {
-            type: "string",
-            description: "Completion status of the exercise",
-            example: "Completed",
+
+          exerciseTime: {
+            type: "number",
+            format: "double",
+            description: "Total time spent in this exercise ",
+            example: 20,
+          },
+
+          isSupported: {
+            type: "boolean",
+            description: "is supported",
+            example: false,
           },
         },
       },
@@ -434,6 +579,11 @@ module.exports = {
             type: "string",
             description: "Mission name",
             example: "Complete 40 push-up",
+          },
+          subTitle: {
+            type: "string",
+            description: "Mission sub title",
+            example: "This mission is....",
           },
           imageURL: {
             type: "string",
@@ -462,11 +612,29 @@ module.exports = {
             description: "Point assigned to this mission",
             example: 80,
           },
-          // duration: {
-          //   type: "string",
-          //   description: "Mission duration",
-          //   example: "10Min",
-          // },
+          attendanceCheck: {
+            type: "integer",
+            description: "Attendance check is a mission to check attendance",
+            example: 5,
+          },
+          exerciseTime: {
+            type: "integer",
+            description: "exercise time is a mission to meet the exercise time",
+            example: 5,
+          },
+          totalWeight: {
+            type: "number",
+            format: "double",
+            description: "a mission to achieve the target amount of weight",
+            example: 58,
+          },
+          totalCalories: {
+            type: "number",
+            format: "double",
+            description:
+              "a mission to achieve the target amount of calorie consumption.",
+            example: 56,
+          },
         },
       },
     },

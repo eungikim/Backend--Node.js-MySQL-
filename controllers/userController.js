@@ -59,8 +59,6 @@ exports.addUserExercise = async (req, res) => {
 
   const exercise = await Exercise.findOne({ where: { id: exercise_id } });
 
-  console.log("This is exercise", exercise);
-
   if (!exercise) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -81,6 +79,14 @@ exports.addUserExercise = async (req, res) => {
     User_ID: user_id,
     Exercise_ID: exercise_id,
   });
+
+  const isExist = await Exercise.findOne({ where: { id: exercise_id } });
+  const updateCOunt = await Exercise.update(
+    {
+      usersCount: isExist.usersCount + 1,
+    },
+    { where: { id: exercise_id } }
+  );
 
   res.status(StatusCodes.CREATED).json({
     message: "Exercise successfully enrolled",

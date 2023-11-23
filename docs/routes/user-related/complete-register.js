@@ -1,7 +1,8 @@
 module.exports = {
   post: {
     tags: ["User operations - sign in/ sign up"],
-    description: "Complete registration (add additional info)",
+    description:
+      "Complete registration (add additional info). Make sure to pass a header as 'authorization: Bearer {token}' ",
     operationId: "",
     parameters: [],
     requestBody: {

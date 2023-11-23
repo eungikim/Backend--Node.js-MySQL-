@@ -9,7 +9,7 @@ exports.authenticateUser = async (req, res, next) => {
   if (!bearerToken) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       message:
-        "No token is passed. Please Pass the token as 'Authorization': 'Bearer {The actual token}'' ",
+        "No token is passed. Please Pass the token as 'authorization': 'Bearer {token}'' ",
     });
   }
 

@@ -34,22 +34,17 @@ exports.sign = async (req, res, next) => {
     console.log("This is user", thisUser);
     // If the user's gender is not NULL this means that this user is already a member
     const token = createJWT({ userId: thisUser.id, role: "user" });
-    await thisUser.update({ isMember: true });
-    res.cookie("motyToken", token, {
-      httpOnly: false,
-      sameSite: "None",
-      secure: true,
-    });
+    await thisUser.update({ isMember: true, jwtToken: token });
+    // res.cookie("motyToken", token, {
+    //   httpOnly: false,
+    //   sameSite: "None",
+    //   secure: true,
+    // });
 
     return res.json({ message: "User successfully logged in", user: thisUser });
   } else if (thisUser) {
     const token = createJWT({ userId: thisUser.id, role: "user" });
-    await thisUser.update({ isMember: false });
-    res.cookie("motyToken", token, {
-      httpOnly: false,
-      sameSite: "None",
-      secure: true,
-    });
+    await thisUser.update({ isMember: false, jwtToken: token });
 
     return res.json({
       message: "User successfully registered",
@@ -63,12 +58,9 @@ exports.sign = async (req, res, next) => {
     });
 
     const token = createJWT({ userId: user.id, role: "user" });
-    res.cookie("motyToken", token, {
-      httpOnly: false,
-      sameSite: "None",
-      secure: true,
-    });
-    await user.update({ isMember: false });
+
+    await user.update({ isMember: false, jwtToken: token });
+
     return res.json({
       message: "User successfully registered",
       user: user,
@@ -77,8 +69,6 @@ exports.sign = async (req, res, next) => {
 };
 
 exports.completeLogin = async (req, res, next) => {
-  const { nickName, gender, height, weight } = req.body;
-
   console.log("This is the user when adding data", req.userId);
 
   try {
@@ -91,16 +81,15 @@ exports.completeLogin = async (req, res, next) => {
         .json({ message: "User not found" });
     }
 
-    user.nickName = nickName;
-    user.gender = gender;
-    user.height = height;
-    user.weight = weight;
-    user.isMember = true;
-    user.save();
+    const userUpdate = await user.update(req.body);
+    await user.update({ isMember: true });
 
-    res
-      .status(StatusCodes.CREATED)
-      .json({ message: "User data successfully added", user: user });
+    const completeUser = await User.findOne({ where: { id: userId } });
+
+    res.status(StatusCodes.CREATED).json({
+      message: "User data successfully added",
+      completeUser: completeUser,
+    });
   } catch (err) {
     res
       .status(StatusCodes.BAD_REQUEST)

@@ -4,13 +4,20 @@ const User = require("../models/user");
 const { verifyJWT } = require("../utils/tokenUtils");
 
 exports.authenticateUser = async (req, res, next) => {
-  const token = req.cookies.motyToken;
+  const bearerToken = req.headers.authorization;
 
-  if (!token) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "Authentication invalid, no token" });
+  if (!bearerToken) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      message:
+        "No token is passed. Please Pass the token as 'Authorization': 'Bearer {The actual token}'' ",
+    });
   }
+
+  const token = bearerToken.substring(7);
+
+  // console.log("This is the token when authenticate", token);
+
+  console.log(verifyJWT(token));
 
   try {
     const user = verifyJWT(token);
@@ -23,8 +30,6 @@ exports.authenticateUser = async (req, res, next) => {
     }
 
     const role = user.role;
-
-    console.log("this is the user id", userId);
 
     req.userId = userId;
     next();

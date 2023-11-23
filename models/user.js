@@ -20,6 +20,10 @@ const User = sequelize.define(
     socialToken: {
       type: Sequelize.STRING,
     },
+
+    jwtToken: {
+      type: Sequelize.STRING,
+    },
     isMember: {
       type: Sequelize.BOOLEAN,
     },

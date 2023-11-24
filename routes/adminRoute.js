@@ -22,6 +22,7 @@ const {
   getOneMission,
   updateMission,
   deleteMission,
+  getAllParticipantUsers,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -59,6 +60,8 @@ router.post("/mission", validateMissionAdding, addMission);
 router.patch("/mission/:mission_id", updateMission);
 
 router.delete("/mission/:mission_id", deleteMission);
+
+router.get("/mission/:mission_id/users", getAllParticipantUsers);
 
 module.exports = router;
 

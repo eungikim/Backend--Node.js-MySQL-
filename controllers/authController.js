@@ -50,6 +50,10 @@ exports.sign = async (req, res, next) => {
     });
 
     if (userAttendanceMission) {
+      const AttendanceMission = await Mission.findOne({
+        where: { missionTheme: "Attendance" },
+      });
+
       const lastLoginDate = thisUser.lastLoginDate;
 
       const currentDateNow = new Date();
@@ -85,6 +89,10 @@ exports.sign = async (req, res, next) => {
           userAttendanceMission.achievedPoint >=
           userAttendanceMission.targetValue
         ) {
+          if (userAttendanceMission.completionStatus != "completed") {
+            AttendanceMission.usersCount = AttendanceMission.usersCount + 1;
+            await AttendanceMission.save();
+          }
           userAttendanceMission.completionStatus = "completed";
           userAttendanceMission.endDate = new Date();
           await userAttendanceMission.save();

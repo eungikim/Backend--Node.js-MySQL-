@@ -441,11 +441,11 @@ exports.getOneUseMission = async (req, res) => {
     },
   });
 
-  if (!user_exercise) {
+  if (!user_mission) {
     return res
       .status(StatusCodes.NOT_FOUND)
       .json({ message: "You don't have any exercise yet" });
   }
 
-  res.status(StatusCodes.OK).json({ user_exercise: user_exercise });
+  res.status(StatusCodes.OK).json({ user_exercise: user_mission });
 };

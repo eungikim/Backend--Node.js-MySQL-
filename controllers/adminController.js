@@ -7,6 +7,7 @@ const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
 
 const Mission = require("../models/mission");
+const UserMission = require("../models/userMission");
 
 // Retrieve all exercises
 exports.getAllExercises = async (req, res) => {
@@ -230,4 +231,61 @@ exports.deleteMission = async (req, res) => {
   } catch (error) {
     res.json("already Deleted");
   }
+};
+
+exports.getAllParticipantUsers = async (req, res) => {
+  const missionId = req.params.mission_id;
+
+  console.log(missionId);
+
+  const mission = await Mission.findOne({ id: missionId });
+
+  if (!mission) {
+    return res.status(404).json({ error: "Mission not found" });
+  }
+
+  const users = await User.findAll({
+    attributes: [
+      "nickName",
+      "email",
+      "totalPoint",
+      "gender",
+      "height",
+      "weight",
+    ],
+    include: [
+      {
+        model: Mission,
+        where: { id: missionId },
+        attributes: [
+          "title",
+          "subTitle",
+          "point",
+          "missionTheme",
+          "targetValue",
+          "usersCount",
+        ],
+
+        through: {
+          model: UserMission,
+          attributes: [
+            "achievedPoint",
+            "completionStatus",
+            "startDate",
+            "endDate",
+          ],
+        },
+      },
+    ],
+  });
+
+  if (!users) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      message: "No participant user is there for this mission",
+    });
+  }
+
+  return res
+    .status(StatusCodes.OK)
+    .json({ message: "Participant user obtained successfully", users: users });
 };

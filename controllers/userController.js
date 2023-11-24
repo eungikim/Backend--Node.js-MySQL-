@@ -101,6 +101,7 @@ exports.getUserExercises = async (req, res) => {
 
   const user_exercise = await User.findOne({
     where: { id: user_id },
+    attributes: ["id", "email"],
     include: {
       model: Exercise,
       through: UserExercise,

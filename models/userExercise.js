@@ -13,22 +13,22 @@ const UserExercise = sequelize.define(
 
     totalWeight: {
       type: Sequelize.DOUBLE,
-      default: 0.0,
+      defaultValue: 0.0,
     },
 
     totalCalories: {
       type: Sequelize.DOUBLE,
-      default: 0.0,
+      defaultValue: 0.0,
     },
 
     exerciseTime: {
       type: Sequelize.DOUBLE,
-      default: 0.0,
+      defaultValue: 0.0,
     },
 
     isSupported: {
-      type: Sequelize.DOUBLE,
-      default: false,
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
 
     startDate: {

@@ -223,7 +223,7 @@ module.exports = {
 
           usersCount: {
             type: "integer",
-            description: "number of users who enrolled this mission",
+            description: "number of users who completed this mission",
             example: 5,
           },
 
@@ -351,47 +351,75 @@ module.exports = {
       },
 
       UserMission: {
-        User_ID: {
-          type: "integer",
-          description: "User id",
-          example: "1",
-        },
-        Mission_ID: {
-          type: "integer",
-          description: "Mission id",
-          example: "2",
-        },
+        properties: {
+          User_ID: {
+            type: "integer",
+            description: "User id",
+            example: "1",
+          },
+          Mission_ID: {
+            type: "integer",
+            description: "Mission id",
+            example: "2",
+          },
 
-        title: {
-          type: "string",
-          description: "Mission title",
-          example: "Achieve 50 calories",
-        },
+          title: {
+            type: "string",
+            description: "Mission title",
+            example: "Achieve 50 calories",
+          },
 
-        subTitle: {
-          type: "string",
-          description: "Mission sub title",
-          example: "This mission help.....",
-        },
+          subTitle: {
+            type: "string",
+            description: "Mission sub title",
+            example: "This mission help.....",
+          },
 
-        completionStatus: {
-          type: "string",
-          enum: ["inProgress", "completed"],
-          example: "completed",
-        },
+          point: {
+            type: "number",
+            format: "double",
+            description: "The reward point when this mission completed",
+            example: 80,
+          },
 
-        startDate: {
-          type: "string",
-          format: "date",
-          description: "The starting date of the mission",
-          example: "03-10-2023",
-        },
+          missionTheme: {
+            type: "string",
+            enum: [
+              "Attendance",
+              "TotalExercise",
+              "TotalWeight",
+              "TotalCalories",
+            ],
+            description: "Theme (type) of this mission",
+            example: "TotalCalories",
+          },
 
-        dueDate: {
-          type: "string",
-          format: "date",
-          description: "The end date of the mission ",
-          example: "13-10-2023",
+          achievedPoint: {
+            type: "number",
+            description: "Achieved point of this mission",
+            example: 6,
+          },
+
+          completionStatus: {
+            type: "string",
+            description: "Completion status of this mission",
+            enum: ["inProgress", "completed"],
+            example: "completed",
+          },
+
+          startDate: {
+            type: "string",
+            format: "date",
+            description: "The starting date of the mission",
+            example: "03-10-2023",
+          },
+
+          endDate: {
+            type: "string",
+            format: "date",
+            description: "The end date of the mission ",
+            example: "13-10-2023",
+          },
         },
       },
 
@@ -581,10 +609,10 @@ module.exports = {
       MissionInput: {
         // type: "object",
         properties: {
-          name: {
+          title: {
             type: "string",
-            description: "Mission name",
-            example: "Complete 40 push-up",
+            description: "Mission title",
+            example: "Login for 10 days",
           },
           subTitle: {
             type: "string",
@@ -607,39 +635,33 @@ module.exports = {
             description: "mission's detailed_information",
             example: "This mission is...",
           },
-          detailed_guide: {
-            type: "string",
-            description: "Mission's detailed_guide",
-            example: "Before starting this mission...",
-          },
+          // detailed_guide: {
+          //   type: "string",
+          //   description: "Mission's detailed_guide",
+          //   example: "Before starting this mission...",
+          // },
           point: {
             type: "number",
             format: "double",
             description: "Point assigned to this mission",
             example: 80,
           },
-          attendanceCheck: {
+          missionTheme: {
+            type: "string",
+            enum: [
+              "Attendance",
+              "TotalExercise",
+              "TotalWeight",
+              "TotalCalories",
+            ],
+            description: "Theme (type) of this mission",
+            example: "TotalCalories",
+          },
+
+          targetValue: {
             type: "integer",
-            description: "Attendance check is a mission to check attendance",
-            example: 5,
-          },
-          exerciseTime: {
-            type: "integer",
-            description: "exercise time is a mission to meet the exercise time",
-            example: 5,
-          },
-          totalWeight: {
-            type: "number",
-            format: "double",
-            description: "a mission to achieve the target amount of weight",
-            example: 58,
-          },
-          totalCalories: {
-            type: "number",
-            format: "double",
-            description:
-              "a mission to achieve the target amount of calorie consumption.",
-            example: 56,
+            description: "The targeted mission value",
+            example: 34,
           },
         },
       },

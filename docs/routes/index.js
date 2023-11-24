@@ -25,6 +25,13 @@ const getAllMyExercises = require("./user-related/get-myExercises");
 const getOneUserExerciseMy = require("./user-related/get-myExercise");
 const sendReport = require("./user-related/send-report");
 
+const getAllMissionsU = require("../routes/mission-user/get-all-missions");
+const getOneMissionU = require("../routes/mission-user/get-one-mission");
+const enrollOneMission = require("../routes/mission-user/enroll-mission");
+const getEnrolledMissions = require("../routes/mission-user/get-my-missions");
+
+const getAllMissionsParticipants = require("../routes/missions-admin/missionParticipantUsers");
+
 module.exports = {
   paths: {
     "/api/v1/auth/admin-login": {
@@ -114,6 +121,27 @@ module.exports = {
 
     "/api/v1/user/report/{exercise_id}": {
       ...sendReport,
+    },
+
+    "/api/v1/user/missions/all": {
+      ...getAllMissionsU,
+    },
+
+    "/api/v1/user/mission/{mission_id}": {
+      get: {
+        ...getOneMissionU.get,
+      },
+      post: {
+        ...enrollOneMission.post,
+      },
+    },
+
+    "/api/v1/user/my_missions": {
+      ...getEnrolledMissions,
+    },
+
+    "/api/v1/admin/mission/{mission_id}/users": {
+      ...getAllMissionsParticipants,
     },
   },
 };

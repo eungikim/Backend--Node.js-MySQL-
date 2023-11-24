@@ -215,10 +215,16 @@ module.exports = {
             example: "TotalCalories",
           },
 
-          missionValue: {
+          targetValue: {
             type: "integer",
             description: "The targeted mission value",
             example: 34,
+          },
+
+          usersCount: {
+            type: "integer",
+            description: "number of users who enrolled this mission",
+            example: 5,
           },
 
           startDate: {

@@ -13,6 +13,18 @@ const UserMission = sequelize.define("UserMission", {
     type: Sequelize.STRING,
   },
 
+  missionTheme: {
+    type: Sequelize.STRING,
+  },
+
+  targetValue: {
+    type: Sequelize.INTEGER,
+  },
+
+  point: {
+    type: Sequelize.DOUBLE,
+  },
+
   achievedPoint: {
     type: Sequelize.DOUBLE,
     defaultValue: 0.0,
@@ -20,6 +32,7 @@ const UserMission = sequelize.define("UserMission", {
 
   completionStatus: {
     type: Sequelize.ENUM("inProgress", "completed"),
+    defaultValue: "inProgress",
   },
 
   startDate: {

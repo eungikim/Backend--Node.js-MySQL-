@@ -68,11 +68,21 @@ exports.validateSendingReport = withValidatorErrors([
 ]);
 
 exports.validateMissionAdding = withValidatorErrors([
-  body("name").notEmpty().withMessage("name is Required"),
-  body("duration").notEmpty().withMessage("duration is required"),
+  body("title").notEmpty().withMessage("title is Required"),
+
+  body("subTitle").notEmpty().withMessage("subTitle is required"),
+
   body("detailed_information")
     .notEmpty()
     .withMessage("detailed_information is required"),
+
+  body("imageURL").notEmpty().withMessage("imageURL is required"),
+
   body("point").notEmpty().withMessage("point is required"),
-  body("detailed_guide").notEmpty().withMessage("detailed_guide is required"),
+
+  body("missionTheme").notEmpty().withMessage("missionTheme is required"),
+
+  body("targetValue").notEmpty().withMessage("targetValue is required"),
+
+  body("missionTheme").notEmpty().withMessage("missionTheme is required"),
 ]);

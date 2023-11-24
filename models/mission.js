@@ -41,9 +41,14 @@ const Mission = sequelize.define(
       ),
     },
 
-    missionValue: {
+    targetValue: {
       // The targeted mission value
       type: Sequelize.INTEGER,
+    },
+
+    usersCount: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
     },
 
     startDate: {

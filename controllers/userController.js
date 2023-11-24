@@ -6,6 +6,8 @@ const UserExercise = require("../models/userExercise");
 
 const UserMission = require("../models/userMission");
 
+const Mission = require("../models/mission");
+
 // #####################################################  //
 
 // -> Retrieve a list of exercises the user can choose from
@@ -151,12 +153,11 @@ exports.getOneUserExercise = async (req, res) => {
 exports.sendReport = async (req, res) => {
   try {
     const {
-      point_Achieved,
       performance,
-      duration,
-      weight_lifted,
-      calorie_conversion_result,
-      completion_status,
+      totalWeight,
+      totalCalories,
+      exerciseTime,
+      isSupported,
     } = req.body;
 
     const user_id = req.userId;
@@ -165,7 +166,7 @@ exports.sendReport = async (req, res) => {
     if (!exercise_id) {
       return res
         .status(StatusCodes.NOT_FOUND)
-        .json({ message: "exercise id is required when adding a report" });
+        .json({ message: "exercise id is required when sending a report" });
     }
 
     const exercise = await UserExercise.findOne({
@@ -180,13 +181,14 @@ exports.sendReport = async (req, res) => {
 
     await UserExercise.update(
       {
-        point_Achieved: exercise.point_Achieved + point_Achieved,
-        performance,
-        duration,
-        weight_lifted: exercise.weight_lifted + weight_lifted,
-        calorie_conversion_result:
-          exercise.calorie_conversion_result + calorie_conversion_result,
-        completion_status,
+        // point_Achieved: exercise.point_Achieved + point_Achieved,
+        // completion_status,
+
+        performance: performance,
+        totalWeight: exercise.totalWeight + totalWeight,
+        totalCalories: exercise.totalCalories + totalCalories,
+        exerciseTime: exercise.exerciseTime + exerciseTime,
+        isSupported: isSupported,
       },
       {
         where: {
@@ -217,11 +219,11 @@ exports.addUserMission = async (req, res) => {
   const userId = req.userId;
   const mission_id = req.params.mission_id;
 
-  const userExists = User.findOne({
+  const userExists = await User.findOne({
     where: { id: userId },
   });
 
-  const missionExists = Mission.findOne({
+  const missionExists = await Mission.findOne({
     where: { id: mission_id },
   });
 
@@ -231,8 +233,20 @@ exports.addUserMission = async (req, res) => {
 
   const enrollment = await UserMission.create({
     UserID: userId,
-    Mission_ID: mission_id,
+    MissionID: mission_id,
+    title: missionExists.title,
+    subTitle: missionExists.subTitle,
+    missionTheme: missionExists.missionTheme,
+    targetValue: missionExists.targetValue,
+    point: missionExists.point,
   });
+
+  const updateCOunt = await Mission.update(
+    {
+      usersCount: missionExists.usersCount + 1,
+    },
+    { where: { id: mission_id } }
+  );
 
   return res.status(StatusCodes.CREATED).json({
     message: "User mission enrolled successfully",

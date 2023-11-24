@@ -38,8 +38,8 @@ router.get("/missions/all", getAllMission);
 
 router.get("/mission/:mission_id", getOneMission);
 
-router.get("/my_missions", getUserMissions);
-
 router.post("/mission/:mission_id", addUserMission);
+
+router.get("/my_missions", getUserMissions);
 
 module.exports = router;

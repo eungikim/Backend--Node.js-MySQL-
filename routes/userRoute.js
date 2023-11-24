@@ -11,6 +11,7 @@ const {
   sendReport,
   getUserMissions,
   addUserMission,
+  getOneUseMission,
 } = require("../controllers/userController");
 
 const {
@@ -38,8 +39,12 @@ router.get("/missions/all", getAllMission);
 
 router.get("/mission/:mission_id", getOneMission);
 
+// my mission
+
 router.post("/mission/:mission_id", addUserMission);
 
 router.get("/my_missions", getUserMissions);
+
+router.get("/my_missions/:mission_id", getOneUseMission);
 
 module.exports = router;

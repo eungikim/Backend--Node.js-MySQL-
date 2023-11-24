@@ -53,13 +53,25 @@ exports.addUserExercise = async (req, res) => {
   const user_id = req.userId;
   const exercise_id = req.params.exercise_id;
 
+  console.log("HERE PASS");
+
   if (!user_id) {
     return res
       .status(StatusCodes.NOT_FOUND)
-      .json({ message: "Invalid exercise id when enrolling exercise" });
+      .json({ message: "userId is required when enrolling exercise" });
   }
 
+  const userExists = await User.findOne({
+    where: { id: user_id },
+  });
+
   const exercise = await Exercise.findOne({ where: { id: exercise_id } });
+
+  if (!userExists) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "Invalid user id when enrolling exercise" });
+  }
 
   if (!exercise) {
     return res
@@ -158,6 +170,8 @@ exports.sendReport = async (req, res) => {
       totalCalories,
       exerciseTime,
       isSupported,
+      startDate,
+      dueDate,
     } = req.body;
 
     const user_id = req.userId;
@@ -167,6 +181,16 @@ exports.sendReport = async (req, res) => {
       return res
         .status(StatusCodes.NOT_FOUND)
         .json({ message: "exercise id is required when sending a report" });
+    }
+
+    const userExists = await User.findOne({
+      where: { id: user_id },
+    });
+
+    if (!userExists) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        message: "No user is found with this id",
+      });
     }
 
     const exercise = await UserExercise.findOne({
@@ -189,6 +213,9 @@ exports.sendReport = async (req, res) => {
         totalCalories: exercise.totalCalories + totalCalories,
         exerciseTime: exercise.exerciseTime + exerciseTime,
         isSupported: isSupported,
+        // startDate: new Date() // May be later
+        startDate: startDate ? startDate : exercise.startDate,
+        dueDate: dueDate ? dueDate : exercise.dueDate,
       },
       {
         where: {
@@ -197,6 +224,61 @@ exports.sendReport = async (req, res) => {
         },
       }
     );
+
+    // Find missions which this user enrolled and update those value
+    const userTotalExerciseMission = await UserMission.findOne({
+      where: { UserID: user_id, missionTheme: "TotalExercise" },
+    });
+
+    console.log("THIS IS MY MISSION", userTotalExerciseMission);
+
+    const userTotalWeightMission = await UserMission.findOne({
+      where: { UserID: user_id, missionTheme: "TotalWeight" },
+    });
+
+    const userTotalCaloriesMission = await UserMission.findOne({
+      where: { UserID: user_id, missionTheme: "TotalCalories" },
+    });
+
+    if (userTotalExerciseMission) {
+      userTotalExerciseMission.achievedPoint =
+        userTotalExerciseMission.achievedPoint + exerciseTime;
+
+      if (
+        userTotalExerciseMission.achievedPoint ==
+        userTotalExerciseMission.targetValue
+      ) {
+        userTotalExerciseMission.completionStatus = "completed";
+      }
+
+      await userTotalExerciseMission.save();
+    }
+
+    if (userTotalWeightMission) {
+      userTotalWeightMission.achievedPoint =
+        userTotalWeightMission.achievedPoint + totalWeight;
+      if (
+        userTotalWeightMission.achievedPoint ==
+        userTotalWeightMission.targetValue
+      ) {
+        userTotalWeightMission.completionStatus = "completed";
+      }
+
+      await userTotalWeightMission.save();
+    }
+
+    if (userTotalCaloriesMission) {
+      userTotalCaloriesMission.achievedPoint =
+        userTotalCaloriesMission.achievedPoint + totalCalories;
+      if (
+        userTotalCaloriesMission.achievedPoint ==
+        userTotalCaloriesMission.targetValue
+      ) {
+        userTotalCaloriesMission.completionStatus = "completed";
+      }
+
+      await userTotalCaloriesMission.save();
+    }
 
     const updatedExercise = await UserExercise.findOne({
       where: { User_ID: user_id, Exercise_ID: exercise_id },
@@ -215,6 +297,8 @@ exports.sendReport = async (req, res) => {
 };
 
 // Mission relating controllers
+
+// Enroll mission
 exports.addUserMission = async (req, res) => {
   const userId = req.userId;
   const mission_id = req.params.mission_id;
@@ -227,8 +311,22 @@ exports.addUserMission = async (req, res) => {
     where: { id: mission_id },
   });
 
-  if (!userExists || !missionExists) {
-    return res.status(404).json({ error: "User or Mission not found" });
+  if (!missionExists) {
+    return res.status(404).json({ error: "Mission not found" });
+  }
+
+  if (!missionExists) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  const isEnrolledBefore = await UserMission.findOne({
+    where: { UserID: userId, MissionID: mission_id },
+  });
+
+  if (isEnrolledBefore) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "You already enrolled before" });
   }
 
   const enrollment = await UserMission.create({
@@ -256,15 +354,57 @@ exports.addUserMission = async (req, res) => {
 
 exports.getUserMissions = async (req, res) => {
   const userId = req.userId;
+
   const userMission = await User.findOne({
-    where: { userId },
+    where: { id: userId },
+    attributes: ["id", "email"],
     include: {
       model: Mission,
-      through: UserMission,
+      through: {
+        model: UserMission,
+        attributes: [
+          "achievedPoint",
+          "achievedPoint",
+          "startDate",
+          "createdAt",
+          "endDate",
+          "updatedAt",
+          "completionStatus",
+        ],
+      },
     },
   });
+
+  if (!userMission) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "You don't have any mission yet" });
+  }
+
   return res.status(StatusCodes.OK).json({
     message: "User mission obtained successfully",
     userMission: userMission,
   });
+};
+
+exports.getOneUseMission = async (req, res) => {
+  const user_id = req.userId;
+  const mission_id = req.params.mission_id;
+
+  const user_mission = await Mission.findOne({
+    where: { id: mission_id },
+    include: {
+      model: User,
+      where: { id: user_id },
+      through: UserMission,
+    },
+  });
+
+  if (!user_exercise) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "You don't have any exercise yet" });
+  }
+
+  res.status(StatusCodes.OK).json({ user_exercise: user_exercise });
 };

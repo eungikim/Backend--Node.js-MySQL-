@@ -5,7 +5,16 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
 const Admin = require("../models/admin");
+const UserMission = require("../models/userMission");
 const { createJWT } = require("../utils/tokenUtils");
+
+function isConsecutiveDates(date1, date2) {
+  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  const firstDate = new Date(date1);
+  const secondDate = new Date(date2);
+
+  return Math.abs(firstDate - secondDate) === oneDay;
+}
 
 exports.sign = async (req, res, next) => {
   const email = req.body.email;
@@ -31,15 +40,68 @@ exports.sign = async (req, res, next) => {
   const thisUser = await User.findOne({ where: { email: email } });
 
   if (thisUser && thisUser.gender) {
-    console.log("This is user", thisUser);
     // If the user's gender is not NULL this means that this user is already a member
     const token = createJWT({ userId: thisUser.id, role: "user" });
     await thisUser.update({ isMember: true, jwtToken: token });
-    // res.cookie("motyToken", token, {
-    //   httpOnly: false,
-    //   sameSite: "None",
-    //   secure: true,
-    // });
+
+    // If this user enroll the Attendance mission, increase his achieved point by one
+    const userAttendanceMission = await UserMission.findOne({
+      where: { UserID: thisUser.id, missionTheme: "Attendance" },
+    });
+
+    if (userAttendanceMission) {
+      const lastLoginDate = thisUser.lastLoginDate;
+
+      const currentDateNow = new Date();
+
+      currentDateNow.setDate(currentDateNow.getDate() + 2);
+
+      const formattedDate = `${currentDateNow.getFullYear()}-${(
+        currentDateNow.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${currentDateNow
+        .getDate()
+        .toString()
+        .padStart(2, "0")}`;
+
+      const lastFormattedDate = `${lastLoginDate.getFullYear()}-${(
+        lastLoginDate.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${lastLoginDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")}`;
+
+      console.log(isConsecutiveDates(lastFormattedDate, formattedDate));
+
+      if (isConsecutiveDates(lastFormattedDate, formattedDate)) {
+        userAttendanceMission.achievedPoint =
+          userAttendanceMission.achievedPoint + 1;
+        userAttendanceMission.save();
+
+        if (
+          userAttendanceMission.achievedPoint >=
+          userAttendanceMission.targetValue
+        ) {
+          userAttendanceMission.completionStatus = "completed";
+          userAttendanceMission.endDate = new Date();
+          await userAttendanceMission.save();
+
+          thisUser.totalPoint =
+            thisUser.totalPoint + userAttendanceMission.point;
+          await thisUser.save();
+        }
+      } else {
+        userAttendanceMission.achievedPoint = 1;
+        userAttendanceMission.completionStatus = "inProgress";
+        userAttendanceMission.save();
+      }
+    }
+
+    thisUser.lastLoginDate = new Date();
+    await thisUser.save();
 
     return res.json({ message: "User successfully logged in", user: thisUser });
   } else if (thisUser) {
@@ -83,6 +145,8 @@ exports.completeLogin = async (req, res, next) => {
 
     const userUpdate = await user.update(req.body);
     await user.update({ isMember: true });
+    user.lastLoginDate = new Date();
+    await user.save();
 
     const completeUser = await User.findOne({ where: { id: userId } });
 

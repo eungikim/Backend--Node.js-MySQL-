@@ -214,7 +214,7 @@ exports.sendReport = async (req, res) => {
         exerciseTime: exercise.exerciseTime + exerciseTime,
         isSupported: isSupported,
         // startDate: new Date() // May be later
-        startDate: startDate ? startDate : exercise.startDate,
+        startDate: startDate ? startDate : new Date(),
         dueDate: dueDate ? dueDate : exercise.dueDate,
       },
       {
@@ -225,12 +225,22 @@ exports.sendReport = async (req, res) => {
       }
     );
 
+    //
+    const TotalExerciseMission = await Mission.findOne({
+      where: { missionTheme: "TotalExercise" },
+    });
+    const TotalWeightMission = await Mission.findOne({
+      where: { missionTheme: "TotalWeight" },
+    });
+    const TotalCaloriesMission = await Mission.findOne({
+      where: { missionTheme: "TotalCalories" },
+    });
+    //
+
     // Find missions which this user enrolled and update those value
     const userTotalExerciseMission = await UserMission.findOne({
       where: { UserID: user_id, missionTheme: "TotalExercise" },
     });
-
-    console.log("THIS IS MY MISSION", userTotalExerciseMission);
 
     const userTotalWeightMission = await UserMission.findOne({
       where: { UserID: user_id, missionTheme: "TotalWeight" },
@@ -245,10 +255,20 @@ exports.sendReport = async (req, res) => {
         userTotalExerciseMission.achievedPoint + exerciseTime;
 
       if (
-        userTotalExerciseMission.achievedPoint ==
+        userTotalExerciseMission.achievedPoint >=
         userTotalExerciseMission.targetValue
       ) {
+        if (userTotalExerciseMission.completionStatus != "completed") {
+          TotalExerciseMission.usersCount = TotalExerciseMission.usersCount + 1;
+          await TotalExerciseMission.save();
+        }
+
         userTotalExerciseMission.completionStatus = "completed";
+        userTotalExerciseMission.endDate = new Date();
+
+        userExists.totalPoint =
+          userExists.totalPoint + userTotalExerciseMission.point;
+        await userExists.save();
       }
 
       await userTotalExerciseMission.save();
@@ -258,10 +278,20 @@ exports.sendReport = async (req, res) => {
       userTotalWeightMission.achievedPoint =
         userTotalWeightMission.achievedPoint + totalWeight;
       if (
-        userTotalWeightMission.achievedPoint ==
+        userTotalWeightMission.achievedPoint >=
         userTotalWeightMission.targetValue
       ) {
+        if (userTotalWeightMission.completionStatus != "completed") {
+          TotalWeightMission.usersCount = TotalWeightMission.usersCount + 1;
+          await TotalWeightMission.save();
+        }
+
         userTotalWeightMission.completionStatus = "completed";
+        userTotalWeightMission.endDate = new Date();
+
+        userExists.totalPoint =
+          userExists.totalPoint + userTotalWeightMission.point;
+        await userExists.save();
       }
 
       await userTotalWeightMission.save();
@@ -271,10 +301,20 @@ exports.sendReport = async (req, res) => {
       userTotalCaloriesMission.achievedPoint =
         userTotalCaloriesMission.achievedPoint + totalCalories;
       if (
-        userTotalCaloriesMission.achievedPoint ==
+        userTotalCaloriesMission.achievedPoint >=
         userTotalCaloriesMission.targetValue
       ) {
+        if (userTotalCaloriesMission.completionStatus != "completed") {
+          TotalCaloriesMission.usersCount = TotalCaloriesMission.usersCount + 1;
+          await TotalCaloriesMission.save();
+        }
+
         userTotalCaloriesMission.completionStatus = "completed";
+        userTotalCaloriesMission.endDate = new Date();
+
+        userExists.totalPoint =
+          userExists.totalPoint + userTotalCaloriesMission.point;
+        await userExists.save();
       }
 
       await userTotalCaloriesMission.save();
@@ -329,6 +369,12 @@ exports.addUserMission = async (req, res) => {
       .json({ message: "You already enrolled before" });
   }
 
+  let achievedPoint = 0;
+
+  if (missionExists.missionTheme === "Attendance") {
+    achievedPoint = 1;
+  }
+
   const enrollment = await UserMission.create({
     UserID: userId,
     MissionID: mission_id,
@@ -337,14 +383,9 @@ exports.addUserMission = async (req, res) => {
     missionTheme: missionExists.missionTheme,
     targetValue: missionExists.targetValue,
     point: missionExists.point,
+    achievedPoint: achievedPoint,
+    startDate: new Date(),
   });
-
-  const updateCOunt = await Mission.update(
-    {
-      usersCount: missionExists.usersCount + 1,
-    },
-    { where: { id: mission_id } }
-  );
 
   return res.status(StatusCodes.CREATED).json({
     message: "User mission enrolled successfully",

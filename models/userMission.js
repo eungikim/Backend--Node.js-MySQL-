@@ -25,6 +25,7 @@ const UserMission = sequelize.define("UserMission", {
     type: Sequelize.DOUBLE,
   },
 
+  // Make the following achievedValue
   achievedPoint: {
     type: Sequelize.DOUBLE,
     defaultValue: 0.0,

@@ -47,6 +47,10 @@ const User = sequelize.define(
     weight: {
       type: Sequelize.DOUBLE,
     },
+
+    lastLoginDate: {
+      type: Sequelize.DATE,
+    },
   },
   {
     timestamps: true,

@@ -10,7 +10,7 @@ module.exports = {
       // response code
       200: {
         description:
-          "Exercise of the past 7 days (including today) obtained successfully", // response desc.
+          "User's exercise of the past 7 days (including today) obtained successfully", // response desc.
         content: {
           // content-type
           "application/json": {

@@ -248,7 +248,6 @@ exports.getTodayExercises = async (req, res) => {
       today.getMonth(),
       today.getDate() + 1
     );
-
     const exercises = await UserExercise.findAll({
       where: {
         User_ID: req.userId,

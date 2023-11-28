@@ -26,6 +26,7 @@ const getOneUserExerciseMy = require("./user-related/get-myExercise");
 const sendReport = require("./user-related/send-report");
 const getWeekExercise = require("./user-related/get-this-week");
 const getOneDayExercise = require("./user-related/get-one-day");
+const getTodayExercises = require("./user-related/get-my-today-exercises");
 
 const getAllMissionsU = require("../routes/mission-user/get-all-missions");
 const getOneMissionU = require("../routes/mission-user/get-one-mission");
@@ -121,12 +122,16 @@ module.exports = {
       ...getOneUserExerciseMy,
     },
 
+    "/api/v1/user/my-exercise/{year}/{month}/{day}": {
+      ...getOneDayExercise,
+    },
+
     "/api/v1/user/my-exercise/week-exercises": {
       ...getWeekExercise,
     },
 
-    "/api/v1/user/my-exercise/{year}/{month}/{day}": {
-      ...getOneDayExercise,
+    "/api/v1/user/my-exercise/today-exercises": {
+      ...getTodayExercises,
     },
 
     "/api/v1/user/report/{exercise_id}": {

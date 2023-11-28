@@ -28,7 +28,8 @@ module.exports = {
     // expected responses
     responses: {
       200: {
-        description: "Exercise is obtained",
+        description:
+          "User's exercise for the give date is obtained successfully",
         content: {
           "application/json": {
             schema: {

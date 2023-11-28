@@ -182,7 +182,53 @@ exports.getWeekExercise = async (req, res) => {
       },
     });
 
-    res.json(exercises);
+    res.status(StatusCodes.OK).json({
+      message:
+        "Exercise of the past 7 days (including today) obtained successfully",
+      exercises: exercises,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+// #########################################################    //
+// Get my-exercise by date
+exports.getByDate = async (req, res) => {
+  try {
+    const { year, month, day } = req.params;
+    const exerciseDate = new Date(`${year}-${month}-${day}`);
+
+    const exercises = await UserExercise.findAll({
+      where: {
+        User_ID: req.userId,
+        createdAt: {
+          [Op.between]: [
+            new Date(
+              exerciseDate.getFullYear(),
+              exerciseDate.getMonth(),
+              exerciseDate.getDate()
+            ),
+            new Date(
+              exerciseDate.getFullYear(),
+              exerciseDate.getMonth(),
+              exerciseDate.getDate() + 1
+            ),
+          ],
+        },
+      },
+    });
+
+    if (!exercises || exercises.length == 0) {
+      return res.status(404).json({ error: "Exercise not found for this day" });
+    }
+
+    res.json({
+      message: `Exercise of ${exerciseDate.getFullYear()}-${
+        exerciseDate.getMonth() + 1
+      }-${exerciseDate.getDate()} obtained successfully`,
+      exercises: exercises,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
@@ -190,7 +236,6 @@ exports.getWeekExercise = async (req, res) => {
 };
 
 // #########################################################    //
-
 // -> Send a report
 exports.sendReport = async (req, res) => {
   try {

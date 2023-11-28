@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 
 const Admin = require("../models/admin");
 const UserMission = require("../models/userMission");
+const Mission = require("../models/mission");
 const { createJWT } = require("../utils/tokenUtils");
 
 function isConsecutiveDates(date1, date2) {

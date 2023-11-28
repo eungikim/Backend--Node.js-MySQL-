@@ -1,4 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
+const { Op } = require("sequelize");
 
 const Exercise = require("../models/exercise");
 const User = require("../models/user");
@@ -157,6 +158,35 @@ exports.getOneUserExercise = async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({ user_exercise: user_exercise });
+};
+
+// #########################################################    //
+// -> Get this week my-exercise (including today)
+exports.getWeekExercise = async (req, res) => {
+  try {
+    const today = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 7);
+
+    console.log("PASS");
+
+    console.log(sevenDaysAgo, today);
+
+    const exercises = await UserExercise.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: sevenDaysAgo,
+          [Op.lte]: today,
+        },
+        User_ID: req.userId,
+      },
+    });
+
+    res.json(exercises);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 // #########################################################    //

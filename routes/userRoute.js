@@ -12,6 +12,7 @@ const {
   getUserMissions,
   addUserMission,
   getOneUseMission,
+  getWeekExercise,
 } = require("../controllers/userController");
 
 const {
@@ -20,14 +21,19 @@ const {
 } = require("../controllers/adminController");
 
 const { validateSendingReport } = require("../middleware/validationMiddleware");
+const { route } = require("./adminRoute");
 
 router.get("/exercises", getAllExercises);
 
 router.get("/exercise/:exercise_id", getOneExercise);
 
+// My exercise
+
 router.post("/exercise/:exercise_id", addUserExercise);
 
 router.get("/my-exercises", getUserExercises);
+
+router.get("/my-exercise/week-exercises", getWeekExercise);
 
 router.get("/my-exercise/:exercise_id", getOneUserExercise);
 

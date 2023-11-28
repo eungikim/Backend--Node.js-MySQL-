@@ -99,15 +99,15 @@ module.exports = {
       ...getOneUserExercise,
     },
 
-    "/api/v1/admin/admin/notice": {
+    "/api/v1/admin/notice": {
       ...addNotice,
     },
 
-    "/api/v1/admin/admin/notices": {
+    "/api/v1/admin/notices": {
       ...getAllNotices,
     },
 
-    "/api/v1/admin/admin/notice/{notice_id}": {
+    "/api/v1/admin/notice/{notice_id}": {
       ...deleteNotice,
     },
     "/api/v1/auth/sign": {

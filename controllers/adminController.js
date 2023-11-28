@@ -295,9 +295,11 @@ exports.getAllParticipantUsers = async (req, res) => {
 exports.addNotice = async (req, res) => {
   const newNotices = await Notice.create(req.body);
 
+  const notices = await Notice.findAll();
+
   res
     .status(StatusCodes.CREATED)
-    .json({ message: "Notice added successfully" });
+    .json({ message: "Notice added successfully", notices: notices });
 };
 
 exports.getAllNotices = async (req, res) => {

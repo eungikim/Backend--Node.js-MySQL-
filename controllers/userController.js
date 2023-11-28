@@ -418,9 +418,9 @@ exports.sendReport = async (req, res) => {
         userTotalExerciseMission.completionStatus = "completed";
         userTotalExerciseMission.endDate = new Date();
 
-        userExists.totalPoint =
-          userExists.totalPoint + userTotalExerciseMission.point;
-        await userExists.save();
+        // userExists.totalPoint =
+        //   userExists.totalPoint + userTotalExerciseMission.point;
+        // await userExists.save();
       }
 
       await userTotalExerciseMission.save();
@@ -441,9 +441,9 @@ exports.sendReport = async (req, res) => {
         userTotalWeightMission.completionStatus = "completed";
         userTotalWeightMission.endDate = new Date();
 
-        userExists.totalPoint =
-          userExists.totalPoint + userTotalWeightMission.point;
-        await userExists.save();
+        // userExists.totalPoint =
+        //   userExists.totalPoint + userTotalWeightMission.point;
+        // await userExists.save();
       }
 
       await userTotalWeightMission.save();
@@ -464,9 +464,9 @@ exports.sendReport = async (req, res) => {
         userTotalCaloriesMission.completionStatus = "completed";
         userTotalCaloriesMission.endDate = new Date();
 
-        userExists.totalPoint =
-          userExists.totalPoint + userTotalCaloriesMission.point;
-        await userExists.save();
+        // userExists.totalPoint =
+        //   userExists.totalPoint + userTotalCaloriesMission.point;
+        // await userExists.save();
       }
 
       await userTotalCaloriesMission.save();
@@ -600,4 +600,56 @@ exports.getOneUseMission = async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({ user_exercise: user_mission });
+};
+
+// Get my reward
+exports.getReward = async (req, res) => {
+  const userId = req.userId;
+  const missionId = req.params.mission_id;
+
+  // Check if there exist a mission with this id
+  const missionExist = await Mission.findOne({ where: { id: missionId } });
+
+  if (!missionExist) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "No mission is found with this id" });
+  }
+
+  // Check if the user enrolled this mission
+  const userMissionExist = await UserMission.findOne({
+    where: { UserID: userId, MissionID: missionId },
+  });
+
+  if (!userMissionExist) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      message:
+        "User didn't enroll this mission, please enroll it before trying to get the reward",
+    });
+  }
+
+  // Check if the user complete this mission
+  if (userMissionExist.completionStatus !== "completed") {
+    return res.status(StatusCodes.OK).json({
+      message:
+        "User didn't complete this mission, please complete it before trying to get the reward",
+    });
+  }
+
+  // give the reward point to this user
+  const thisUser = await User.findOne({ where: { id: userId } });
+
+  thisUser.totalPoint = thisUser.totalPoint + missionExist.point;
+  await thisUser.save();
+
+  // Delete this user mission to enable him to enroll it again
+  const deletedRows = await UserMission.destroy({
+    where: { UserID: userId, MissionID: missionId },
+  });
+
+  return res.status(StatusCodes.OK).json({
+    message: "The reward point added successfully to the user's total point",
+    newAddedPoint: missionExist.point,
+    totalUserPoint: thisUser.totalPoint,
+  });
 };

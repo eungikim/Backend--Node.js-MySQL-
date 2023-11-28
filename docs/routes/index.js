@@ -32,6 +32,7 @@ const getAllMissionsU = require("../routes/mission-user/get-all-missions");
 const getOneMissionU = require("../routes/mission-user/get-one-mission");
 const enrollOneMission = require("../routes/mission-user/enroll-mission");
 const getEnrolledMissions = require("../routes/mission-user/get-my-missions");
+const getReward = require("./mission-user/get-reward");
 
 const getAllMissionsParticipants = require("../routes/missions-admin/missionParticipantUsers");
 
@@ -149,6 +150,10 @@ module.exports = {
       post: {
         ...enrollOneMission.post,
       },
+    },
+
+    "/api/v1/user/get-reward/{mission_id}": {
+      ...getReward,
     },
 
     "/api/v1/user/my_missions": {

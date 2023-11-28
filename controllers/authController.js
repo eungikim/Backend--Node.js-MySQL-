@@ -98,9 +98,9 @@ exports.sign = async (req, res, next) => {
           userAttendanceMission.endDate = new Date();
           await userAttendanceMission.save();
 
-          thisUser.totalPoint =
-            thisUser.totalPoint + userAttendanceMission.point;
-          await thisUser.save();
+          // thisUser.totalPoint =
+          //   thisUser.totalPoint + userAttendanceMission.point;
+          // await thisUser.save();
         }
       } else {
         userAttendanceMission.achievedPoint = 1;

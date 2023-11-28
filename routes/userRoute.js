@@ -14,6 +14,8 @@ const {
   getOneUseMission,
   getWeekExercise,
   getByDate,
+  getMonthExercise,
+  getTodayExercises,
 } = require("../controllers/userController");
 
 const {
@@ -34,11 +36,17 @@ router.post("/exercise/:exercise_id", addUserExercise);
 
 router.get("/my-exercises", getUserExercises);
 
+// // get this month(last 30 days)
+// router.get("/my-exercise/month-exercises", getMonthExercise);
+
 // get this week
 router.get("/my-exercise/week-exercises", getWeekExercise);
 
 //get by date
 router.get("/my-exercise/:year/:month/:day", getByDate);
+
+// get today
+router.get("/my-exercise/today-exercises", getTodayExercises);
 
 router.get("/my-exercise/:exercise_id", getOneUserExercise);
 

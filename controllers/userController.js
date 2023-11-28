@@ -161,6 +161,47 @@ exports.getOneUserExercise = async (req, res) => {
 };
 
 // #########################################################    //
+// -> Get this month (last 30days) including todays
+exports.getMonthExercise = async (req, res) => {
+  try {
+    const today = new Date();
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+
+    const exercises = await UserExercise.findAll({
+      where: {
+        User_ID: req.userId,
+        createdAt: {
+          [Op.between]: [
+            new Date(
+              thirtyDaysAgo.getFullYear(),
+              thirtyDaysAgo.getMonth(),
+              thirtyDaysAgo.getDate()
+            ),
+            new Date(
+              today.getFullYear(),
+              today.getMonth(),
+              today.getDate() + 1
+            ),
+          ],
+        },
+      },
+    });
+
+    if (exercises.length === 0) {
+      return res.json({ message: "No exercises found for this month" });
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "User exercise for the last 30 days obtained successfully",
+      exercises: exercises,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// #########################################################    //
 // -> Get this week my-exercise (including today)
 exports.getWeekExercise = async (req, res) => {
   try {
@@ -184,11 +225,48 @@ exports.getWeekExercise = async (req, res) => {
 
     res.status(StatusCodes.OK).json({
       message:
-        "Exercise of the past 7 days (including today) obtained successfully",
+        "User exercise of the past 7 days (including today) obtained successfully",
       exercises: exercises,
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+// #########################################################    //
+// -> Get my todays exercise
+exports.getTodayExercises = async (req, res) => {
+  try {
+    const today = new Date();
+    const startOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+    const endOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1
+    );
+
+    const exercises = await UserExercise.findAll({
+      where: {
+        User_ID: req.userId,
+        createdAt: {
+          [Op.between]: [startOfDay, endOfDay],
+        },
+      },
+    });
+
+    if (exercises.length === 0) {
+      return res.json({ message: "No exercises found for today" });
+    }
+
+    res.json({
+      message: "User today's exercises obtained successfully",
+      exercises: exercises,
+    });
+  } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -224,7 +302,7 @@ exports.getByDate = async (req, res) => {
     }
 
     res.json({
-      message: `Exercise of ${exerciseDate.getFullYear()}-${
+      message: `User exercise of ${exerciseDate.getFullYear()}-${
         exerciseDate.getMonth() + 1
       }-${exerciseDate.getDate()} obtained successfully`,
       exercises: exercises,

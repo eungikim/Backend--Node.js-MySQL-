@@ -86,3 +86,9 @@ exports.validateMissionAdding = withValidatorErrors([
 
   body("missionTheme").notEmpty().withMessage("missionTheme is required"),
 ]);
+
+exports.validateNoticeAdding = withValidatorErrors([
+  body("title").notEmpty().withMessage("title is Required"),
+
+  body("thumbnailURL").notEmpty().withMessage("thumbnailURL is required"),
+]);

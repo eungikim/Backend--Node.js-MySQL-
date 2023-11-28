@@ -22,6 +22,7 @@ const {
 const {
   getAllMission,
   getOneMission,
+  getAllNotices,
 } = require("../controllers/adminController");
 
 const { validateSendingReport } = require("../middleware/validationMiddleware");
@@ -70,5 +71,8 @@ router.get("/my_missions/:mission_id", getOneUseMission);
 // get reward
 
 router.get("/get-reward/:mission_id", getReward);
+
+// Get all notices
+router.get("/notices", getAllNotices);
 
 module.exports = router;

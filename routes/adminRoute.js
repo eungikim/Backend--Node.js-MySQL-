@@ -5,6 +5,7 @@ const express = require("express");
 const {
   validateExerciseAdding,
   validateMissionAdding,
+  validateNoticeAdding,
 } = require("../middleware/validationMiddleware");
 
 const {
@@ -23,6 +24,9 @@ const {
   updateMission,
   deleteMission,
   getAllParticipantUsers,
+  addNotice,
+  getAllNotices,
+  deleteNotice,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -62,6 +66,14 @@ router.patch("/mission/:mission_id", updateMission);
 router.delete("/mission/:mission_id", deleteMission);
 
 router.get("/mission/:mission_id/users", getAllParticipantUsers);
+
+// Routes relating to notices
+
+router.post("/notice", validateNoticeAdding, addNotice);
+
+router.get("/notices", getAllNotices);
+
+router.delete("/notice/:notice_id", deleteNotice);
 
 module.exports = router;
 

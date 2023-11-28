@@ -5,6 +5,7 @@ const Admin = require("../models/admin");
 const Exercise = require("../models/exercise");
 const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
+const Notice = require("../models/notice");
 
 const Mission = require("../models/mission");
 const UserMission = require("../models/userMission");
@@ -288,4 +289,37 @@ exports.getAllParticipantUsers = async (req, res) => {
   return res
     .status(StatusCodes.OK)
     .json({ message: "Participant user obtained successfully", users: users });
+};
+
+// Notice relating controllers
+exports.addNotice = async (req, res) => {
+  const newNotices = await Notice.create(req.body);
+
+  res
+    .status(StatusCodes.CREATED)
+    .json({ message: "Notice added successfully" });
+};
+
+exports.getAllNotices = async (req, res) => {
+  const notices = await Notice.findAll();
+
+  res
+    .status(StatusCodes.OK)
+    .json({ message: "All notices obtained successfully ", notices: notices });
+};
+
+exports.deleteNotice = async (req, res) => {
+  const noticeId = req.params.notice_id;
+
+  const isExist = await Notice.destroy({ where: { id: noticeId } });
+
+  if (!isExist) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "Notice not found with id" });
+  }
+
+  return res
+    .status(StatusCodes.OK)
+    .json({ message: "Notice deleted successfully" });
 };

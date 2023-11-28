@@ -36,6 +36,11 @@ const getReward = require("./mission-user/get-reward");
 
 const getAllMissionsParticipants = require("../routes/missions-admin/missionParticipantUsers");
 
+const getAllNotices = require("./notice-related/admin-get-all-notices");
+const deleteNotice = require("./notice-related/admin-delete-notice");
+const addNotice = require("./notice-related/admin-add-notices");
+const getAllNoticesU = require("./notice-related/user-get-all-notices");
+
 module.exports = {
   paths: {
     "/api/v1/auth/admin-login": {
@@ -94,6 +99,17 @@ module.exports = {
       ...getOneUserExercise,
     },
 
+    "/api/v1/admin/admin/notice": {
+      ...addNotice,
+    },
+
+    "/api/v1/admin/admin/notices": {
+      ...getAllNotices,
+    },
+
+    "/api/v1/admin/admin/notice/{notice_id}": {
+      ...deleteNotice,
+    },
     "/api/v1/auth/sign": {
       ...sign,
     },
@@ -150,6 +166,10 @@ module.exports = {
       post: {
         ...enrollOneMission.post,
       },
+    },
+
+    "api/v1/user/notices": {
+      ...getAllNoticesU,
     },
 
     "/api/v1/user/get-reward/{mission_id}": {

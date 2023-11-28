@@ -423,6 +423,42 @@ module.exports = {
         },
       },
 
+      Notice: {
+        properties: {
+          id: {
+            type: "integer",
+            description: "Notice identification number",
+            example: 1, // example of an id
+          },
+
+          title: {
+            type: "string",
+            description: "Notice title",
+            example: "Mission 2 have an amazing reward",
+          },
+
+          thumbnailURL: {
+            type: "string",
+            description: "Notice thumbnail URL",
+            example: "http://notice/../..",
+          },
+
+          startDate: {
+            type: "string",
+            format: "date",
+            description: "The start date",
+            example: "2023-12-10",
+          },
+
+          dueDate: {
+            type: "string",
+            format: "date",
+            description: "The end date",
+            example: "2023-12-20",
+          },
+        },
+      },
+
       AdminLoginInput: {
         // type: "object",
         properties: {
@@ -662,6 +698,36 @@ module.exports = {
             type: "integer",
             description: "The targeted mission value",
             example: 34,
+          },
+        },
+      },
+
+      NoticeInput: {
+        properties: {
+          title: {
+            type: "string",
+            description: "Notice title",
+            example: "Mission 2 have an amazing reward",
+          },
+
+          thumbnailURL: {
+            type: "string",
+            description: "Notice thumbnail URL",
+            example: "http://notice/../..",
+          },
+
+          startDate: {
+            type: "string",
+            format: "date",
+            description: "The start date",
+            example: "2023-12-10",
+          },
+
+          dueDate: {
+            type: "string",
+            format: "date",
+            description: "The end date",
+            example: "2023-12-20",
           },
         },
       },

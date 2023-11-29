@@ -17,6 +17,7 @@ const {
   getMonthExercise,
   getTodayExercises,
   getReward,
+  updateProfileImage,
 } = require("../controllers/userController");
 
 const {
@@ -74,5 +75,40 @@ router.get("/get-reward/:mission_id", getReward);
 
 // Get all notices
 router.get("/notices", getAllNotices);
+
+// Profile
+const AWS = require("aws-sdk");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+
+AWS.config.update({
+  accessKeyId: "AKIAQS5BLJWQDTR4QSTZ",
+  secretAccessKey: "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",
+  region: "us-east-1",
+});
+
+// Create an instance of the S3 service
+const s3 = new AWS.S3();
+
+// Configure Multer-S3 storage
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "moty-bucket",
+    acl: "public-read",
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      // Generate a unique filename for the uploaded image
+      const filename = `${req.userId}-profile-image.jpg`;
+      console.log(filename);
+      cb(null, filename);
+    },
+  }),
+});
+
+router.post("/update-profile", upload.single("image"), updateProfileImage);
+// Update profile
 
 module.exports = router;

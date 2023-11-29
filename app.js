@@ -22,8 +22,8 @@ app.use(
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", [
-    // "http://localhost:5173",
-    "https://bag6xc5pd2.us-east-1.awsapprunner.com/",
+    "http://localhost:5173",
+    // "https://bag6xc5pd2.us-east-1.awsapprunner.com/",
   ]);
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
@@ -76,7 +76,7 @@ app.get("/", (req, res, next) => {
 //404 middleware
 app.use("*", (req, res, next) => {
   //'*' stands for all routes that do not match the all the above routes
-  res.status(404).json({ message: "page not found" });
+  res.status(404).json({ message: "Page not found" });
 });
 
 //General error handling middleware

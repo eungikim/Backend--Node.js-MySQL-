@@ -29,6 +29,11 @@ const {
   deleteNotice,
 } = require("../controllers/adminController");
 
+const {
+  resetPassword,
+  updatePassword,
+} = require("../controllers/authController");
+
 const router = express.Router();
 
 // Routes relating to admin-to-exercise
@@ -75,6 +80,10 @@ router.get("/notices", getAllNotices);
 
 router.delete("/notice/:notice_id", deleteNotice);
 
-module.exports = router;
+// Reset password
+
+router.post("/reset-password", resetPassword);
+
+router.post("/update-password", updatePassword);
 
 module.exports = router;

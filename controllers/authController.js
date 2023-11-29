@@ -3,6 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const User = require("../models/user");
 
 const bcrypt = require("bcryptjs");
+const bcr = require("bcrypt");
 
 const Admin = require("../models/admin");
 const UserMission = require("../models/userMission");
@@ -206,5 +207,94 @@ exports.adminLogin = async (req, res, next) => {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: "Failed to login admin" });
+  }
+};
+
+// ########################## Reset password   ################################ //
+
+const {
+  generateResetToken,
+  sendResetPasswordEmail,
+} = require("../utils/resetPassword");
+
+exports.resetPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "email is required",
+    });
+  }
+
+  try {
+    const admin = await Admin.findOne({ email });
+
+    if (!admin) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Admin is not found",
+      });
+    }
+
+    const resetToken = generateResetToken();
+
+    admin.resetToken = resetToken;
+    admin.resetTokenExpiry = Date.now() + 3600000;
+
+    await admin.save();
+
+    await sendResetPasswordEmail(admin.email, resetToken);
+
+    res.json({
+      message: "Reset password instructions sent to your email.",
+      resetToken: resetToken,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while resetting the password." });
+  }
+};
+
+// Update the admin's password with the new one
+exports.updatePassword = async (req, res) => {
+  const { resetToken, newPassword } = req.body;
+
+  if (!resetToken) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "resetToken is required",
+    });
+  }
+
+  if (!newPassword) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "newPassword is required",
+    });
+  }
+
+  try {
+    const admin = await Admin.findOne({
+      resetToken,
+      resetTokenExpiry: { $gt: Date.now() },
+    });
+
+    if (!admin) {
+      return res.status(400).json({ error: "Invalid or expired reset token." });
+    }
+
+    // const hashedPassword = await bcr.hash(newPassword, 10);
+
+    admin.password = newPassword;
+    admin.resetToken = undefined;
+    admin.resetTokenExpiry = undefined;
+
+    await admin.save();
+
+    res.json({ message: "Password updated successfully." });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating the password." });
   }
 };

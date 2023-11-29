@@ -10,18 +10,31 @@ const Admin = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+
     email: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true,
     },
+
     password: {
       type: Sequelize.STRING,
       allowNull: false,
     },
+
     role: {
       type: Sequelize.STRING,
       defaultValue: "admin",
+    },
+
+    resetToken: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+
+    resetTokenExpiry: {
+      type: Sequelize.DATE,
+      allowNull: true,
     },
   },
   {

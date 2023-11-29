@@ -656,14 +656,11 @@ exports.getReward = async (req, res) => {
 
 // Update profile
 
-// Controller method for updating profile image
 exports.updateProfileImage = async (req, res, next) => {
   const user = await User.findOne({ where: { id: req.userId } });
 
-  // Update the user's imageURL with the S3 object URL
   user.imageURL = req.file.location;
 
-  // Save the user model to your database
   await user.save();
 
   res.json({

@@ -30,7 +30,11 @@ const {
   getAllNotices,
 } = require("../controllers/adminController");
 
-const { validateSendingReport } = require("../middleware/validationMiddleware");
+const {
+  validateSendingReport,
+  validateExerciseAdding,
+  validateExerciseEnrolling,
+} = require("../middleware/validationMiddleware");
 const { route } = require("./adminRoute");
 
 router.get("/exercises", getAllExercises);
@@ -39,7 +43,12 @@ router.get("/exercise/:exercise_id", getOneExercise);
 
 // My exercise
 
-router.post("/exercise/:exercise_id", addUserExercise);
+// Enroll exercise
+router.post(
+  "/exercise/:exercise_id",
+  validateExerciseEnrolling,
+  addUserExercise
+);
 
 router.get("/my-exercises", getUserExercises);
 
@@ -57,7 +66,7 @@ router.get("/my-exercise/today-exercises", getTodayExercises);
 
 router.get("/my-exercise/:exercise_id", getOneUserExercise);
 
-router.post("/report/:exercise_id", validateSendingReport, sendReport);
+router.post("/report/:exercise_id/", validateSendingReport, sendReport);
 
 //User Mission
 

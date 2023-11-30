@@ -65,6 +65,8 @@ exports.validateSendingReport = withValidatorErrors([
   body("totalCalories").notEmpty().withMessage("totalCalories  is required"),
 
   body("exerciseTime").notEmpty().withMessage("exerciseTime is required"),
+
+  body("startDate").notEmpty().withMessage("startDate is required"),
 ]);
 
 exports.validateMissionAdding = withValidatorErrors([
@@ -91,4 +93,8 @@ exports.validateNoticeAdding = withValidatorErrors([
   body("title").notEmpty().withMessage("title is Required"),
 
   body("thumbnailURL").notEmpty().withMessage("thumbnailURL is required"),
+]);
+
+exports.validateExerciseEnrolling = withValidatorErrors([
+  body("startDate").notEmpty().withMessage("startDate is Required"),
 ]);

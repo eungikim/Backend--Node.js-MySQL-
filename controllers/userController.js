@@ -1,6 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { Op } = require("sequelize");
-
+const { Op, literal } = require("sequelize");
 const Exercise = require("../models/exercise");
 const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
@@ -53,6 +52,7 @@ exports.getOneExercise = async (req, res) => {
 exports.addUserExercise = async (req, res) => {
   const user_id = req.userId;
   const exercise_id = req.params.exercise_id;
+  const startDate = req.body.startDate;
 
   console.log("HERE PASS");
 
@@ -81,27 +81,45 @@ exports.addUserExercise = async (req, res) => {
   }
 
   const isEnrolledBefore = await UserExercise.findOne({
+    where: {
+      User_ID: user_id,
+      Exercise_ID: exercise_id,
+      startDate: {
+        [Op.gte]: new Date(new Date().setHours(0, 0, 0, 0)), // Set the time to the start of today
+        [Op.lt]: new Date(new Date().setHours(23, 59, 59, 999)), // Set the time to the end of today
+      },
+    },
+  });
+
+  // if (isEnrolledBefore) {
+  //   return res
+  //     .status(StatusCodes.BAD_REQUEST)
+  //     .json({ message: "You already enrolled this exercise today" });
+  // }
+
+  const isExist = await Exercise.findOne({ where: { id: exercise_id } });
+  // If this is the first time the user enroll this exercise increase the exercise counter by 1
+
+  const isFirstTime = await UserExercise.findOne({
     where: { User_ID: user_id, Exercise_ID: exercise_id },
   });
 
-  if (isEnrolledBefore) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "You already enrolled before" });
+  if (!isFirstTime) {
+    const updateCount = await Exercise.update(
+      {
+        usersCount: isExist.usersCount + 1,
+      },
+      { where: { id: exercise_id } }
+    );
   }
+
+  const currentDate = new Date();
 
   const enrolled = await UserExercise.create({
     User_ID: user_id,
     Exercise_ID: exercise_id,
+    startDate: startDate,
   });
-
-  const isExist = await Exercise.findOne({ where: { id: exercise_id } });
-  const updateCOunt = await Exercise.update(
-    {
-      usersCount: isExist.usersCount + 1,
-    },
-    { where: { id: exercise_id } }
-  );
 
   res.status(StatusCodes.CREATED).json({
     message: "Exercise successfully enrolled",
@@ -215,7 +233,7 @@ exports.getWeekExercise = async (req, res) => {
 
     const exercises = await UserExercise.findAll({
       where: {
-        createdAt: {
+        startDate: {
           [Op.gte]: sevenDaysAgo,
           [Op.lte]: today,
         },
@@ -251,7 +269,7 @@ exports.getTodayExercises = async (req, res) => {
     const exercises = await UserExercise.findAll({
       where: {
         User_ID: req.userId,
-        createdAt: {
+        startDate: {
           [Op.between]: [startOfDay, endOfDay],
         },
       },
@@ -279,7 +297,7 @@ exports.getByDate = async (req, res) => {
     const exercises = await UserExercise.findAll({
       where: {
         User_ID: req.userId,
-        createdAt: {
+        startDate: {
           [Op.between]: [
             new Date(
               exerciseDate.getFullYear(),
@@ -345,13 +363,19 @@ exports.sendReport = async (req, res) => {
       });
     }
 
+    console.log(literal(`DATE(startDate) = '${startDate}'`));
+
     const exercise = await UserExercise.findOne({
-      where: { User_ID: user_id, Exercise_ID: exercise_id },
+      where: {
+        User_ID: user_id,
+        Exercise_ID: exercise_id,
+        startDate: literal(`DATE(startDate) = '${startDate}'`),
+      },
     });
 
     if (!exercise) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        message: "No exercise is found for this user_id and exercise_id",
+        message: "You don't have this exercise for such date",
       });
     }
 
@@ -366,13 +390,13 @@ exports.sendReport = async (req, res) => {
         exerciseTime: exercise.exerciseTime + exerciseTime,
         isSupported: isSupported,
         // startDate: new Date() // May be later
-        startDate: startDate ? startDate : new Date(),
         dueDate: dueDate ? dueDate : exercise.dueDate,
       },
       {
         where: {
           User_ID: user_id,
           Exercise_ID: exercise_id,
+          startDate: literal(`DATE(startDate) = '${startDate}'`),
         },
       }
     );
@@ -643,9 +667,9 @@ exports.getReward = async (req, res) => {
   await thisUser.save();
 
   // Delete this user mission to enable him to enroll it again
-  const deletedRows = await UserMission.destroy({
-    where: { UserID: userId, MissionID: missionId },
-  });
+  // const deletedRows = await UserMission.destroy({
+  //   where: { UserID: userId, MissionID: missionId },
+  // });
 
   return res.status(StatusCodes.OK).json({
     message: "The reward point added successfully to the user's total point",

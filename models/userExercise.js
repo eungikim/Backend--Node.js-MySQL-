@@ -7,6 +7,23 @@ const Exercise = require("../models/exercise");
 const UserExercise = sequelize.define(
   "userExercise",
   {
+    // User_ID: {
+    //   type: Sequelize.INTEGER,
+    //   primaryKey: true,
+    // },
+    // Exercise_ID: {
+    //   type: Sequelize.INTEGER,
+    //   primaryKey: true,
+    // },
+    // createdAt: {
+    //   type: Sequelize.DATE,
+    //   primaryKey: true,
+    // },
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     performance: {
       type: Sequelize.ENUM("STANDARD", "ECCENTRIC", "CONCENTRIC"),
     },
@@ -40,19 +57,27 @@ const UserExercise = sequelize.define(
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 
 User.belongsToMany(Exercise, {
-  through: UserExercise,
+  through: {
+    model: UserExercise,
+    unique: false,
+  },
+  constraints: false,
   foreignKey: "User_ID",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
 
 Exercise.belongsToMany(User, {
-  through: UserExercise,
+  through: {
+    model: UserExercise,
+    unique: false,
+  },
+  constraints: false,
   foreignKey: "Exercise_ID",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",

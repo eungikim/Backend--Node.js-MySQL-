@@ -218,11 +218,17 @@ const {
 } = require("../utils/resetPassword");
 
 exports.resetPassword = async (req, res) => {
-  const { email } = req.body;
+  const { email, callBack } = req.body;
 
   if (!email) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       message: "email is required",
+    });
+  }
+
+  if (!callBack) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "callBack is required",
     });
   }
 
@@ -242,7 +248,7 @@ exports.resetPassword = async (req, res) => {
 
     await admin.save();
 
-    await sendResetPasswordEmail(admin.email, resetToken);
+    await sendResetPasswordEmail(admin.email, resetToken, callBack);
 
     res.json({
       message: "Reset password instructions sent to your email.",
@@ -282,9 +288,9 @@ exports.updatePassword = async (req, res) => {
       return res.status(400).json({ error: "Invalid or expired reset token." });
     }
 
-    // const hashedPassword = await bcr.hash(newPassword, 10);
+    const hashedPassword = await bcr.hash(newPassword, 10);
 
-    admin.password = newPassword;
+    admin.password = hashedPassword;
     admin.resetToken = undefined;
     admin.resetTokenExpiry = undefined;
 

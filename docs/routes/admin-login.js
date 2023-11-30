@@ -1,6 +1,6 @@
 module.exports = {
   post: {
-    tags: ["Admin operations"],
+    tags: ["Admin-Auth operations"],
     description: "Admin login",
     operationId: "adminLogin",
     parameters: [],

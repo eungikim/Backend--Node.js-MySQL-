@@ -80,10 +80,4 @@ router.get("/notices", getAllNotices);
 
 router.delete("/notice/:notice_id", deleteNotice);
 
-// Reset password
-
-router.post("/reset-password", resetPassword);
-
-router.post("/update-password", updatePassword);
-
 module.exports = router;

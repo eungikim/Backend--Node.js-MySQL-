@@ -1,4 +1,7 @@
 const adminLogin = require("./admin-login");
+const resetPassword = require("./admin-password/reset-password");
+const updatePassword = require("./admin-password/update-password");
+
 const getAllUser = require("./get-users");
 const getOneUser = require("./get-user");
 const getAllExercises = require("./get-exercises");
@@ -46,6 +49,15 @@ module.exports = {
     "/api/v1/auth/admin-login": {
       ...adminLogin,
     },
+
+    "api/v1/auth/reset-password": {
+      ...resetPassword,
+    },
+
+    "/api/v1/auth/update-password": {
+      ...updatePassword,
+    },
+
     "/api/v1/admin/exercise": {
       ...createNewExercise,
     },

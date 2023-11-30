@@ -639,6 +639,13 @@ module.exports = {
             description: "is supported",
             example: false,
           },
+
+          startDate: {
+            type: "string",
+            description:
+              "The started date of the exercise which the report is send for",
+            example: "2023-11-28",
+          },
         },
       },
       // Mission  input model

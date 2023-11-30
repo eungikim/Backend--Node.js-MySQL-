@@ -14,6 +14,21 @@ module.exports = {
         description: "A single exercise id",
       },
     ],
+    requestBody: {
+      content: {
+        // content-type
+        "application/json": {
+          schema: {
+            properties: {
+              startDate: {
+                description: "The start date of the exercise",
+                example: "2023-11-28",
+              },
+            },
+          },
+        },
+      },
+    },
 
     // expected responses
     responses: {

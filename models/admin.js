@@ -27,6 +27,10 @@ const Admin = sequelize.define(
       defaultValue: "admin",
     },
 
+    jwtToken: {
+      type: Sequelize.STRING,
+    },
+
     resetToken: {
       type: Sequelize.STRING,
       allowNull: true,

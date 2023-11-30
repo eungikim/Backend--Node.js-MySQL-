@@ -83,8 +83,8 @@ router.get("/notices", getAllNotices);
 // ################### Update Profile ########################### //
 
 AWS.config.update({
-  accessKeyId: "AKIAQS5BLJWQDTR4QSTZ",
-  secretAccessKey: "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",
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
   region: "us-east-1",
 });
 

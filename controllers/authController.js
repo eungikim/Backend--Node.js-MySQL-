@@ -194,15 +194,11 @@ exports.adminLogin = async (req, res, next) => {
 
     const token = createJWT({ adminId: admin.id, role: "admin" });
 
-    res.cookie("motyToken", token, {
-      httpOnly: false,
-      sameSite: "None",
-      secure: true,
-    });
+    await admin.update({ jwtToken: token });
 
     return res
       .status(StatusCodes.OK)
-      .json({ message: "Admin successfully logged in" });
+      .json({ message: "Admin successfully logged in", admin });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)

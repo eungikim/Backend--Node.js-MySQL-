@@ -3,13 +3,23 @@ const { StatusCodes } = require("http-status-codes");
 const { verifyJWT } = require("../utils/tokenUtils");
 
 exports.authenticateAdmin = async (req, res, next) => {
-  const token = req.cookies.motyToken;
+  // const token = req.cookies.motyToken;
+  const bearerToken = req.headers.authorization;
 
-  if (!token) {
-    const error = new Error("Authentication invalid, no token");
-    error.statusCode = StatusCodes.UNAUTHORIZED;
-    throw error;
+  // if (!token) {
+  //   const error = new Error("Authentication invalid, no token");
+  //   error.statusCode = StatusCodes.UNAUTHORIZED;
+  //   throw error;
+  // }
+
+  if (!bearerToken) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      message:
+        "No token is passed. Please Pass the token as 'authorization': 'Bearer {token}'' ",
+    });
   }
+
+  const token = bearerToken.substring(7);
 
   try {
     const admin = verifyJWT(token);

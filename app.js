@@ -95,9 +95,9 @@ sequelize
   })
   .then(async (admin) => {
     if (!admin) {
-      const hashedPassword = await bcrypt.hash("admin_password", 10);
+      const hashedPassword = await bcrypt.hash("admin", 10);
       return Admin.create({
-        email: "faytonext@gmail.com",
+        email: "pom2398@gmail.com",
         password: hashedPassword,
       });
     }

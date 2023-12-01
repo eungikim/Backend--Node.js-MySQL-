@@ -84,18 +84,15 @@ exports.addUserExercise = async (req, res) => {
     where: {
       User_ID: user_id,
       Exercise_ID: exercise_id,
-      startDate: {
-        [Op.gte]: new Date(new Date().setHours(0, 0, 0, 0)), // Set the time to the start of today
-        [Op.lt]: new Date(new Date().setHours(23, 59, 59, 999)), // Set the time to the end of today
-      },
+      startDate: literal(`DATE(startDate) = '${startDate}'`),
     },
   });
 
-  // if (isEnrolledBefore) {
-  //   return res
-  //     .status(StatusCodes.BAD_REQUEST)
-  //     .json({ message: "You already enrolled this exercise today" });
-  // }
+  if (isEnrolledBefore) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "You already enrolled this exercise today" });
+  }
 
   const isExist = await Exercise.findOne({ where: { id: exercise_id } });
   // If this is the first time the user enroll this exercise increase the exercise counter by 1

@@ -2,6 +2,8 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../utils/database");
 
+const Question = require("../models/question");
+
 const User = sequelize.define(
   "user",
   {
@@ -56,5 +58,7 @@ const User = sequelize.define(
     timestamps: true,
   }
 );
+
+User.hasMany(Question, { foreignKey: "User_ID" });
 
 module.exports = User;

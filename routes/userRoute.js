@@ -22,6 +22,7 @@ const {
   getTodayExercises,
   getReward,
   updateProfileImage,
+  askQuestion,
 } = require("../controllers/userController");
 
 const {
@@ -116,5 +117,9 @@ const upload = multer({
 });
 
 router.post("/update-profile", upload.single("image"), updateProfileImage);
+
+// 1:1 inquiries
+
+router.post("/question/ask", askQuestion);
 
 module.exports = router;

@@ -27,6 +27,9 @@ const {
   addNotice,
   getAllNotices,
   deleteNotice,
+  getAllQuestions,
+  getOneQuestion,
+  giveAnswer,
 } = require("../controllers/adminController");
 
 const {
@@ -79,5 +82,13 @@ router.post("/notice", validateNoticeAdding, addNotice);
 router.get("/notices", getAllNotices);
 
 router.delete("/notice/:notice_id", deleteNotice);
+
+// Routes relating to 1:1
+
+router.get("/questions", getAllQuestions);
+
+router.get("/question/:question_id", getOneQuestion);
+
+router.put("/question/:question_id", giveAnswer);
 
 module.exports = router;

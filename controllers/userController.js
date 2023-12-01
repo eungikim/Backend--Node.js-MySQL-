@@ -1,12 +1,12 @@
 const { StatusCodes } = require("http-status-codes");
 const { Op, literal } = require("sequelize");
+
 const Exercise = require("../models/exercise");
 const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
-
 const UserMission = require("../models/userMission");
-
 const Mission = require("../models/mission");
+const Question = require("../models/question");
 
 // #####################################################  //
 
@@ -703,3 +703,24 @@ exports.updateProfileImage = async (req, res, next) => {
     newImageURL: user.imageURL,
   });
 };
+
+// 1:1 inquiries
+
+exports.askQuestion = async (req, res) => {
+  const { questionText } = req.body;
+
+  if (!questionText) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "questionText is required" });
+  }
+
+  const question = await Question.create({ questionText, User_ID: req.userId });
+  return res
+    .status(StatusCodes.BAD_REQUEST)
+    .json({ message: "Question sent successfully" });
+};
+
+// exports.seeMyQuestionAnswer = async (req, res) => {
+//   const
+// }

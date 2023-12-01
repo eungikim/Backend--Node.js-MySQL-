@@ -6,6 +6,7 @@ const Exercise = require("../models/exercise");
 const User = require("../models/user");
 const UserExercise = require("../models/userExercise");
 const Notice = require("../models/notice");
+const Question = require("../models/question");
 
 const Mission = require("../models/mission");
 const UserMission = require("../models/userMission");
@@ -324,4 +325,49 @@ exports.deleteNotice = async (req, res) => {
   return res
     .status(StatusCodes.OK)
     .json({ message: "Notice deleted successfully" });
+};
+
+// 1:1 inquiries
+exports.getAllQuestions = async (req, res) => {
+  const questions = await Question.findAll();
+
+  res.status(StatusCodes.OK).json({
+    message: "All questions obtained successfully",
+    questions: questions,
+  });
+};
+
+exports.getOneQuestion = async (req, res) => {
+  const question_id = req.params.question_id;
+
+  const question = await Question.findOne({ where: { id: question_id } });
+
+  if (question) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "No question is found for this id" });
+  }
+
+  res
+    .status(StatusCodes.OK)
+    .json({ message: "Question is obtained successfully", question: question });
+};
+
+exports.giveAnswer = async (req, res) => {
+  const { id } = req.params;
+  const { answerText } = req.body;
+
+  const question = await Question.findByPk(id);
+
+  if (!question) {
+    return res.status(404).json({ message: "Question not found" });
+  }
+
+  question.answerText = answerText;
+  await question.save();
+
+  res.status(StatusCodes.OK).json({
+    message: "Question is answered successfully",
+    question: question,
+  });
 };

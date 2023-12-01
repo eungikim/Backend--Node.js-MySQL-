@@ -196,6 +196,12 @@ module.exports = {
               "https://images.pexels.com/photos/3775164/pexels-photo-3775164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           },
 
+          duration: {
+            type: "string",
+            description: "mission's duration",
+            // example: "This mission is...",
+          },
+
           point: {
             type: "number",
             format: "double",

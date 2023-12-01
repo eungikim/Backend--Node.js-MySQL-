@@ -23,6 +23,10 @@ const Mission = sequelize.define(
       type: Sequelize.STRING,
     },
 
+    duration: {
+      type: Sequelize.STRING,
+    },
+
     imageURL: {
       type: Sequelize.STRING,
     },

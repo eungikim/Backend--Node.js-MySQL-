@@ -78,6 +78,8 @@ exports.validateMissionAdding = withValidatorErrors([
     .notEmpty()
     .withMessage("detailed_information is required"),
 
+  body("duration").notEmpty().withMessage("duration is required"),
+
   body("imageURL").notEmpty().withMessage("imageURL is required"),
 
   body("point").notEmpty().withMessage("point is required"),

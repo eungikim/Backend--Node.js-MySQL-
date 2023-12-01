@@ -651,9 +651,16 @@ exports.getReward = async (req, res) => {
 
   // Check if the user complete this mission
   if (userMissionExist.completionStatus !== "completed") {
-    return res.status(StatusCodes.OK).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message:
         "User didn't complete this mission, please complete it before trying to get the reward",
+    });
+  }
+
+  // Check if he already rewarded for this mission
+  if (userMissionExist.isRewarded) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "User already rewarded for this mission",
     });
   }
 
@@ -661,7 +668,12 @@ exports.getReward = async (req, res) => {
   const thisUser = await User.findOne({ where: { id: userId } });
 
   thisUser.totalPoint = thisUser.totalPoint + missionExist.point;
+
   await thisUser.save();
+
+  // change the isRewarded to true
+  userMissionExist.isRewarded = true;
+  await userMissionExist.save();
 
   // Delete this user mission to enable him to enroll it again
   // const deletedRows = await UserMission.destroy({

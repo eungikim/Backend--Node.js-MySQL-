@@ -36,6 +36,11 @@ const UserMission = sequelize.define("UserMission", {
     defaultValue: "inProgress",
   },
 
+  isRewarded: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+
   startDate: {
     type: Sequelize.DATE,
   },

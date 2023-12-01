@@ -91,11 +91,11 @@ exports.sign = async (req, res, next) => {
           userAttendanceMission.achievedPoint >=
           userAttendanceMission.targetValue
         ) {
-          if (userAttendanceMission.completionStatus != "completed") {
+          if (userAttendanceMission.completionStatus != "REWARD") {
             AttendanceMission.usersCount = AttendanceMission.usersCount + 1;
             await AttendanceMission.save();
           }
-          userAttendanceMission.completionStatus = "completed";
+          userAttendanceMission.completionStatus = "REWARD";
           userAttendanceMission.endDate = new Date();
           await userAttendanceMission.save();
 
@@ -105,7 +105,7 @@ exports.sign = async (req, res, next) => {
         }
       } else {
         userAttendanceMission.achievedPoint = 1;
-        userAttendanceMission.completionStatus = "inProgress";
+        userAttendanceMission.completionStatus = "ENROLL";
         userAttendanceMission.save();
       }
     }

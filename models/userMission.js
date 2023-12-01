@@ -32,13 +32,8 @@ const UserMission = sequelize.define("UserMission", {
   },
 
   completionStatus: {
-    type: Sequelize.ENUM("inProgress", "completed"),
-    defaultValue: "inProgress",
-  },
-
-  isRewarded: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
+    type: Sequelize.ENUM("BEFORE", "ENROLL", "REWARD", "COMPLETE"),
+    defaultValue: "BEFORE",
   },
 
   startDate: {

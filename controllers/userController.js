@@ -431,12 +431,12 @@ exports.sendReport = async (req, res) => {
         userTotalExerciseMission.achievedPoint >=
         userTotalExerciseMission.targetValue
       ) {
-        if (userTotalExerciseMission.completionStatus != "completed") {
+        if (userTotalExerciseMission.completionStatus != "REWARD") {
           TotalExerciseMission.usersCount = TotalExerciseMission.usersCount + 1;
           await TotalExerciseMission.save();
         }
 
-        userTotalExerciseMission.completionStatus = "completed";
+        userTotalExerciseMission.completionStatus = "REWARD";
         userTotalExerciseMission.endDate = new Date();
 
         // userExists.totalPoint =
@@ -454,12 +454,12 @@ exports.sendReport = async (req, res) => {
         userTotalWeightMission.achievedPoint >=
         userTotalWeightMission.targetValue
       ) {
-        if (userTotalWeightMission.completionStatus != "completed") {
+        if (userTotalWeightMission.completionStatus != "REWARD") {
           TotalWeightMission.usersCount = TotalWeightMission.usersCount + 1;
           await TotalWeightMission.save();
         }
 
-        userTotalWeightMission.completionStatus = "completed";
+        userTotalWeightMission.completionStatus = "REWARD";
         userTotalWeightMission.endDate = new Date();
 
         // userExists.totalPoint =
@@ -477,12 +477,12 @@ exports.sendReport = async (req, res) => {
         userTotalCaloriesMission.achievedPoint >=
         userTotalCaloriesMission.targetValue
       ) {
-        if (userTotalCaloriesMission.completionStatus != "completed") {
+        if (userTotalCaloriesMission.completionStatus != "REWARD") {
           TotalCaloriesMission.usersCount = TotalCaloriesMission.usersCount + 1;
           await TotalCaloriesMission.save();
         }
 
-        userTotalCaloriesMission.completionStatus = "completed";
+        userTotalCaloriesMission.completionStatus = "REWARD";
         userTotalCaloriesMission.endDate = new Date();
 
         // userExists.totalPoint =
@@ -557,6 +557,8 @@ exports.addUserMission = async (req, res) => {
     targetValue: missionExists.targetValue,
     point: missionExists.point,
     achievedPoint: achievedPoint,
+    completionStatus: "ENROLL",
+
     startDate: new Date(),
   });
 
@@ -649,18 +651,18 @@ exports.getReward = async (req, res) => {
     });
   }
 
-  // Check if the user complete this mission
-  if (userMissionExist.completionStatus !== "completed") {
+  // Check if he already rewarded for this mission
+  if (userMissionExist.completionStatus === "COMPLETE") {
     return res.status(StatusCodes.BAD_REQUEST).json({
-      message:
-        "User didn't complete this mission, please complete it before trying to get the reward",
+      message: "User already rewarded for this mission",
     });
   }
 
-  // Check if he already rewarded for this mission
-  if (userMissionExist.isRewarded) {
+  // Check if the user complete this mission
+  if (userMissionExist.completionStatus !== "REWARD") {
     return res.status(StatusCodes.BAD_REQUEST).json({
-      message: "User already rewarded for this mission",
+      message:
+        "User didn't complete this mission, please complete it before trying to get the reward",
     });
   }
 
@@ -671,8 +673,8 @@ exports.getReward = async (req, res) => {
 
   await thisUser.save();
 
-  // change the isRewarded to true
-  userMissionExist.isRewarded = true;
+  // change the complete to true
+  userMissionExist.completionStatus = "COMPLETE";
   await userMissionExist.save();
 
   // Delete this user mission to enable him to enroll it again

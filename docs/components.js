@@ -1,3 +1,5 @@
+const { format } = require("mysql2");
+
 module.exports = {
   components: {
     schemas: {
@@ -435,6 +437,42 @@ module.exports = {
         },
       },
 
+      bodyExercise: {
+        properties: {
+          id: {
+            type: "integer",
+            description: "body part exercise identification number",
+            example: 1, // example of an id
+          },
+
+          exercise_part: {
+            type: "string",
+            enum: ["shoulders", "arms", "stomach", "back", "legs", "chest"],
+            description: "Question text",
+            example: "How to improve my exercise",
+          },
+
+          weight: {
+            type: "integer",
+            format: "double",
+            description: "The weight this body part",
+            example: 60,
+          },
+
+          gender: {
+            type: "string",
+            description: "The gender of the user",
+            example: "male",
+          },
+
+          User_ID: {
+            type: "integer",
+            description: "The ID of the user",
+            example: 3,
+          },
+        },
+      },
+
       ONEtoONE: {
         properties: {
           id: {
@@ -460,6 +498,12 @@ module.exports = {
             enum: ["Answer completed", "Not answered"],
             description: "The status of the question",
             example: "Answer completed",
+          },
+
+          User_ID: {
+            type: "integer",
+            description: "The ID of the asker",
+            example: 3,
           },
         },
       },

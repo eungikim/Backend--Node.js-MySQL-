@@ -246,36 +246,6 @@ module.exports = {
             description: "The end date of the mission ",
             example: "13-10-2023",
           },
-
-          // attendanceCheck: {
-          //   type: "integer",
-          //   description: "Attendance check is a mission to check attendance",
-          //   example: 5,
-          // },
-          // exerciseTime: {
-          //   type: "integer",
-          //   description: "exercise time is a mission to meet the exercise time",
-          //   example: 5,
-          // },
-          // totalWeight: {
-          //   type: "number",
-          //   format: "double",
-          //   description: "a mission to achieve the target amount of weight",
-          //   example: 58,
-          // },
-          // totalCalories: {
-          //   type: "number",
-          //   format: "double",
-          //   description:
-          //     "a mission to achieve the target amount of calorie consumption.",
-          //   example: 56,
-          // },
-
-          // duration: {
-          //   type: "string",
-          //   description: "Mission duration",
-          //   example: "10Min",
-          // },
         },
       },
 
@@ -461,6 +431,35 @@ module.exports = {
             format: "date",
             description: "The end date",
             example: "2023-12-20",
+          },
+        },
+      },
+
+      ONEtoONE: {
+        properties: {
+          id: {
+            type: "integer",
+            description: "Question identification number",
+            example: 1, // example of an id
+          },
+
+          questionText: {
+            type: "string",
+            description: "Question text",
+            example: "How to improve my exercise",
+          },
+
+          answerText: {
+            type: "string",
+            description: "Answer text",
+            example: "You can improve your exercise by.....",
+          },
+
+          status: {
+            type: "string",
+            enum: ["Answer completed", "Not answered"],
+            description: "The status of the question",
+            example: "Answer completed",
           },
         },
       },

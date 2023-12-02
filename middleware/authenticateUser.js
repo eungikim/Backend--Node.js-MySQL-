@@ -22,6 +22,7 @@ exports.authenticateUser = async (req, res, next) => {
   try {
     const user = verifyJWT(token);
     const userId = user.userId;
+    const userGender = user.gender;
 
     if (!userId) {
       return res
@@ -32,6 +33,7 @@ exports.authenticateUser = async (req, res, next) => {
     const role = user.role;
 
     req.userId = userId;
+    req.userGender = userGender;
     next();
   } catch (err) {
     const error = new Error("Authentication invalid");

@@ -29,13 +29,13 @@ exports.validateAdminLogin = withValidatorErrors([
 ]);
 
 exports.validateCompleteLogin = withValidatorErrors([
-  body("nickName").notEmpty().withMessage("Nick Name is required"),
+  body("nickName").notEmpty().withMessage("nickName is required"),
 
-  body("gender").notEmpty().withMessage("Gender is required"),
+  body("gender").notEmpty().withMessage("gender is required"),
 
-  body("height").notEmpty().withMessage("Height is required"),
+  body("height").notEmpty().withMessage("height is required"),
 
-  body("weight").notEmpty().withMessage("Weight is required"),
+  body("weight").notEmpty().withMessage("weight is required"),
 ]);
 
 exports.validateExerciseAdding = withValidatorErrors([

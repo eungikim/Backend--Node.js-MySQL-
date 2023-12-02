@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { Op, literal } = require("sequelize");
+const Sequelize = require("sequelize");
 
 const Exercise = require("../models/exercise");
 const User = require("../models/user");
@@ -7,6 +8,7 @@ const UserExercise = require("../models/userExercise");
 const UserMission = require("../models/userMission");
 const Mission = require("../models/mission");
 const Question = require("../models/question");
+const PartBody = require("../models/bodyPart");
 
 // #####################################################  //
 
@@ -759,4 +761,104 @@ exports.seeAnswer = async (req, res) => {
     message: "User's question obtained successfully",
     question: QandA,
   });
+};
+
+// part of body RM
+
+exports.postOneRM = async (req, res) => {
+  const { exercise_part, weight } = req.body;
+
+  const userId = req.userId;
+
+  const thisUser = await User.findOne({ where: { id: userId } });
+
+  if (!exercise_part) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "exercise_part is required" });
+  }
+
+  if (!weight) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "weight is required" });
+  }
+
+  const validExerciseParts = [
+    "shoulders",
+    "arms",
+    "stomach",
+    "back",
+    "legs",
+    "chest",
+  ];
+
+  if (!validExerciseParts.includes(exercise_part)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: `exercise_part must be one of the following values: ${validExerciseParts.join(
+        ", "
+      )}`,
+    });
+  }
+
+  const isSameExist = await PartBody.findOne({
+    where: {
+      User_ID: userId,
+      exercise_part: exercise_part,
+    },
+  });
+
+  if (isSameExist) {
+    isSameExist.weight = weight;
+    await isSameExist.save();
+    return res.status(StatusCodes.CREATED).json({
+      message: "User exercise part data is added successfully",
+    });
+  }
+
+  const addBody = await PartBody.create({
+    exercise_part: exercise_part,
+    weight: weight,
+    gender: thisUser.gender,
+    User_ID: userId,
+  });
+
+  res.status(StatusCodes.CREATED).json({
+    message: "User exercise part data is added successfully",
+  });
+};
+
+exports.getAllMyRM = async (req, res) => {
+  const userBodiesExercises = await PartBody.findAll({
+    where: { User_ID: req.userId },
+  });
+
+  if (!userBodiesExercises) {
+    return res.status(StatusCodes.OK).json({
+      message: "You don't have any body part exercise",
+      userBodiesExercises,
+    });
+  }
+
+  res.status(StatusCodes.OK).json({
+    message: "User body parts exercises obtained successfully",
+    userBodiesExercises,
+  });
+};
+
+exports.getTotalUserAverage = async (req, res) => {
+  const averageWeights = await PartBody.findAll({
+    attributes: [
+      "exercise_part",
+      [Sequelize.fn("AVG", Sequelize.col("weight")), "weight"],
+    ],
+    group: ["exercise_part"],
+  });
+
+  const totalUserAverage = averageWeights.map((average) => ({
+    weight: average.dataValues.weight,
+    exercise_part: average.dataValues.exercise_part,
+  }));
+
+  res.status(StatusCodes.OK).json({ total_user_average: totalUserAverage });
 };

@@ -24,6 +24,9 @@ const {
   updateProfileImage,
   askQuestion,
   seeAnswers,
+  postOneRM,
+  getAllMyRM,
+  getTotalUserAverage,
 } = require("../controllers/userController");
 
 const {
@@ -43,7 +46,7 @@ router.get("/exercises", getAllExercises);
 
 router.get("/exercise/:exercise_id", getOneExercise);
 
-// My exercise
+//  ###########################   My exercise ############################### //
 
 // Enroll exercise
 router.post(
@@ -52,40 +55,42 @@ router.post(
   addUserExercise
 );
 
+// Get all my enrolled exercises
 router.get("/my-exercises", getUserExercises);
 
-// // get this month(last 30 days)
-// router.get("/my-exercise/month-exercises", getMonthExercise);
-
-// get my exercise for this week
+// get my exercises for this week
 router.get("/my-exercise/week-exercises", getWeekExercise);
 
-//get by my exercise by date
+//get by my exercises by date
 router.get("/my-exercise/:year/:month/:day", getByDate);
 
 // get my today's exercises
 router.get("/my-exercise/today-exercises", getTodayExercises);
 
+// get one of my enrolled exercise
 router.get("/my-exercise/:exercise_id", getOneUserExercise);
 
+// send a report
 router.post("/report/:exercise_id/", validateSendingReport, sendReport);
 
-//User Mission
+//  ###########################   My missions ############################### //
 
+// Get all missions
 router.get("/missions/all", getAllMission);
 
+// Get one mission
 router.get("/mission/:mission_id", getOneMission);
 
-// my mission
-
+// Enroll mission
 router.post("/mission/:mission_id", addUserMission);
 
+// Get all my enrolled missions
 router.get("/my_missions", getUserMissions);
 
+// Get one of my enrolled mission
 router.get("/my_missions/:mission_id", getOneUseMission);
 
-// get reward
-
+// Get reward after completion of a mission
 router.get("/get-reward/:mission_id", getReward);
 
 // Get all notices
@@ -119,10 +124,26 @@ const upload = multer({
 
 router.post("/update-profile", upload.single("image"), updateProfileImage);
 
-// 1:1 inquiries
+// ################### 1:1 inquiries ########################### //
 
+// Ask a question
 router.post("/question/ask", askQuestion);
 
+// See the answer for my question
 router.get("/questions/see-answers", seeAnswers);
+
+// ###################  My part of body data ########################### //
+
+// post one RM
+router.post("/exercise-part", postOneRM);
+
+// // Get one RM
+router.get("/exercise-part", getAllMyRM);
+
+// // Get all users average RM
+router.get("/exercise-part/total-user-average", getTotalUserAverage);
+
+// // Get same gender
+// router.get("/same_gender_average", getSameGenderAverage);
 
 module.exports = router;

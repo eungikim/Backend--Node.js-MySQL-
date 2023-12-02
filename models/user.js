@@ -4,6 +4,8 @@ const sequelize = require("../utils/database");
 
 const Question = require("../models/question");
 
+const bodyPart = require("../models/bodyPart");
+
 const User = sequelize.define(
   "user",
   {
@@ -65,4 +67,9 @@ User.hasMany(Question, {
   onUpdate: "CASCADE",
 });
 
+User.hasMany(bodyPart, {
+  foreignKey: "User_ID",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
 module.exports = User;

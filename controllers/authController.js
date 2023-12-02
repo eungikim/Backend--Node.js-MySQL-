@@ -43,7 +43,12 @@ exports.sign = async (req, res, next) => {
 
   if (thisUser && thisUser.gender) {
     // If the user's gender is not NULL this means that this user is already a member
-    const token = createJWT({ userId: thisUser.id, role: "user" });
+    const token = createJWT({
+      userId: thisUser.id,
+      role: "user",
+      userGender: thisUser.gender,
+    });
+
     await thisUser.update({ isMember: true, jwtToken: token });
 
     // If this user enroll the Attendance mission, increase his achieved point by one

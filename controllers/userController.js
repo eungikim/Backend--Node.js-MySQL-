@@ -337,6 +337,7 @@ exports.sendReport = async (req, res) => {
       totalCalories,
       exerciseTime,
       isSupported,
+      totalCnt,
       startDate,
       dueDate,
     } = req.body;
@@ -386,6 +387,7 @@ exports.sendReport = async (req, res) => {
         totalCalories: exercise.totalCalories + totalCalories,
         exerciseTime: exercise.exerciseTime + exerciseTime,
         isSupported: isSupported,
+        totalCnt: totalCnt,
         // startDate: new Date() // May be later
         dueDate: dueDate ? dueDate : exercise.dueDate,
       },

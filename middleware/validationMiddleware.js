@@ -66,6 +66,8 @@ exports.validateSendingReport = withValidatorErrors([
 
   body("exerciseTime").notEmpty().withMessage("exerciseTime is required"),
 
+  body("totalCnt").notEmpty().withMessage("totalCnt is required"),
+
   body("startDate").notEmpty().withMessage("startDate is required"),
 ]);
 

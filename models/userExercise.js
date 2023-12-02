@@ -48,6 +48,11 @@ const UserExercise = sequelize.define(
       defaultValue: false,
     },
 
+    totalCnt: {
+      type: Sequelize.DOUBLE,
+      defaultValue: 0.0,
+    },
+
     startDate: {
       type: Sequelize.DATE,
     },

@@ -105,6 +105,10 @@ module.exports = {
       },
     },
 
+    "/api/v1/admin/mission/{mission_id}/users": {
+      ...getAllMissionsParticipants,
+    },
+
     "/api/v1/admin/users": {
       ...getAllUser,
     },
@@ -142,8 +146,6 @@ module.exports = {
         ...answerQuestion.put,
       },
     },
-
-    "/api/v1/admin/": {},
 
     "/api/v1/auth/sign": {
       ...sign,
@@ -203,10 +205,6 @@ module.exports = {
       },
     },
 
-    "api/v1/user/notices": {
-      ...getAllNoticesU,
-    },
-
     "/api/v1/user/get-reward/{mission_id}": {
       ...getReward,
     },
@@ -215,8 +213,18 @@ module.exports = {
       ...getEnrolledMissions,
     },
 
-    "/api/v1/admin/mission/{mission_id}/users": {
-      ...getAllMissionsParticipants,
+    "api/v1/user/notices": {
+      ...getAllNoticesU,
+    },
+
+    "api/v1/user/question/ask": {
+      ...askQuestion,
+    },
+    "api/v1/user/questions/see-answers": {
+      ...getAllMyQandA,
+    },
+    "api/v1/user/questions/see-answer": {
+      ...getMyOneQandA,
     },
   },
 };

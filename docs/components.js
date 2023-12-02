@@ -306,6 +306,12 @@ module.exports = {
             example: false,
           },
 
+          totalCnt: {
+            type: "integer",
+            description: "totalCnt",
+            example: 10,
+          },
+
           startDate: {
             type: "string",
             format: "date",
@@ -687,6 +693,12 @@ module.exports = {
             type: "boolean",
             description: "is supported",
             example: false,
+          },
+
+          totalCnt: {
+            type: "integer",
+            description: "totalCnt",
+            example: 20,
           },
 
           startDate: {

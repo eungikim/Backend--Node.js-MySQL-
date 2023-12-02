@@ -24,6 +24,7 @@ const {
   updateProfileImage,
   askQuestion,
   seeAnswers,
+  seeAnswer,
   postOneRM,
   getAllMyRM,
   getTotalUserAverage,
@@ -130,8 +131,11 @@ router.post("/update-profile", upload.single("image"), updateProfileImage);
 // Ask a question
 router.post("/question/ask", askQuestion);
 
-// See the answer for my question
+// See the answers for all my questions
 router.get("/questions/see-answers", seeAnswers);
+
+// See one question with its answer
+router.get("/questions/see-answer", seeAnswer);
 
 // ###################  My part of body data ########################### //
 

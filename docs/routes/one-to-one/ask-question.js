@@ -12,7 +12,7 @@ module.exports = {
               questionText: {
                 questionText: "The text of the question",
                 type: "string",
-                example: "How to improve my exercise",
+                example: "How to improve my exercise?",
               },
             },
           },

@@ -2,8 +2,8 @@ module.exports = {
   // operation's method
   get: {
     tags: ["User-to-Question operations"],
-    description: "Get all questions with their answers",
-    operationId: "getAllAnswerQuestion", // unique operation id
+    description: "Get all my questions with their answers",
+    operationId: "getAllAnswersQuestions", // unique operation id
     parameters: [],
 
     responses: {
@@ -20,11 +20,6 @@ module.exports = {
 
       404: {
         description: "No question is found for this id",
-        content: {
-          "application/json": {
-            message: "No question is found for this id",
-          },
-        },
       },
     },
   },

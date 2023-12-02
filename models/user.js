@@ -59,6 +59,10 @@ const User = sequelize.define(
   }
 );
 
-User.hasMany(Question, { foreignKey: "User_ID" });
+User.hasMany(Question, {
+  foreignKey: "User_ID",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
 
 module.exports = User;

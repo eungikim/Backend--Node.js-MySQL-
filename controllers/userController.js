@@ -721,6 +721,40 @@ exports.askQuestion = async (req, res) => {
     .json({ message: "Question sent successfully" });
 };
 
-// exports.seeMyQuestionAnswer = async (req, res) => {
-//   const
-// }
+exports.seeAnswers = async (req, res) => {
+  const userId = req.userId;
+  const yourQandA = await Question.findAll({ where: { User_ID: userId } });
+
+  if (!yourQandA) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      message: "You don't have any question yet",
+    });
+  }
+
+  res
+    .status(StatusCodes.OK)
+    .json({ message: "User's questions with answers obtained successfully" });
+};
+
+exports.seeAnswer = async (req, res) => {
+  const userId = req.userId;
+  const question_id = req.params.question_id;
+
+  const QandA = await Question.findOne({
+    where: {
+      id: question_id,
+      User_ID: userId,
+    },
+  });
+
+  if (QandA) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      message: "You don't have any question with this id",
+    });
+  }
+
+  res.status(StatusCodes.OK).json({
+    message: "User's question obtained successfully",
+    question: QandA,
+  });
+};

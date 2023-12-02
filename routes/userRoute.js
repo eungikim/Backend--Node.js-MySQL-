@@ -23,6 +23,7 @@ const {
   getReward,
   updateProfileImage,
   askQuestion,
+  seeAnswers,
 } = require("../controllers/userController");
 
 const {
@@ -121,5 +122,7 @@ router.post("/update-profile", upload.single("image"), updateProfileImage);
 // 1:1 inquiries
 
 router.post("/question/ask", askQuestion);
+
+router.get("/questions/see-answers", seeAnswers);
 
 module.exports = router;

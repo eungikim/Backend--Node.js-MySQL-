@@ -186,7 +186,18 @@ exports.getOneMission = async (req, res) => {
 };
 
 exports.addMission = async (req, res) => {
+  const isAlreadyExist = await Mission.findOne({
+    where: { missionTheme: req.body.missionTheme },
+  });
+
+  if (isAlreadyExist) {
+    return res.status(StatusCodes.CONFLICT).json({
+      message: "A mission with the same missionTheme is already exists!",
+    });
+  }
+
   const mission = await Mission.create(req.body);
+
   return res
     .status(StatusCodes.CREATED)
     .json({ message: "Mission created successfully", mission: mission });
@@ -342,7 +353,7 @@ exports.getOneQuestion = async (req, res) => {
 
   const question = await Question.findOne({ where: { id: question_id } });
 
-  if (question) {
+  if (!question) {
     return res
       .status(StatusCodes.NOT_FOUND)
       .json({ message: "No question is found for this id" });
@@ -354,19 +365,26 @@ exports.getOneQuestion = async (req, res) => {
 };
 
 exports.giveAnswer = async (req, res) => {
-  const { id } = req.params;
+  const { question_id } = req.params;
   const { answerText } = req.body;
 
-  const question = await Question.findByPk(id);
+  if (!answerText) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      message: "answerText is required",
+    });
+  }
+
+  const question = await Question.findByPk(question_id);
 
   if (!question) {
     return res.status(404).json({ message: "Question not found" });
   }
 
   question.answerText = answerText;
+  question.status = "Answer completed";
   await question.save();
 
-  res.status(StatusCodes.OK).json({
+  res.status(StatusCodes.CREATED).json({
     message: "Question is answered successfully",
     question: question,
   });

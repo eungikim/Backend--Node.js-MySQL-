@@ -2,23 +2,13 @@ module.exports = {
   // operation's method
   get: {
     tags: ["User-to-Question operations"],
-    description: "Get one answer for my one question",
-    operationId: "getOneAnswerQuestion", // unique operation id
-    parameters: [
-      {
-        name: "question_id",
-        in: "path",
-        schema: {
-          $ref: "#/components/schemas/ONEtoONE/properties/id",
-        },
-        required: true, // Mandatory param
-        description: "A single question id",
-      },
-    ],
+    description: "Get all questions with their answers",
+    operationId: "getAllAnswerQuestion", // unique operation id
+    parameters: [],
 
     responses: {
       200: {
-        description: "User's question obtained successfully",
+        description: "User's questions with answers obtained successfully",
         content: {
           "application/json": {
             schema: {

@@ -44,6 +44,13 @@ const deleteNotice = require("./notice-related/admin-delete-notice");
 const addNotice = require("./notice-related/admin-add-notices");
 const getAllNoticesU = require("./notice-related/user-get-all-notices");
 
+const getAllQuestions = require("./one-to-one/get-all-questions");
+const getOneQuestion = require("./one-to-one/get-one-question");
+const askQuestion = require("./one-to-one/ask-question");
+const answerQuestion = require("./one-to-one/answer-a-question");
+const getAllMyQandA = require("./one-to-one/get-all-my-qANDa");
+const getMyOneQandA = require("./one-to-one/get-my-qANDa");
+
 module.exports = {
   paths: {
     "/api/v1/auth/admin-login": {
@@ -122,6 +129,22 @@ module.exports = {
     "/api/v1/admin/notice/{notice_id}": {
       ...deleteNotice,
     },
+
+    "/api/v1/admin/questions": {
+      ...getAllQuestions,
+    },
+
+    "/api/v1/admin/question/{question_id}": {
+      get: {
+        ...getOneQuestion.get,
+      },
+      put: {
+        ...answerQuestion.put,
+      },
+    },
+
+    "/api/v1/admin/": {},
+
     "/api/v1/auth/sign": {
       ...sign,
     },

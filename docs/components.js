@@ -437,7 +437,7 @@ module.exports = {
         },
       },
 
-      bodyExercise: {
+      bodyPartExercise: {
         properties: {
           id: {
             type: "integer",

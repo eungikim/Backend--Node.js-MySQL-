@@ -27,6 +27,7 @@ const {
   postOneRM,
   getAllMyRM,
   getTotalUserAverage,
+  getSameGenderAverage,
 } = require("../controllers/userController");
 
 const {
@@ -143,7 +144,7 @@ router.get("/exercise-part", getAllMyRM);
 // // Get all users average RM
 router.get("/exercise-part/total-user-average", getTotalUserAverage);
 
-// // Get same gender
-// router.get("/same_gender_average", getSameGenderAverage);
+// // Get same gender average
+router.get("/exercise-part/same-gender-average", getSameGenderAverage);
 
 module.exports = router;

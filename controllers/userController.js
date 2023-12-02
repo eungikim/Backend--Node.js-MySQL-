@@ -860,5 +860,31 @@ exports.getTotalUserAverage = async (req, res) => {
     exercise_part: average.dataValues.exercise_part,
   }));
 
-  res.status(StatusCodes.OK).json({ total_user_average: totalUserAverage });
+  res.status(StatusCodes.OK).json({
+    message: "Total user average obtained successfully",
+    total_user_average: totalUserAverage,
+  });
+};
+
+exports.getSameGenderAverage = async (req, res) => {
+  const thisUser = await User.findOne({ where: { id: req.userId } });
+
+  const averageWeights = await PartBody.findAll({
+    attributes: [
+      "exercise_part",
+      [Sequelize.fn("AVG", Sequelize.col("weight")), "weight"],
+    ],
+    where: { gender: thisUser.gender },
+    group: ["exercise_part"],
+  });
+
+  const genderUserAverage = averageWeights.map((average) => ({
+    weight: average.dataValues.weight,
+    exercise_part: average.dataValues.exercise_part,
+  }));
+
+  res.status(StatusCodes.OK).json({
+    message: "Same gender average obtained successfully",
+    gender_user_average: genderUserAverage,
+  });
 };

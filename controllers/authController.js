@@ -148,6 +148,14 @@ exports.sign = async (req, res, next) => {
 exports.completeLogin = async (req, res, next) => {
   console.log("This is the user when adding data", req.userId);
 
+  const { gender } = req.body;
+
+  if ((gender != "male") & (gender != "female")) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "gender must be one of the following: `male` OR `female`",
+    });
+  }
+
   try {
     const userId = req.userId;
     const user = await User.findOne({ where: { id: userId } });

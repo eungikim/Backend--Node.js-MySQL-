@@ -135,7 +135,7 @@ router.post("/question/ask", askQuestion);
 router.get("/questions/see-answers", seeAnswers);
 
 // See one question with its answer
-router.get("/questions/see-answer", seeAnswer);
+router.get("/questions/see-answer/:question_id", seeAnswer);
 
 // ###################  My part of body data ########################### //
 

@@ -5,11 +5,12 @@ module.exports = {
     description: "Get all my questions with their answers",
     operationId: "getAllAnswersQuestions", // unique operation id
     parameters: [],
-
+    requestBody: {},
     responses: {
       200: {
         description: "User's questions with answers obtained successfully",
         content: {
+          // content-type
           "application/json": {
             schema: {
               $ref: "#/components/schemas/ONEtoONE",

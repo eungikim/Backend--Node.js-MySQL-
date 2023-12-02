@@ -51,6 +51,11 @@ const answerQuestion = require("./one-to-one/answer-a-question");
 const getAllMyQandA = require("./one-to-one/get-all-my-qANDa");
 const getMyOneQandA = require("./one-to-one/get-my-qANDa");
 
+const postOneRM = require("./body-part-exercise/postRM");
+const getAllPartExercise = require("./body-part-exercise/get-all-RM");
+const getAllUsersAVG = require("./body-part-exercise/get-all-user-AVG");
+const getSameGenderAverage = require("./body-part-exercise/get-same-gender");
+
 module.exports = {
   paths: {
     "/api/v1/auth/admin-login": {
@@ -213,6 +218,23 @@ module.exports = {
       ...getEnrolledMissions,
     },
 
+    "/api/v1/user/exercise-part": {
+      post: {
+        ...postOneRM.post,
+      },
+      get: {
+        ...getAllPartExercise.get,
+      },
+    },
+
+    "/api/v1/user/exercise-part/total-user-average": {
+      ...getAllUsersAVG,
+    },
+
+    "/api/v1/user/exercise-part/same-gender-average": {
+      ...getSameGenderAverage,
+    },
+
     "api/v1/user/notices": {
       ...getAllNoticesU,
     },
@@ -220,9 +242,11 @@ module.exports = {
     "api/v1/user/question/ask": {
       ...askQuestion,
     },
+
     "api/v1/user/questions/see-answers": {
       ...getAllMyQandA,
     },
+
     "api/v1/user/questions/see-answer": {
       ...getMyOneQandA,
     },

@@ -454,8 +454,8 @@ module.exports = {
           exercise_part: {
             type: "string",
             enum: ["shoulders", "arms", "stomach", "back", "legs", "chest"],
-            description: "Question text",
-            example: "How to improve my exercise",
+            description: "Exercise part",
+            example: "arms",
           },
 
           weight: {

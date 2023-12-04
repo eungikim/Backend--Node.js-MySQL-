@@ -21,12 +21,19 @@ app.use(
   })
 );
 
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", [
+//     // "http://localhost:5173",
+//     // "https://bag6xc5pd2.us-east-1.awsapprunner.com/",
+//     "*",
+//   ]);
+//   res.setHeader("Access-Control-Allow-Methods", "*");
+//   res.setHeader("Access-Control-Allow-Headers", "*");
+//   next();
+// });
+
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", [
-    // "http://localhost:5173",
-    // "https://bag6xc5pd2.us-east-1.awsapprunner.com/",
-    "*",
-  ]);
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
   next();

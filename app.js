@@ -12,11 +12,7 @@ const swaggerUI = require("swagger-ui-express");
 
 app.use(
   cors({
-    origin: [
-      "*",
-      // "http://localhost:5173",
-      // "https://bag6xc5pd2.us-east-1.awsapprunner.com/",
-    ],
+    origin: "*",
     credentials: true,
   })
 );

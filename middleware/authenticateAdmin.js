@@ -36,7 +36,9 @@ exports.authenticateAdmin = async (req, res, next) => {
     req.role = role;
     next();
   } catch (err) {
-    const error = new Error("Authentication invalid for admin");
+    const error = new Error(
+      "Authentication invalid for admin.The token you passed is not correct, please pass a correct token."
+    );
     error.statusCode = StatusCodes.UNAUTHORIZED;
     throw error;
   }

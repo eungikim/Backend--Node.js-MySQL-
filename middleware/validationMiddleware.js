@@ -86,7 +86,25 @@ exports.validateMissionAdding = withValidatorErrors([
 
   body("point").notEmpty().withMessage("point is required"),
 
-  body("missionTheme").notEmpty().withMessage("missionTheme is required"),
+  body("missionTheme")
+    .notEmpty()
+    .withMessage("missionTheme is required")
+    .custom((value) => {
+      const allowedThemes = [
+        "Attendance",
+        "TotalExercise",
+        "TotalWeight",
+        "TotalCalories",
+      ];
+      if (!allowedThemes.includes(value)) {
+        throw new Error(
+          `Please provide a correct missionTheme. Allowed missionThemes are ${allowedThemes.join(
+            ", "
+          )}.`
+        );
+      }
+      return true;
+    }),
 
   body("targetValue").notEmpty().withMessage("targetValue is required"),
 ]);

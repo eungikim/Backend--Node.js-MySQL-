@@ -192,7 +192,8 @@ exports.addMission = async (req, res) => {
 
   if (isAlreadyExist) {
     return res.status(StatusCodes.CONFLICT).json({
-      message: "A mission with the same missionTheme is already exists!",
+      message:
+        "A mission with the same missionTheme is already exists! Use another mission theme",
     });
   }
 

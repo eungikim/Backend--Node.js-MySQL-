@@ -36,7 +36,6 @@ app.use((req, res, next) => {
 });
 
 const session = require("express-session");
-const passport = require("./config/passport");
 
 const sequelize = require("./utils/database");
 const Admin = require("./models/admin");
@@ -53,9 +52,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Docs
 const docs = require("./docs");
@@ -93,8 +89,8 @@ app.use((error, req, res, next) => {
 });
 
 sequelize
-  // .sync({ force: true })
-  .sync()
+  .sync({ force: true })
+  // .sync()
   .then((result) => {
     return Admin.findByPk(1);
   })

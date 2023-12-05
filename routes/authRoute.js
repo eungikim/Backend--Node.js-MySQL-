@@ -1,7 +1,5 @@
 const express = require("express");
 
-const passport = require("../config/passport");
-
 const { sign } = require("../controllers/authController");
 const {
   completeLogin,

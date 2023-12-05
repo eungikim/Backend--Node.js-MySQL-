@@ -5,6 +5,11 @@ const User = require("./user");
 const Mission = require("./mission");
 
 const UserMission = sequelize.define("UserMission", {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   title: {
     type: Sequelize.STRING,
   },

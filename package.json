@@ -1,5 +1,5 @@
 {
-  "name": "main",
+  "name": "moty-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "NHS",
   "devDependencies": {
     "@types/multer-s3": "^3.0.3",
     "@types/nodemailer": "^6.4.14",

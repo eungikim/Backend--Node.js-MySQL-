@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["User operations"],
-    description: "Send a report ",
+    description: "리포트 전송",
     operationId: "sendReport",
     parameters: [
       {
@@ -11,7 +11,7 @@ module.exports = {
           $ref: "#/components/schemas/Exercise/properties/id",
         },
         required: true,
-        description: "A single exercise id",
+        description: "운동 idx",
       },
     ],
     requestBody: {
@@ -29,14 +29,14 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "Report added successfully",
+        description: "등록 성공",
       },
       400: {
-        description: "No exercise is found for this user_id and exercise_id",
+        description: "운동을 찾을 수 없습니다",
       },
       // response code
       500: {
-        description: "Error when adding exercise",
+        description: "등록 실패",
       },
     },
   },

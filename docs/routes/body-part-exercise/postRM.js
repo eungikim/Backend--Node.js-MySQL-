@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["User-to-Body Part Exercise operations"],
-    description: "Send a report for this part exercise",
+    description: "운동부위 리포트 전송",
     operationId: "addBodyPartExercise",
     parameters: [],
     requestBody: {
@@ -26,7 +26,7 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "User exercise part data is added successfully",
+        description: "운동부위 리포트 등록 성공",
       },
     },
   },

@@ -2,7 +2,7 @@ module.exports = {
   // operation's method
   get: {
     tags: ["User-to-Question operations"],
-    description: "Get one answer for my one question",
+    description: "문의사항과 답변을 하나 가져옵니다",
     operationId: "getOneAnswerQuestion", // unique operation id
     parameters: [
       {
@@ -12,13 +12,13 @@ module.exports = {
           $ref: "#/components/schemas/ONEtoONE/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single question id",
+        description: "문의사항 idx",
       },
     ],
 
     responses: {
       200: {
-        description: "User's question obtained successfully",
+        description: "가져오기 성공",
         content: {
           "application/json": {
             schema: {
@@ -29,7 +29,7 @@ module.exports = {
       },
 
       404: {
-        description: "No question is found for this id",
+        description: "가져오기 실패",
         content: {
           "application/json": {
             message: "No question is found for this id",

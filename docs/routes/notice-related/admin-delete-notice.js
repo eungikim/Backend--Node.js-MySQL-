@@ -2,7 +2,7 @@ module.exports = {
   // operation's method.
   delete: {
     tags: ["Admin-to-notice operations"],
-    description: "Deleting a notice",
+    description: "공지사항 삭제",
     operationId: "deleteNotice",
     parameters: [
       // expected parameters
@@ -13,22 +13,22 @@ module.exports = {
           $ref: "#/components/schemas/Notice/id",
         },
         required: true,
-        description: "Deleting a notice by Id",
+        description: "공지사항 idx",
       },
     ],
     // expected responses
     responses: {
       // response code
       200: {
-        description: "Notice deleted successfully",
+        description: "삭제 성공",
       },
       // response code
       404: {
-        description: "Notice not found",
+        description: "공지사항 없음",
       },
       // response code
       500: {
-        description: "Server error",
+        description: "내부 에러",
       },
     },
   },

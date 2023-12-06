@@ -2,7 +2,7 @@ module.exports = {
   post: {
     tags: ["User operations - sign in/ sign up"],
     description:
-      "Complete registration (add additional info). Make sure to pass a header as 'authorization: Bearer {token}' ",
+      "상세정보 기입. 토큰 확인하세요! authorization: Bearer {token}",
     operationId: "",
     parameters: [],
     requestBody: {
@@ -20,7 +20,7 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "User's data added successfully",
+        description: "상세정보 입력 성공",
         content: {
           "application/json": {
             schema: {
@@ -32,7 +32,7 @@ module.exports = {
 
       // response code
       400: {
-        description: "Authentication failed, user not found",
+        description: "인증 실패, 유저 찾을 수 없음",
       },
     },
   },

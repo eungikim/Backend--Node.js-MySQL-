@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["User operations"],
-    description: "Enroll exercise (from listed exercises to user_exercise)",
+    description: "운동 등록(유저 운동)",
     operationId: "enrollExercise",
     parameters: [
       {
@@ -11,7 +11,7 @@ module.exports = {
           $ref: "#/components/schemas/Exercise/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single exercise id",
+        description: "운동 idx",
       },
     ],
     requestBody: {
@@ -21,7 +21,7 @@ module.exports = {
           schema: {
             properties: {
               startDate: {
-                description: "The start date of the exercise",
+                description: "운동 시작 날자",
                 example: "2023-11-28",
               },
             },
@@ -34,11 +34,11 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "Exercise successfully enrolled",
+        description: "등록 완료",
       },
       // response code
       400: {
-        description: "Invalid exercise id when enrolling exercise",
+        description: "등록 실패(운동idx)",
       },
     },
   },

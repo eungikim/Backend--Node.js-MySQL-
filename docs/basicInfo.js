@@ -5,9 +5,9 @@ module.exports = {
     description: "Moty API",
     version: "1.0.0",
     contact: {
-      name: "Faysel Abdella",
-      email: "fayselcode@gmail.com",
-      url: "https://personal-portfolio-y2fh.vercel.app/",
+      name: "NHS",
+      email: "sam@nhsco.xyz",
+      url: "http://nhsco.xyz/",
     },
   },
 };

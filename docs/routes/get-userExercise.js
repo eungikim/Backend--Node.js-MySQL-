@@ -2,7 +2,7 @@ module.exports = {
   // operation's method
   get: {
     tags: ["Admin-to-user operations"],
-    description: "Get a user_exercise using user_id and exercise_id",
+    description: "유저의 운동 가져오기",
     operationId: "getOneUserExercise", // unique operation id
     parameters: [
       // expected params.
@@ -13,7 +13,7 @@ module.exports = {
           $ref: "#/components/schemas/User/properties/id",
         },
         required: true,
-        description: "A single user id",
+        description: "유저 idx",
       },
       {
         name: "exercise_id",
@@ -22,13 +22,13 @@ module.exports = {
           $ref: "#/components/schemas/UserExercise/properties/id",
         },
         required: true,
-        description: "A single exercise id",
+        description: "운동 idx",
       },
     ],
     // expected responses
     responses: {
       200: {
-        description: "UserExercise is obtained",
+        description: "유저운동 가져오기 성공",
         content: {
           "application/json": {
             schema: {
@@ -38,7 +38,7 @@ module.exports = {
         },
       },
       404: {
-        description: "No user is found by this id",
+        description: "가져오기 실패",
         content: {
           "application/json": {
             message: "No user is found by this id",

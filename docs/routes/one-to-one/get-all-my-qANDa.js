@@ -2,13 +2,13 @@ module.exports = {
   // operation's method
   get: {
     tags: ["User-to-Question operations"],
-    description: "Get all my questions with their answers",
+    description: "문의사항과 답변을 모두 가져옵니다",
     operationId: "getAllAnswersQuestions", // unique operation id
     parameters: [],
     requestBody: {},
     responses: {
       200: {
-        description: "User's questions with answers obtained successfully",
+        description: "가져오기 성공",
         content: {
           // content-type
           "application/json": {
@@ -20,7 +20,7 @@ module.exports = {
       },
 
       404: {
-        description: "No question is found for this id",
+        description: "가져오기 실패",
       },
     },
   },

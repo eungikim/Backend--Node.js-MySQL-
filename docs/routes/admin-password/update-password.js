@@ -2,7 +2,7 @@ module.exports = {
   post: {
     tags: ["Admin-Auth operations"],
     description:
-      "Admin update password. Sending a request to change the password",
+      "관리자 비밀번호 변경.",
     operationId: "adminPasswordUpdate",
     parameters: [],
     requestBody: {
@@ -12,12 +12,12 @@ module.exports = {
           schema: {
             properties: {
               resetToken: {
-                resetToken: "The token sent to the admin email",
+                resetToken: "보낸 리셋 토큰",
                 type: "string",
                 example: "749773738768f3e3772962745abf793b1b952488",
               },
               newPassword: {
-                description: "The new password",
+                description: "신규 비밀번호",
                 example: "admin-new-password",
               },
             },
@@ -29,11 +29,11 @@ module.exports = {
     responses: {
       // response code
       200: {
-        description: "Password updated successfully.",
+        description: "비밀번호 변경 성공.",
       },
       // response code
       400: {
-        description: "Invalid or expired reset token",
+        description: "유효하지 않거나 리셋 토큰 만료",
       },
     },
   },

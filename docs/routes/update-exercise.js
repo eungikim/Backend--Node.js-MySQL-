@@ -2,7 +2,7 @@ module.exports = {
   // operation's method
   patch: {
     tags: ["Admin-to-exercise operations"],
-    description: "Update exercise",
+    description: "운동 업데이트",
     operationId: "updateExercise",
     parameters: [
       // expected params
@@ -13,7 +13,7 @@ module.exports = {
           $ref: "#/components/schemas/Exercise/properties/id",
         },
         required: true,
-        description: "Id of exercise to be updated",
+        description: "업데이트 할 운동 idx",
       },
     ],
     // expected request
@@ -32,15 +32,15 @@ module.exports = {
     responses: {
       // response code
       200: {
-        description: "Exercise updated successfully",
+        description: "업데이트 성공",
       },
       // response code
       404: {
-        description: "Exercise not found",
+        description: "운동을 찾을 수 없습니다",
       },
       // response code
       500: {
-        description: "Server error",
+        description: "내부 에러",
       },
     },
   },

@@ -2,7 +2,7 @@ module.exports = {
   // operation's method
   put: {
     tags: ["Admin-to-Question operations"],
-    description: "Give an answer for a question",
+    description: "답변하기",
     operationId: "giveAnswer",
     parameters: [
       {
@@ -12,7 +12,7 @@ module.exports = {
           $ref: "#/components/schemas/ONEtoONE/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single question id",
+        description: "문의사항 idx",
       },
     ],
 
@@ -22,7 +22,7 @@ module.exports = {
           schema: {
             properties: {
               questionText: {
-                questionText: "The text of the answer",
+                questionText: "답변 내용",
                 type: "string",
                 example: "You can improve your exercise",
               },
@@ -34,11 +34,11 @@ module.exports = {
 
     responses: {
       200: {
-        description: "Question is answered successfully",
+        description: "답변 성공",
       },
 
       404: {
-        description: "No question is found for this id",
+        description: "가져오기 실패",
         content: {
           "application/json": {
             message: "No question is found for this id",

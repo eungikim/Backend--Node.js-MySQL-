@@ -2,7 +2,7 @@ module.exports = {
   // operation's method
   get: {
     tags: ["User operations"],
-    description: "Get a specific exercise form User_exercise",
+    description: "특정 유저운동을 가져옵니다.",
     operationId: "getOneUserExerciseMy", // unique operation id
     parameters: [
       // expected params.
@@ -13,13 +13,13 @@ module.exports = {
           $ref: "#/components/schemas/Exercise/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single exercise id",
+        description: "운동 idx",
       },
     ],
     // expected responses
     responses: {
       200: {
-        description: "Exercise is obtained",
+        description: "가져오기 성공",
         content: {
           "application/json": {
             schema: {
@@ -29,7 +29,7 @@ module.exports = {
         },
       },
       404: {
-        description: "No exercise is found by this id",
+        description: "운동을 찾을 수 없습니다",
         content: {
           "application/json": {
             message: "No exercise is found by this id",

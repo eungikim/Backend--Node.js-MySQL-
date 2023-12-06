@@ -2,14 +2,14 @@ module.exports = {
   // method of operation
   get: {
     tags: ["User-to-Body Part Exercise operations"],
-    description: "Get total user average ",
+    description: "유저 평균",
     operationId: "getAllUsersBodyPart", // unique operation id.
     parameters: [], // expected params.
     // expected responses
     responses: {
       // response code
       200: {
-        description: "Total users average obtained successfully", // response desc.
+        description: "유저 평균 가져오기 성공", // response desc.
         content: {
           // content-type
           "application/json": {

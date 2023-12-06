@@ -2,7 +2,7 @@ module.exports = {
   // operation's method.
   delete: {
     tags: ["Admin-to-mission operations"],
-    description: "Deleting an mission",
+    description: "미션 삭제",
     operationId: "deleteMission",
     parameters: [
       // expected parameters
@@ -13,22 +13,22 @@ module.exports = {
           $ref: "#/components/schemas/Mission/id",
         },
         required: true,
-        description: "Deleting an mission by Id",
+        description: "삭제할 미션 idx",
       },
     ],
     // expected responses
     responses: {
       // response code
       200: {
-        description: "Mission deleted successfully",
+        description: "삭제 성공",
       },
       // response code
       404: {
-        description: "Mission not found",
+        description: "미션을 찾을 수 없습니다",
       },
       // response code
       500: {
-        description: "Server error",
+        description: "내부 에러",
       },
     },
   },

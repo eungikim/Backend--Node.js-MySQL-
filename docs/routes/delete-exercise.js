@@ -2,7 +2,7 @@ module.exports = {
   // operation's method.
   delete: {
     tags: ["Admin-to-exercise operations"],
-    description: "Deleting an exercise",
+    description: "운동 삭제",
     operationId: "deleteExercise",
     parameters: [
       // expected parameters
@@ -13,22 +13,22 @@ module.exports = {
           $ref: "#/components/schemas/Exercise/id",
         },
         required: true,
-        description: "Deleting an exercise by Id",
+        description: "삭제할 운동 idx",
       },
     ],
     // expected responses
     responses: {
       // response code
       200: {
-        description: "Exercise deleted successfully",
+        description: "삭제 성공",
       },
       // response code
       404: {
-        description: "Exercise not found",
+        description: "운동을 찾을 수 없습니다",
       },
       // response code
       500: {
-        description: "Server error",
+        description: "내부 에러",
       },
     },
   },

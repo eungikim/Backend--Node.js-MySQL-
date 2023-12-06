@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["Admin-to-exercise operations"],
-    description: "Create exercise",
+    description: "운동 생성",
     operationId: "addExercise",
     parameters: [],
     requestBody: {
@@ -19,11 +19,11 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "Exercise created successfully",
+        description: "운동 생성 성공",
       },
       // response code
       500: {
-        description: "Error when adding exercise",
+        description: "운동 추가 에러",
       },
     },
   },

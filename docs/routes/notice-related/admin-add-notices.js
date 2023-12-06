@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["Admin-to-notice operations"],
-    description: "Add notice",
+    description: "공지사항 등록",
     operationId: "addNotice",
     parameters: [],
     requestBody: {
@@ -19,11 +19,11 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "Notice added successfully",
+        description: "등록 성공",
       },
       // response code
       500: {
-        description: "Error when adding notice",
+        description: "등록 실패",
       },
     },
   },

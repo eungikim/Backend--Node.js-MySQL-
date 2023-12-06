@@ -2,7 +2,7 @@ module.exports = {
   // operation's method
   patch: {
     tags: ["Admin-to-mission operations"],
-    description: "Update mission",
+    description: "미션 업데이트",
     operationId: "updateMission1",
     parameters: [
       // expected params
@@ -13,7 +13,7 @@ module.exports = {
           $ref: "#/components/schemas/Mission/properties/id",
         },
         required: true,
-        description: "Id of mission to be updated",
+        description: "업데이트 할 미션 idx",
       },
     ],
     // expected request
@@ -32,15 +32,15 @@ module.exports = {
     responses: {
       // response code
       200: {
-        description: "Mission updated successfully",
+        description: "업데이트 성공",
       },
       // response code
       404: {
-        description: "Mission not found",
+        description: "미션을 찾을 수 없습니다",
       },
       // response code
       500: {
-        description: "Server error",
+        description: "내부 에러",
       },
     },
   },

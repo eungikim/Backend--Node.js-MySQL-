@@ -2,7 +2,7 @@ module.exports = {
   // method of operation
   get: {
     tags: ["Admin-to-mission operations"],
-    description: "A list of users currently engaged in a specific mission",
+    description: "미션에 참가하고 있는 유저 리스트",
     operationId: "getAllMissionsParticipants", // unique operation id.
     parameters: [
       {
@@ -12,14 +12,14 @@ module.exports = {
           $ref: "#/components/schemas/Mission/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single mission id",
+        description: "미션 idx",
       },
     ], // expected params.
     // expected responses
     responses: {
       // response code
       200: {
-        description: "All missions participant are obtained successfully", // response desc.
+        description: "미션 참가자 가져오기 성공", // response desc.
         content: {
           // content-type
           "application/json": {
@@ -31,7 +31,7 @@ module.exports = {
       },
 
       400: {
-        description: "No mission participant is found",
+        description: "참가자가 없습니다",
       },
     },
   },

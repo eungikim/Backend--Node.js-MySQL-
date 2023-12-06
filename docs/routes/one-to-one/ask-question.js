@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["User-to-Question operations"],
-    description: "Ask a question",
+    description: "질문 등록하기",
     operationId: "askQuestion",
     parameters: [],
     requestBody: {
@@ -21,7 +21,7 @@ module.exports = {
     },
     responses: {
       201: {
-        description: "Question sent successfully",
+        description: "질문 등록하기 성공",
       },
     },
   },

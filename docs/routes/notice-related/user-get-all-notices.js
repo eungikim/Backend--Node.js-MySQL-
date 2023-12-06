@@ -2,14 +2,14 @@ module.exports = {
   // method of operation
   get: {
     tags: ["User-to-notice operations"],
-    description: "Get all notices",
+    description: "공지사항 모두 가져오기",
     operationId: "getAllNoticesU", // unique operation id.
     parameters: [], // expected params.
     // expected responses
     responses: {
       // response code
       200: {
-        description: "All notices are obtained", // response desc.
+        description: "가져오기 성공", // response desc.
         content: {
           // content-type
           "application/json": {
@@ -21,7 +21,7 @@ module.exports = {
       },
 
       400: {
-        description: "No notice is found",
+        description: "가져오기 실패",
       },
     },
   },

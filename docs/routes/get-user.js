@@ -2,7 +2,7 @@ module.exports = {
   // operation's method
   get: {
     tags: ["Admin-to-user operations"],
-    description: "Get a user by ID",
+    description: "유저 한명 가져오기",
     operationId: "getOneUser", // unique operation id
     parameters: [
       // expected params.
@@ -13,13 +13,13 @@ module.exports = {
           $ref: "#/components/schemas/User/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single user id",
+        description: "유저 idx",
       },
     ],
     // expected responses
     responses: {
       200: {
-        description: "User is obtained",
+        description: "유저 가져오기 성공",
         content: {
           "application/json": {
             schema: {
@@ -29,7 +29,7 @@ module.exports = {
         },
       },
       404: {
-        description: "No user is found by this id",
+        description: "가져오기 실패",
         content: {
           "application/json": {
             message: "No user is found by this id",

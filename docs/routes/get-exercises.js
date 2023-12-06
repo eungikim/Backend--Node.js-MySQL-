@@ -2,14 +2,14 @@ module.exports = {
   // method of operation
   get: {
     tags: ["Admin-to-exercise operations"],
-    description: "Get all exercises",
+    description: "모든 운동을 가져옵니다",
     operationId: "getAllExercises", // unique operation id.
     parameters: [], // expected params.
     // expected responses
     responses: {
       // response code
       200: {
-        description: "All exercises are obtained", // response desc.
+        description: "가져오기 완료", // response desc.
         content: {
           // content-type
           "application/json": {
@@ -21,7 +21,7 @@ module.exports = {
       },
 
       400: {
-        description: "No exercise is found",
+        description: "찾을 수 없습니다",
       },
     },
   },

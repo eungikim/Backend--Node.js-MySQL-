@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["Admin-Auth operations"],
-    description: "Admin login",
+    description: "관리자 로그인",
     operationId: "adminLogin",
     parameters: [],
     requestBody: {
@@ -19,11 +19,11 @@ module.exports = {
     responses: {
       // response code
       200: {
-        description: "Admin successfully logged in",
+        description: "로그인 완료",
       },
       // response code
       400: {
-        description: "Non-authorized admin",
+        description: "인증 불가",
       },
     },
   },

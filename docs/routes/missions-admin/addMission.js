@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["Admin-to-mission operations"],
-    description: "Create mission",
+    description: "미션 만들기",
     operationId: "addMission",
     parameters: [],
     requestBody: {
@@ -19,11 +19,11 @@ module.exports = {
     responses: {
       // response code
       201: {
-        description: "Mission created successfully",
+        description: "미션 생성 성공",
       },
       // response code
       500: {
-        description: "Error when adding mission",
+        description: "미션 생성 에러",
       },
     },
   },

@@ -2,14 +2,14 @@ module.exports = {
   // method of operation
   get: {
     tags: ["User-to-Body Part Exercise operations"],
-    description: "Get all my body part exercises",
+    description: "운동부위를 모두 가져옵니다",
     operationId: "getAllBodyPart", // unique operation id.
     parameters: [], // expected params.
     // expected responses
     responses: {
       // response code
       200: {
-        description: "All exercise_parts are obtained successfully", // response desc.
+        description: "운동부위 모두 가져오기 성공", // response desc.
         content: {
           // content-type
           "application/json": {
@@ -21,7 +21,7 @@ module.exports = {
       },
 
       400: {
-        description: "No exercise is found",
+        description: "운동을 찾을 수 없습니다",
       },
     },
   },

@@ -2,7 +2,7 @@ module.exports = {
   // method of operation
   get: {
     tags: ["Admin-to-user operations"],
-    description: "Get all exercises for a specific user(get User_Exercise)",
+    description: "유저의 모든 운동 가져오기",
     operationId: "getUserExercises", // unique operation id.
     parameters: [
       {
@@ -12,14 +12,14 @@ module.exports = {
           $ref: "#/components/schemas/User/properties/id",
         },
         required: true, // Mandatory param
-        description: "A single user id",
+        description: "유저 idx",
       },
     ],
     // expected responses
     responses: {
       // response code
       200: {
-        description: "All userExercises are obtained", // response desc.
+        description: "운동 가져오기 성공", // response desc.
         content: {
           // content-type
           "application/json": {
@@ -31,7 +31,7 @@ module.exports = {
       },
 
       400: {
-        description: "No exercise is found",
+        description: "운동을 찾을 수 없습니다",
       },
     },
   },

@@ -1,7 +1,7 @@
 module.exports = {
   post: {
     tags: ["User operations - sign in/ sign up"],
-    description: "User sign in/ sign up",
+    description: "유저 로그인/회원가입",
     operationId: "userSign",
     parameters: [],
     requestBody: {
@@ -19,7 +19,7 @@ module.exports = {
     responses: {
       // response code
       200: {
-        description: "User successfully registered",
+        description: "유저 가입 성공",
         content: {
           // content-type
           "application/json": {
@@ -31,7 +31,7 @@ module.exports = {
       },
       // response code
       400: {
-        description: "Failed to register",
+        description: "가입 실패",
       },
     },
   },
